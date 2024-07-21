@@ -14,11 +14,14 @@ const Navbar = () => {
           <button>
             <Image src={dark} alt="Dark" className="h-8 w-8" />
           </button>
-          <Link href="signin" className="text-white mr-4">
+          {/* <Link href="signin" className="text-white mr-4">
             Sign in
           </Link>
           <Link href="/signup" className="text-white border border-white rounded-full px-4 py-2">
             Sign up - For free
+          </Link> */}
+          <Link href="/home" className="text-white border border-white rounded-full px-4 py-2">
+            Go Home
           </Link>
         </div>
       </div>
