@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# CogniFile
 
-First, run the development server:
+Our innovative file management solution addresses key challenges in the digital workspace, streamlining organization and boosting productivity. It offers a comprehensive, user-friendly approach to modern file management, featuring:
+
+This solution tackles the complexities of modern file management head-on, ensuring complete control and privacy over your data.
+
+
+
+
+
+## Features
+
+- Multilingual natural language search with voice integration.
+- AI-powered chatbot for intelligent metadata generation.
+- Automated file categorization, tagging, and folder organization suggestions.
+- Duplicate file detection for optimized storage
+- Local deployment options for enhanced security and data privacy.
+- Automatic version control and malicious file detection.
+Automatic file translation.
+- Robust data backup.
+- Advanced search capabilities for images and voice content.
+
+## Technical Stack
+
+This is a repository for the Frontend part of this project. It was built with the following technologies:
+
+- Next.js (For building the web application)
+- Tailwind CSS (For styling the web application)
+- Jest (For testing the web application)
+
+## Installation
+
+1- Clone the repository to your local machine and cd to it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/K3A-Team/CogniFile-frontend
+  cd CogniFile-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2- Install the project dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Or
 
-## Learn More
+```bash
+  yarn install
+```
 
-To learn more about Next.js, take a look at the following resources:
+3- Enable Husky tool to run code checks when making a git commit
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npx husky install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Or
 
-## Deploy on Vercel
+```bash
+  yarn husky install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3- Launch the development server of the project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  npm run dev
+```
+
+Or
+
+```bash
+  yarn dev
+```
+    
+## Screenshots
+
+![Landing Page Hero Section]()
+
+![My Storage Page]()
+
+![Shared Storage Page]()
+
+
+## Authors
+
+- [Zouambia Sohaib](https://github.com/z-sohaib)
+
+
+## Feedback
+
+If you have any feedback, please reach out to us at js_zouambia@esi.dz
+
+
+## Support
+
+For support, email js_zouambia@esi.dz.
+
