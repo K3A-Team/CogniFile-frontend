@@ -76,11 +76,11 @@ Or
     
 ## Screenshots
 
-![Landing Page Hero Section]()
+![Landing Page Hero Section](https://github.com/user-attachments/assets/f2adaaff-3844-490b-bd14-7eb27a345791)
 
-![My Storage Page]()
+![My Storage Page](https://github.com/user-attachments/assets/bcbfa7b4-35ac-4d89-932c-4e79e1081e24)
 
-![Shared Storage Page]()
+![Shared Storage Page](https://github.com/user-attachments/assets/1130beff-0493-4703-a6dd-06ba73cebccb)
 
 
 ## Authors
