@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import shape5 from '@/public/Power.png';
 import shape6 from '@/public/arrow_right.png';
 import shape1 from '@/public/shape1.png';
@@ -26,10 +27,13 @@ const Hero = () => {
         <h1 className="text-4xl lg:text-7xl font-extrabold mb-6 leading-normal lg:leading-normal text-center w-[100%]">
           Discover The Best Productivity Tool Effortlessly
         </h1>
-        <button className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark rounded-full px-16 py-4 font-bold text-lg">
+        <Link
+          className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
+          href="/auth/register"
+        >
           Try For Free
-        </button>
-        <p className="mt-6 lg:text-xl leading-8 lg:w-auto max-w-[80%] m-auto">
+        </Link>
+        <p className="mt-12 lg:text-xl leading-8 lg:w-auto max-w-[80%] m-auto">
           Over <span className="font-bold">200+ tools</span> and graphic design, Lorem ipsum is a
           placeholder text <br className="hidden lg:block" />
           commonly used to demonstrate the visual.
