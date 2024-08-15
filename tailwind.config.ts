@@ -29,7 +29,7 @@ const config: Config = {
         For Line height, if it's 150% in figma use loose or relaxed or Normal
       */
 
-      /* Make sure to treat the hover effect it's shpwed in the prototype*/
+      /* Make sure to treat the hover effect it's showed in the prototype*/
 
       /* For the radius, calculate it in rem:
         1rem = 16px
@@ -87,6 +87,15 @@ const config: Config = {
         'Orange-gradient': 'linear-gradient(to right, #DBA568, #AD7033)',
         'Red-gradient': 'linear-gradient(to right, #DB6868, #AD3333)',
         'Green-gradient': 'linear-gradient(to right, #87DB68, #53AD33)',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.5s ease-in-out',
       },
     },
   },

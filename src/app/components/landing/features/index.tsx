@@ -6,42 +6,58 @@ import security from '@/public/security.png';
 
 const Features = () => {
   return (
-    <section className="bg-black text-white p-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
-          CogniFile helps you and your business at every step.
+    <section className="bg-[#191919] text-white w-screen py-20 flex flex-col items-center gap-20">
+      <div className="flex flex-col justify-center gap-6">
+        <h2 className="text-3xl lg:text-5xl font-extrabold leading-normal lg:leading-normal text-center w-[80%] lg:w-[100%] m-auto">
+          CogniFile helps you and your business <br></br> at every step.
         </h2>
+      </div>
+
+      <div className="container mx-auto text-center w-[80%] m-auto lg:w-[100%]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="flex flex-col items-center">
-            <Image src={cloud} alt="Cloud" className="mb-4 h-16 w-auto" />
-            <h3 className="text-xl font-semibold mb-2">Stockez vos fichiers</h3>
-            <p className="text-gray-400 text-center">
+          <div className="flex flex-col items-center gap-4 py-6 px-4 hover:bg-[#1F1F1F] rounded-[1rem]">
+            <div className="flex flex-col items-center gap-2">
+              <Image src={cloud} alt="Cloud" className="mb-4 h-16 w-auto" />
+              <h3 className="text-[26px] font-extrabold mb-2">Store your files</h3>
+            </div>
+            <p className="text-white opacity-60 text-center text-xl">
               Securely store and share files, easily sign and send important documents, back up your
-              work, all in one location, for streamlined and effective file organization.
+              work, all in one place, for efficient and organized file management.
             </p>
           </div>
-          <div className="flex flex-col items-center">
-            <Image src={chatgpt} alt="Chat GPT" className="mb-4 h-16 w-auto" />
-            <h3 className="text-xl font-semibold mb-2">AI support features</h3>
-            <p className="text-gray-400 text-center">
+
+          <div className="flex flex-col items-center gap-4 py-6 px-4 hover:bg-[#1F1F1F] rounded-[1rem]">
+            <div className="flex flex-col items-center gap-2">
+              <Image src={chatgpt} alt="Cloud" className="mb-4 h-16 w-auto" />
+              <h3 className="text-[26px] font-extrabold mb-2">AI support features</h3>
+            </div>
+            <p className="text-white opacity-60 text-center text-xl">
               Securely store and share files, easily sign and send important documents, back up your
-              work, all in one location, for streamlined and effective file organization.
+              work, all in one place, for efficient and organized file management.
             </p>
           </div>
-          <div className="flex flex-col items-center">
-            <Image src={folder} alt="Folder" className="mb-4 h-16 w-auto" />
-            <h3 className="text-xl font-semibold mb-2">Automatic file hierarchy</h3>
-            <p className="text-gray-400 text-center">
+
+          <div className="flex flex-col items-center gap-4 py-6 px-4 hover:bg-[#1F1F1F] rounded-[1rem]">
+            <div className="flex flex-col items-center gap-2">
+              <Image src={folder} alt="Cloud" className="mb-4 h-16 w-auto" />
+              <h3 className="text-[26px] font-extrabold mb-2 text-nowrap">
+                Automatic file structure
+              </h3>
+            </div>
+            <p className="text-white opacity-60 text-center text-xl">
               Securely store and share files, easily sign and send important documents, back up your
-              work, all in one location, for streamlined and effective file organization.
+              work, all in one place, for efficient and organized file management.
             </p>
           </div>
-          <div className="flex flex-col items-center">
-            <Image src={security} alt="Security" className="mb-4 h-16 w-auto" />
-            <h3 className="text-xl font-semibold mb-2">Security and backup</h3>
-            <p className="text-gray-400 text-center">
+
+          <div className="flex flex-col items-center gap-4 py-6 px-4 hover:bg-[#1F1F1F] rounded-[1rem]">
+            <div className="flex flex-col items-center gap-2">
+              <Image src={security} alt="Cloud" className="mb-4 h-16 w-auto" />
+              <h3 className="text-[26px] font-extrabold mb-2">Security and backup</h3>
+            </div>
+            <p className="text-white opacity-60 text-center text-xl">
               Securely store and share files, easily sign and send important documents, back up your
-              work, all in one location, for streamlined and effective file organization.
+              work, all in one place, for efficient and organized file management.
             </p>
           </div>
         </div>
