@@ -75,7 +75,7 @@ export default function Register() {
   return (
     <div className="h-screen w-screen flex items-center justify-center">
       <MiniNavbar />
-      <div className="md:py-24 md:px-36 py-16 px-8 w-[90%] md:w-auto bg-[#191919] rounded-[1rem] flex flex-col items-center justify-center gap-12">
+      <div className="my-16 md:py-24 md:px-36 py-16 px-8 w-[90%] md:w-auto bg-[#191919] rounded-[1rem] flex flex-col items-center justify-center gap-12">
         <div className="flex flex-col gap-10 items-center justify-center w-full">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
             <h2 className="font-semibold text-white text-3xl text-center">

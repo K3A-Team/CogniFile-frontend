@@ -187,7 +187,7 @@ function Step3({ onContinue }: StepProps) {
 
 function Step4() {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="relative w-screen flex items-center justify-center">
       <MiniNavbar />
       <div className="md:py-24 md:px-36 py-16 px-8 w-[90%] md:w-auto md:min-w-[40%] bg-[#191919] rounded-[1rem] flex flex-col items-center justify-center gap-12">
         <div className="flex flex-col gap-10 items-center justify-center w-full">
