@@ -142,8 +142,8 @@ function Search() {
           </button>
         </div>
       </form>
-      {error && <p>{error}</p>}
-      {searchResults.toString()}
+      {error && <p className="hidden">{error}</p>}
+      <p className="hidden">{searchResults.toString()}</p>
     </div>
   );
 }

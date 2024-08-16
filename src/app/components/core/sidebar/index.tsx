@@ -3,71 +3,84 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaHome, FaFolder, FaTags, FaTrash, FaStar } from 'react-icons/fa';
+import folderSelected from '@/public/folders-selected.png';
+import folders from '@/public/folders.png';
+import homeSelcted from '@/public/home-slected.png';
+import home from '@/public/home.png';
 import logoShort from '@/public/logo_short.png';
+import plus from '@/public/plus.png';
+import recentsSelected from '@/public/recent-selected.png';
+import recents from '@/public/recent.png';
+import sharedSelected from '@/public/shared-selected.png';
+import shared from '@/public/shared.png';
+import staredSelected from '@/public/stared-selected.png';
+import stared from '@/public/stared.png';
+import trashSelected from '@/public/trash-selected.png';
+import trash from '@/public/trash.png';
 
 const Sidebar = () => {
   const mainLinks = [
     {
-      href: '/storage',
+      href: '/home',
       label: 'Home',
-      icon: <FaHome className="text-cf-white-text mr-3" />,
-      iconSelected: <FaHome className="text-selected-sidebar mr-3" />,
+      icon: <Image src={home} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={homeSelcted} alt="Logo" className="w-5" />,
+    },
+    {
+      href: '/storage',
+      label: 'My Storage',
+      icon: <Image src={folders} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={folderSelected} alt="Logo" className="w-5" />,
     },
     {
       href: '/storage/shared',
-      label: 'My Storage',
-      icon: <FaFolder className="text-cf-white-text mr-3" />,
-      iconSelected: <FaFolder className="text-selected-sidebar mr-3" />,
-    },
-    {
-      href: '/shared-storage',
       label: 'Shared Storage',
-      icon: <FaFolder className="text-cf-white-text mr-3" />,
-      iconSelected: <FaFolder className="text-selected-sidebar mr-3" />,
+      icon: <Image src={shared} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={sharedSelected} alt="Logo" className="w-5" />,
     },
   ];
 
   const tagLinks = [
-    { href: '/tags/yellow', label: 'Yellow', color: 'bg-cf-yellow' },
-    { href: '/tags/blue', label: 'Blue', color: 'bg-cf-blue' },
-    { href: '/tags/green', label: 'Green', color: 'bg-cf-green' },
+    { href: '/tags/yellow', label: 'Yellow', color: 'bg-[#FADB14]' },
+    { href: '/tags/blue', label: 'Blue', color: 'bg-[#1890FF]' },
+    { href: '/tags/green', label: 'Green', color: 'bg-[#52C41A]' },
     {
       href: '/tags/add',
       label: 'Add more tag',
-      icon: <FaTags className="text-cf-white-text mr-3" />,
+      icon: <Image src={plus} alt="Logo" className="w-5" />,
     },
   ];
 
   const moreLinks = [
     {
-      href: '/recents',
+      href: '/more/recents',
       label: 'Recents',
-      icon: <FaFolder className="text-cf-white-text mr-3" />,
-      iconSelected: <FaFolder className="text-selected-sidebar mr-3" />,
+      icon: <Image src={stared} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={staredSelected} alt="Logo" className="w-5" />,
     },
     {
-      href: '/stared',
+      href: '/more/stared',
       label: 'Stared',
-      icon: <FaStar className="text-cf-white-text mr-3" />,
-      iconSelected: <FaStar className="text-selected-sidebar mr-3" />,
+      icon: <Image src={recents} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={recentsSelected} alt="Logo" className="w-5" />,
     },
     {
-      href: '/trash',
+      href: '/more/trash',
       label: 'Trash',
-      icon: <FaTrash className="text-cf-white-text mr-3" />,
-      iconSelected: <FaTrash className="text-selected-sidebar mr-3" />,
+      icon: <Image src={trash} alt="Logo" className="w-5" />,
+      iconSelected: <Image src={trashSelected} alt="Logo" className="w-5" />,
     },
   ];
   const pathname = usePathname();
 
   return (
-    <div className="bg-dar-card text-white h-screen py-4 w-64 fixed">
-      <div className="flex justify-center items-center mb-4 px-2">
+    <div className="bg-dar-card text-white h-screen py-12 w-[15%]">
+      <div className="flex justify-center items-center mb-20 px-2">
         <Image src={logoShort} alt="Logo" className="w-20" />
       </div>
-      <div className="mb-2">
-        <h2 className="text-gray-500 text-sm uppercase mb-2 px-5">Drive Storage</h2>
+
+      <div className="mb-8">
+        <h2 className="font-medium text-[#595959] text-sm mb-4 px-5">Drive Storage</h2>
         <ul className="flex flex-col">
           {mainLinks.map(link => (
             <li
@@ -75,7 +88,7 @@ const Sidebar = () => {
               className={`flex items-center px-5 py-3 text-lg text-cf-white-text ${pathname === link.href ? 'bg-Gray-gradient text-selected-sidebar' : ''}`}
             >
               <Link href={link.href}>
-                <div className="flex items-center w-full">
+                <div className="flex items-center w-full gap-3">
                   {pathname === link.href ? link.iconSelected : link.icon}
                   <span>{link.label}</span>
                 </div>
@@ -84,8 +97,9 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="mb-2">
-        <h2 className="text-gray-500 text-sm uppercase mb-2 px-5">Tags</h2>
+
+      <div className="mb-8">
+        <h2 className="font-medium text-[#595959] text-sm mb-4 px-5">Tags</h2>
         <ul className="flex flex-col">
           {tagLinks.map(link => (
             <li
@@ -93,9 +107,9 @@ const Sidebar = () => {
               className={`flex items-center px-5 py-3 text-lg text-cf-white-text ${pathname === link.href ? 'bg-Gray-gradient text-selected-sidebar' : ''}`}
             >
               <Link href={link.href}>
-                <div className="flex items-center w-full">
+                <div className="flex items-center w-full gap-3">
                   {link.color ? (
-                    <span className={`${link.color} w-3 h-3 rounded-full mr-3`}></span>
+                    <span className={`${link.color} w-5 h-5 rounded-full mr-3`}></span>
                   ) : (
                     link.icon
                   )}
@@ -106,8 +120,9 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="mb-2">
-        <h2 className="text-gray-500 text-sm uppercase mb-2 px-5">More</h2>
+
+      <div className="mb-8">
+        <h2 className="font-medium text-[#595959] text-sm mb-4 px-5">More</h2>
         <ul className="flex flex-col">
           {moreLinks.map(link => (
             <li
@@ -115,7 +130,7 @@ const Sidebar = () => {
               className={`flex items-center px-5 py-3 text-lg text-cf-white-text ${pathname === link.href ? 'bg-Gray-gradient text-selected-sidebar' : ''}`}
             >
               <Link href={link.href}>
-                <div className="flex items-center w-full">
+                <div className="flex items-center w-full gap-3">
                   {pathname === link.href ? link.iconSelected : link.icon}
                   <span>{link.label}</span>
                 </div>
@@ -124,8 +139,9 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
+
       <div className="mt-auto px-5">
-        <h2 className="text-gray-500 text-sm uppercase mb-2">Storage</h2>
+        <h2 className="font-medium text-[#595959] text-sm mb-4">Storage</h2>
         <div className="flex justify-between mb-2">
           <span>1.1B GB of 50 GB</span>
         </div>
