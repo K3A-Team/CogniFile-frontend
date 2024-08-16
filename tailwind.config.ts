@@ -70,6 +70,7 @@ const config: Config = {
         red: '#E63C18',
         green: '#6EBA57',
         purple: '#8C57BA',
+        'cf-white-text': '#FFFFFF73',
         'cf-gray': '#787878',
         'cf-dark': '#1F1F1F',
         'cf-dark-two': '#252525',
@@ -78,6 +79,7 @@ const config: Config = {
         'cf-red': '#E63C18',
         'cf-green': '#6EBA57',
         'cf-purple': '#8C57BA',
+        'cf-gray-two': '#333333',
       },
       backgroundImage: {
         datacenter: "url('/datacenter.png')",
