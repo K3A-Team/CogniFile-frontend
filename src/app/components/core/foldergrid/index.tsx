@@ -2,7 +2,7 @@
 
 import FolderCard from '../foldercard';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import settingsBlue from '@/public/settings_blue.svg';
 
 const CombinedComponent = () => {
@@ -18,6 +18,110 @@ const CombinedComponent = () => {
     const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  const mergeFolders = useCallback(
+    (folderIds: number[], newName: string) => {
+      if (folderIds.length < 2) return;
+
+      const firstFolderIndex = folders.findIndex(folder => folder.id === folderIds[0]);
+
+      const mergedFolder = folderIds.reduce(
+        (acc, folderId) => {
+          const folder = folders.find(folder => folder.id === folderId) as (typeof folders)[number];
+          return {
+            ...acc,
+            name: newName,
+            items: acc.items + folder.items,
+            size: `${parseInt(acc.size) + parseInt(folder.size)} GB`,
+            customAnimation: '',
+          };
+        },
+        {
+          id: folders.length + 1,
+          color: 'green',
+          name: '',
+          items: 0,
+          size: '0 GB',
+          customAnimation: '',
+        },
+      );
+
+      const fadeAnimations = folders.map((folder, index) => {
+        if (folderIds.includes(folder.id)) {
+          if (index < firstFolderIndex) return 'animate-fade-out-right';
+          if (index > firstFolderIndex) return 'animate-fade-out-left';
+        }
+        return '';
+      });
+
+      folders.forEach((folder, index) => {
+        if (folderIds.includes(folder.id)) {
+          setTimeout(() => {
+            const newFolder = {
+              ...folder,
+              customAnimation: fadeAnimations[index],
+            };
+            setFolders(prevFolders =>
+              prevFolders.map(folderItem => (folderItem.id === folder.id ? newFolder : folderItem)),
+            );
+          }, 0);
+        }
+      });
+
+      setTimeout(() => {
+        const updatedFolders = folders.filter(folder => !folderIds.includes(folder.id));
+        updatedFolders.splice(firstFolderIndex, 0, mergedFolder);
+        setFolders(updatedFolders);
+      }, 500);
+    },
+    [folders, setFolders],
+  );
+
+  const divideFolder = useCallback(
+    (folderId: number, parts: number, customNames: string[]) => {
+      const folder = folders.find(folder => folder.id === folderId);
+
+      if (!folder || parts < 2 || customNames.length !== parts) return;
+
+      const folderIndex = folders.findIndex(folder => folder.id === folderId);
+
+      setFolders(prevFolders =>
+        prevFolders.map(folder =>
+          folder.id === folderId ? { ...folder, customAnimation: 'animate-fade-out-down' } : folder,
+        ),
+      );
+
+      setTimeout(() => {
+        const fadeAnimations = Array(parts).fill('');
+
+        for (let index = 0; index < parts; index++) {
+          if (index === 0) {
+            fadeAnimations[index] = 'animate-fade-in-up';
+          } else {
+            fadeAnimations[index] = 'animate-fade-in-right';
+          }
+        }
+
+        const dividedFolders = Array.from({ length: parts }, (_element, index) => ({
+          id: folders.length + 1 + index,
+          color: ['yellow', 'blue', 'green'][index % 3],
+          name: customNames[index],
+          items: Math.floor(folder.items / parts),
+          size: `${(parseInt(folder.size) / parts).toFixed(1)} GB`,
+          customAnimation: fadeAnimations[index],
+        }));
+
+        setFolders(prevFolders =>
+          prevFolders
+            .filter(folder => folder.id !== folderId)
+            .slice(0, folderIndex)
+            .concat(dividedFolders)
+            .concat(prevFolders.slice(folderIndex + 1)),
+        );
+      }, 500);
+    },
+    [folders],
+  );
 
   useEffect(() => {
     if (!loading) {
@@ -37,105 +141,27 @@ const CombinedComponent = () => {
         clearTimeout(divideTimeout);
       };
     }
-  }, [loading]);
+  }, [loading, mergeFolders, folders, divideFolder]);
 
-  const mergeFolders = (folderIds: number[], newName: string) => {
-    if (folderIds.length < 2) return;
+  useEffect(() => {
+    if (!loading) {
+      let timeout = 500;
+      const mergeTimeout = setTimeout(() => {
+        mergeFolders([1, 2], 'Custom Merged Folder');
+      }, timeout);
 
-    const firstFolderIndex = folders.findIndex(folder => folder.id === folderIds[0]);
+      timeout += 500;
 
-    const mergedFolder = folderIds.reduce(
-      (acc, folderId) => {
-        const folder = folders.find(folder => folder.id === folderId) as (typeof folders)[number];
-        return {
-          ...acc,
-          name: newName,
-          items: acc.items + folder.items,
-          size: `${parseInt(acc.size) + parseInt(folder.size)} GB`,
-          customAnimation: '',
-        };
-      },
-      {
-        id: folders.length + 1,
-        color: 'green',
-        name: '',
-        items: 0,
-        size: '0 GB',
-        customAnimation: '',
-      },
-    );
+      const divideTimeout = setTimeout(() => {
+        divideFolder(3, 3, ['Pictures Part 1', 'Pictures Part 2', 'Pictures Part 3']);
+      }, timeout);
 
-    const fadeAnimations = folders.map((folder, index) => {
-      if (folderIds.includes(folder.id)) {
-        if (index < firstFolderIndex) return 'animate-fade-out-right';
-        if (index > firstFolderIndex) return 'animate-fade-out-left';
-      }
-      return '';
-    });
-
-    folders.forEach((folder, index) => {
-      if (folderIds.includes(folder.id)) {
-        setTimeout(() => {
-          const newFolder = {
-            ...folder,
-            customAnimation: fadeAnimations[index],
-          };
-          setFolders(prevFolders =>
-            prevFolders.map(folderItem => (folderItem.id === folder.id ? newFolder : folderItem)),
-          );
-        }, 0);
-      }
-    });
-
-    setTimeout(() => {
-      const updatedFolders = folders.filter(folder => !folderIds.includes(folder.id));
-      updatedFolders.splice(firstFolderIndex, 0, mergedFolder);
-      setFolders(updatedFolders);
-    }, 500);
-  };
-
-  const divideFolder = (folderId: number, parts: number, customNames: string[]) => {
-    const folder = folders.find(folder => folder.id === folderId);
-
-    if (!folder || parts < 2 || customNames.length !== parts) return;
-
-    const folderIndex = folders.findIndex(folder => folder.id === folderId);
-
-    setFolders(prevFolders =>
-      prevFolders.map(folder =>
-        folder.id === folderId ? { ...folder, customAnimation: 'animate-fade-out-down' } : folder,
-      ),
-    );
-
-    setTimeout(() => {
-      const fadeAnimations = Array(parts).fill('');
-
-      for (let index = 0; index < parts; index++) {
-        if (index === 0) {
-          fadeAnimations[index] = 'animate-fade-in-up';
-        } else {
-          fadeAnimations[index] = 'animate-fade-in-right';
-        }
-      }
-
-      const dividedFolders = Array.from({ length: parts }, (_element, index) => ({
-        id: folders.length + 1 + index,
-        color: ['yellow', 'blue', 'green'][index % 3],
-        name: customNames[index],
-        items: Math.floor(folder.items / parts),
-        size: `${(parseInt(folder.size) / parts).toFixed(1)} GB`,
-        customAnimation: fadeAnimations[index],
-      }));
-
-      setFolders(prevFolders =>
-        prevFolders
-          .filter(folder => folder.id !== folderId)
-          .slice(0, folderIndex)
-          .concat(dividedFolders)
-          .concat(prevFolders.slice(folderIndex + 1)),
-      );
-    }, 500);
-  };
+      return () => {
+        clearTimeout(mergeTimeout);
+        clearTimeout(divideTimeout);
+      };
+    }
+  }, [loading, divideFolder, mergeFolders]);
 
   return (
     <div className="w-2/3 h-[600px] bg-dar-card rounded-2xl">
