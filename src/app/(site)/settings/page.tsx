@@ -7,8 +7,6 @@ import arrowLeft from '@/public/arrow_left.png';
 import whiteCheck from '@/public/check_white.png';
 
 function Settings() {
-  /* Const user = localStorage.getItem('user')
-  console.log(user) */
   return (
     <div className="flex px-20 w-full flex-col gap-10 h-screen">
       <div className="w-full h-16 flex justify-between items-center">
