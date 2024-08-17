@@ -38,7 +38,7 @@ export default function Login() {
 
     try {
       const response = await axios.post<LoginSuccessResponse | LoginErrorResponse>(
-        'http://34.41.104.20/auth/login',
+        'http://34.41.104.20:8000/auth/login',
         { email, password },
       );
 

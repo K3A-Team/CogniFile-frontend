@@ -7,7 +7,7 @@ interface InputProps {
   placeholder: string;
   isPassword: boolean;
   isOTP: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
 const Input = ({ placeholder, isPassword, isOTP, onChange, value }: InputProps) => {
