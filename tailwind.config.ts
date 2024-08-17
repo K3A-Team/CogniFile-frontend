@@ -8,6 +8,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // eslint-disable-next-line lines-around-comment
       /* For the dimensions make sure to work with 100% of zoom in your pc and in the browser to get the perfect result*/
 
       /* Calculate dimensions using rem
@@ -95,9 +96,59 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeOutLeft: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(-50px)' },
+        },
+        fadeOutRight: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(50px)' },
+        },
+        fadeOutUp: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(-50px)' },
+        },
+        fadeOutDown: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(50px)' },
+        },
+        fadeInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        fadeInRight: {
+          '0%': { opacity: '0', transform: 'translateX(50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(50px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInDown: {
+          '0%': { opacity: '0', transform: 'translateY(-50px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideFadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        slideFadeOut: {
+          '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+          '100%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',
+        'fade-out-left': 'fadeOutLeft 0.5s ease-out forwards',
+        'fade-out-right': 'fadeOutRight 0.5s ease-out forwards',
+        'fade-out-up': 'fadeOutUp 0.5s ease-out forwards',
+        'fade-out-down': 'fadeOutDown 0.5s ease-out forwards',
+        'fade-in-left': 'fadeInLeft 0.5s ease-out forwards',
+        'fade-in-right': 'fadeInRight 0.5s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+        'fade-in-down': 'fadeInDown 0.5s ease-out forwards',
+        'slide-fade-in': 'slideFadeIn 0.5s ease-out forwards',
+        'slide-fade-out': 'slideFadeOut 0.5s ease-out forwards',
       },
     },
   },
