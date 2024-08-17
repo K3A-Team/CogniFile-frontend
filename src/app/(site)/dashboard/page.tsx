@@ -5,6 +5,7 @@ function page() {
     <div className="rleative h-screen w-screen flex items-center justify-center">
       {/* <Chatbot /> */}
       {/* <Search /> */}
+      {/* <Chatbot /> */}
     </div>
   );
 }

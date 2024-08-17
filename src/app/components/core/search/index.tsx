@@ -51,7 +51,7 @@ function Search() {
     try {
       if (naturalSearch) {
         const response = await axios.post<ResponseNatural>(
-          `http://34.41.104.20/search/natural_language`,
+          `http://34.41.104.20:8000/search/natural_language`,
           { query: query.text },
           {
             headers: {
@@ -69,7 +69,7 @@ function Search() {
         }
       } else {
         const response = await axios.get<ResponseSearch>(
-          `http://34.41.104.20/search/query_search?search=${query.text}`,
+          `http://34.41.104.20:8000/search/query_search?search=${query.text}`,
           {
             headers: {
               'Content-Type': 'application/json',

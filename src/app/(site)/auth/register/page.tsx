@@ -46,7 +46,7 @@ export default function Register() {
 
     try {
       const response = await axios.post<RegisterSuccessResponse | RegisterErrorResponse>(
-        'http://34.41.104.20/auth/register',
+        'http://34.41.104.20:8000/auth/register',
         { firstName, lastName, email, password },
       );
 
