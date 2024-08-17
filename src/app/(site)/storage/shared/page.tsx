@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import React from 'react';
-import { FaCog, FaSortAlphaDown } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
+import arrowbtm from '@/public/arrow_btm.png';
+import arrowUp from '@/public/arrow_up.png';
 import earth from '@/public/images/earth.jpg';
 import google from '@/public/images/google.jpg';
+import magicBlue from '@/public/magicBlue.png';
+import Button from '@/src/app/components/core/button';
 
 // Replace with your actual image paths
 
@@ -13,51 +17,50 @@ const sharedWorkspaces = [
 
 const SharedStorage = () => {
   return (
-    <div className="container mx-auto">
-      <div className="flex justify-between items-center mb-8">
-        <div className="flex items-center bg-transparent border border-white rounded-full px-4 py-2 w-full md:w-1/2">
-          <input
-            type="text"
-            placeholder="Search in the storage"
-            className="bg-transparent focus:outline-none text-white w-full"
-          />
-          <div className="flex items-center space-x-2">
-            <FaCog className="text-gray-400" />
-            <FaSortAlphaDown className="text-gray-400" />
+    <>
+      <div className="flex justify-between items-center mb-16 mt-20">
+        <div className="flex items-center gap-x-12">
+          <div className="flex items-center gap-x-2">
+            <h2 className="text-3xl font-normal">My Storage</h2>
+            <button>
+              <FaChevronDown />
+            </button>
+          </div>
+          <div className="hover:cursor-pointer">
+            <Button
+              text="Enhanced File Hierarchy"
+              icon={<Image src={magicBlue} alt="" />}
+              color={1}
+            />
           </div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <button className="p-2 rounded-full">
-            <FaCog className="text-white" size={24} />
-          </button>
-          <button className="flex items-center justify-center w-12 h-12 rounded-full bg-cf-dark-two text-white">
-            <span className="text-lg font-semibold">AB</span>
-          </button>
-        </div>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-x-4">
-          <h2 className="text-2xl font-semibold">Shared Storage</h2>
-          <button className="border text-cf-blue border-cf-blue rounded-full px-4 py-2">
-            Enhanced File Hierarchy
-          </button>
+        <div className="flex gap-8 items-center">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center px-4 py-2 rounded-full gap-2 bg-[#252525]">
+              <p className="text-white font-regular">Name</p>
+              <Image src={arrowbtm} alt="arrowUp rotate-90" />
+            </div>
+            <Image src={arrowUp} alt="arrowUp" />
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {sharedWorkspaces.map((workspace, index) => (
-          <div key={index} className="flex flex-col items-center p-4 rounded-lg bg-gray-800">
-            <button>
-              <Image
-                src={workspace.image}
-                alt={workspace.name}
-                className="mb-4 w-60 h-40 object-cover rounded-md"
-              />
-            </button>
+          <button
+            key={index}
+            className="flex flex-col gap-y-4 items-center p-5 rounded-lg bg-dar-card"
+          >
+            <Image
+              src={workspace.image}
+              alt={workspace.name}
+              className="w-60 h-52 object-cover rounded-md"
+            />
+
             <h3 className="text-lg font-semibold text-white">{workspace.name}</h3>
-          </div>
+          </button>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

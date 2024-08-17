@@ -74,7 +74,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="bg-dar-card text-white h-screen py-12 w-[15%]">
+    <div className="bg-dar-card text-white py-12 w-[15%]">
       <div className="flex justify-center items-center mb-20 px-2">
         <Image src={logoShort} alt="Logo" className="w-20" />
       </div>

@@ -17,7 +17,7 @@ const Home = () => {
   const [isListView, setIsListView] = useState(false);
 
   return (
-    <div className="flex h-screen gap-0 w-screen">
+    <div className="flex gap-0 w-screen">
       <Sidebar />
       <div className="flex px-20 py-12 w-[85%] flex-col gap-10">
         <div className="w-full h-16 flex justify-end items-center">
