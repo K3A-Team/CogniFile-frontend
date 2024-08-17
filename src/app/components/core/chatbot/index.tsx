@@ -51,7 +51,7 @@ function Bot() {
 
     try {
       const response = await axios.post<ChatbotResponse>(
-        'http://34.41.104.20/chatbot/chatbot',
+        'http://34.41.104.20:8000/chatbot/chatbot',
         { question: input },
         {
           headers: {
