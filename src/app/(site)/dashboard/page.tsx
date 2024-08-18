@@ -6,6 +6,7 @@ function page() {
       {/* <Chatbot /> */}
       {/* <Search /> */}
       {/* <Chatbot /> */}
+      Dashboard Page
     </div>
   );
 }
