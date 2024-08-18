@@ -1,5 +1,6 @@
 'use client';
 
+import Breadcrumb from '../../components/core/breadcrumb';
 import Button from '../../components/core/button';
 import FileCard from '../../components/core/filecard';
 import FileRow from '../../components/core/filerow';
@@ -7,7 +8,7 @@ import FolderCard from '../../components/core/foldercard';
 import FolderRow from '../../components/core/folderrow';
 import Image from 'next/image';
 import { useState } from 'react';
-import { FaTh, FaList, FaChevronDown } from 'react-icons/fa';
+import { FaTh, FaList } from 'react-icons/fa';
 import add from '@/public/add.png';
 import arrowbtm from '@/public/arrow_btm.png';
 import arrowUp from '@/public/arrow_up.png';
@@ -33,12 +34,7 @@ const MyStorage = () => {
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
         <div className="flex items-center gap-x-12">
-          <div className="flex items-center gap-x-2">
-            <h2 className="text-3xl font-normal">My Storage</h2>
-            <button>
-              <FaChevronDown />
-            </button>
-          </div>
+          <Breadcrumb items={['My Storage', 'Cv']} />
           <div className="hover:cursor-pointer">
             <Button
               text="Enhanced File Hierarchy"
