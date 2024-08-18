@@ -12,3 +12,13 @@ export type File = {
   size: string;
   date: string;
 };
+
+export type User = {
+  lastName: string;
+  firstName: string;
+  rootFolderId: string;
+  trial: string;
+  chatbotSessionId: string;
+  email: string;
+  usedSpace: string;
+};

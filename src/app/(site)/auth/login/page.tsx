@@ -38,18 +38,17 @@ export default function Login() {
 
     try {
       const response = await axios.post<LoginSuccessResponse | LoginErrorResponse>(
-        'http://34.41.104.20:8000/auth/login',
-        { email, password },
+        '/api/auth/login',
+        {
+          email,
+          password,
+        },
       );
 
-      const { data } = response;
-
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+      if (response.data.success) {
         router.push('/dashboard');
       } else {
-        setError(data.message);
+        setError(response.data.message);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

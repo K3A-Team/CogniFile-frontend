@@ -46,15 +46,13 @@ export default function Register() {
 
     try {
       const response = await axios.post<RegisterSuccessResponse | RegisterErrorResponse>(
-        'http://34.41.104.20:8000/auth/register',
+        '/api/auth/register',
         { firstName, lastName, email, password },
       );
 
       const { data } = response;
 
       if (data.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
         router.push('/dashboard');
       } else {
         setError(data.message);

@@ -1,10 +1,11 @@
+import { User } from '../types/shared';
 import { cookies } from 'next/headers';
 import 'server-only';
 
-export async function createSession(userId: string, token: string) {
+export async function createSession(user: User, token: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = {
-    userId,
+    user,
     token,
   };
 
@@ -20,7 +21,7 @@ export async function createSession(userId: string, token: string) {
 export async function updateSession() {
   const session = JSON.parse(cookies().get('session')?.value || '');
 
-  if (!session || !session.userId || !session.token) {
+  if (!session || !session.token) {
     return null;
   }
 
