@@ -1,4 +1,5 @@
 export type Folder = {
+  id: number | undefined;
   name: string;
   items: number;
   size: string;
@@ -6,6 +7,7 @@ export type Folder = {
   date: string;
 };
 export type File = {
+  id: number | undefined;
   name: string;
   size: string;
   date: string;
