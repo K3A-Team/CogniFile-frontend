@@ -15,13 +15,13 @@ import magicBlue from '@/public/magicBlue.png';
 import { Folder, File } from '@/src/types/shared';
 
 const folders: Folder[] = [
-  { name: 'Important Docs', items: 12, size: '150 MB', color: 'blue', date: '15 June 2024' },
-  { name: 'Projects', items: 58, size: '700 MB', color: 'yellow', date: '20 May 2024' },
+  { id: 1, name: 'Important Docs', items: 12, size: '150 MB', color: 'blue', date: '15 June 2024' },
+  { id: 2, name: 'Projects', items: 58, size: '700 MB', color: 'yellow', date: '20 May 2024' },
 ];
 
 const files: File[] = [
-  { name: 'contract.pdf', size: '2.1 MB', date: '10 July 2024' },
-  { name: 'design.psd', size: '120 MB', date: '02 July 2024' },
+  { id: 3, name: 'contract.pdf', size: '2.1 MB', date: '10 July 2024' },
+  { id: 4, name: 'design.psd', size: '120 MB', date: '02 July 2024' },
 ];
 
 const Starred = () => {

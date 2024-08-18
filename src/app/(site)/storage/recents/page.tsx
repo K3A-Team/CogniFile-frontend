@@ -15,13 +15,13 @@ import magicBlue from '@/public/magicBlue.png';
 import { Folder, File } from '@/src/types/shared';
 
 const folders: Folder[] = [
-  { name: 'Slide', items: 54, size: '223 MB', color: 'blue', date: '20 July 2024' },
-  { name: 'Gathering', items: 230, size: '322 MB', color: 'yellow', date: '20 July 2024' },
+  { id: 1, name: 'Slide', items: 54, size: '223 MB', color: 'blue', date: '20 July 2024' },
+  { id: 2, name: 'Gathering', items: 230, size: '322 MB', color: 'yellow', date: '20 July 2024' },
 ];
 
 const files: File[] = [
-  { name: 'report.pdf', size: '2.3 MB', date: '21 July 2024' },
-  { name: 'image.png', size: '1.2 MB', date: '22 July 2024' },
+  { id: 3, name: 'report.pdf', size: '2.3 MB', date: '21 July 2024' },
+  { id: 4, name: 'image.png', size: '1.2 MB', date: '22 July 2024' },
 ];
 
 const Recents = () => {
