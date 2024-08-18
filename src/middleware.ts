@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 // 1. Specify protected and public routes
-const protectedRoutes = ['/dashboard'];
+const protectedRoutes = ['/dashboard', '/home'];
 const publicRoutes = ['/auth/login', '/auth/register', '/auth/reset', '/'];
 
 export default async function middleware(req: NextRequest) {
@@ -21,7 +21,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // 6. Redirect to /dashboard if the user is authenticated
-  if (isPublicRoute && session?.user && !req.nextUrl.pathname.startsWith('/dashboard')) {
+  if (isPublicRoute && session?.user && !req.nextUrl.pathname.startsWith('/home')) {
     return NextResponse.redirect(new URL('/home', req.nextUrl));
   }
 

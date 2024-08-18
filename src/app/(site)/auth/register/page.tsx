@@ -53,7 +53,7 @@ export default function Register() {
       const { data } = response;
 
       if (data.success) {
-        router.push('/dashboard');
+        router.push('/home');
       } else {
         setError(data.message);
       }

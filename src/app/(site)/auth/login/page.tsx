@@ -46,7 +46,7 @@ export default function Login() {
       );
 
       if (response.data.success) {
-        router.push('/dashboard');
+        router.push('/home');
       } else {
         setError(response.data.message);
       }

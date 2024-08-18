@@ -1,17 +1,13 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
-const customAxios = async (): Promise<AxiosInstance> => {
-  const api = axios.create({
-    baseURL: process.env.API_URL,
-    timeout: 30000,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true,
-  });
+const baseURL = process.env.API_URL;
 
-  return api;
-};
-
-export default customAxios;
+export default axios.create({
+  baseURL,
+  timeout: 30000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});

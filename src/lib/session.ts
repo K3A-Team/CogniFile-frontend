@@ -1,5 +1,6 @@
 import { User } from '../types/shared';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import 'server-only';
 
 export async function createSession(user: User, token: string) {
@@ -33,6 +34,15 @@ export async function updateSession() {
     sameSite: 'lax',
     path: '/',
   });
+}
+
+export async function verifySession() {
+  const session = JSON.parse(cookies().get('session')?.value || '{}');
+  if (!session || !session.token) {
+    redirect('/auth/login');
+  } else {
+    return session;
+  }
 }
 
 export function deleteSession() {

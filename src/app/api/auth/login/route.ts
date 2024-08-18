@@ -1,11 +1,10 @@
 import { createSession } from '@/src/lib/session';
-import customAxios from '@/src/utils/axios';
+import api from '@/src/utils/axios';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { email, password } = body;
-    const api = await customAxios();
     const authRes = await api.post('auth/login', {
       email,
       password,
