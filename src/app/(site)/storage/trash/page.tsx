@@ -1,10 +1,12 @@
 'use client';
 
-import Button from '../../components/core/button';
-import FileCard from '../../components/core/filecard';
-import FileRow from '../../components/core/filerow';
-import FolderCard from '../../components/core/foldercard';
-import FolderRow from '../../components/core/folderrow';
+import Button from '../../../components/core/button';
+import FileCard from '../../../components/core/filecard';
+// Assuming you've created a similar FileCard component
+import FileRow from '../../../components/core/filerow';
+import FolderCard from '../../../components/core/foldercard';
+import FolderRow from '../../../components/core/folderrow';
+// Assuming you've created a similar FileRow component
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaTh, FaList, FaChevronDown } from 'react-icons/fa';
@@ -14,17 +16,15 @@ import arrowUp from '@/public/arrow_up.png';
 import magicBlue from '@/public/magicBlue.png';
 import { Folder, File } from '@/src/types/shared';
 
-const folders: Folder[] = [
-  { name: 'Slide', items: 54, size: '223 MB', color: 'blue', date: '20 July 2024' },
-  { name: 'Gathering', items: 230, size: '322 MB', color: 'yellow', date: '20 July 2024' },
-];
+// Replace with your actual icon
 
-const files: File[] = [
-  { name: 'report.pdf', size: '2.3 MB', date: '21 July 2024' },
-  { name: 'image.png', size: '1.2 MB', date: '22 July 2024' },
-];
+// Trash Folders array (empty to simulate the empty state)
+const folders: Folder[] = [];
 
-const MyStorage = () => {
+// Trash Files array (empty to simulate the empty state)
+const files: File[] = [];
+
+const Trash = () => {
   const [isListView, setIsListView] = useState(false);
 
   const isEmpty = folders.length === 0 && files.length === 0;
@@ -34,17 +34,13 @@ const MyStorage = () => {
       <div className="flex justify-between items-center mb-16 mt-20">
         <div className="flex items-center gap-x-12">
           <div className="flex items-center gap-x-2">
-            <h2 className="text-3xl font-normal">My Storage</h2>
+            <h2 className="text-3xl font-normal">Trash</h2>
             <button>
               <FaChevronDown />
             </button>
           </div>
           <div className="hover:cursor-pointer">
-            <Button
-              text="Enhanced File Hierarchy"
-              icon={<Image src={magicBlue} alt="" />}
-              color={1}
-            />
+            <Button text="Empty Trash" icon={<Image src={magicBlue} alt="" />} color={1} />
           </div>
         </div>
         <div className="flex gap-8 items-center">
@@ -87,8 +83,8 @@ const MyStorage = () => {
       </div>
       {isEmpty ? (
         <div className="flex flex-col items-center justify-center h-[400px] text-center">
-          <Image src={add} alt="No files or folders" />
-          <p className="text-2xl text-gray-400">No files or folders</p>
+          <Image src={add} alt="Trash is empty" />
+          <p className="text-2xl text-gray-400">The trash is empty</p>
         </div>
       ) : (
         <>
@@ -134,4 +130,4 @@ const MyStorage = () => {
   );
 };
 
-export default MyStorage;
+export default Trash;

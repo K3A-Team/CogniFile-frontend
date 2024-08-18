@@ -48,7 +48,7 @@ const FolderCard = ({
   return (
     <div
       className={`flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
-        mounted ? customAnimation || 'animate-slide-fade-in' : 'animate-slide-fade-out'
+        mounted ? (customAnimation ? customAnimation : 'animate-fade-in-up') : ''
       }`}
       onClick={handleRemove}
       onKeyDown={handleRemove}

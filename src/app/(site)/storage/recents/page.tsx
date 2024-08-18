@@ -1,10 +1,10 @@
 'use client';
 
-import Button from '../../components/core/button';
-import FileCard from '../../components/core/filecard';
-import FileRow from '../../components/core/filerow';
-import FolderCard from '../../components/core/foldercard';
-import FolderRow from '../../components/core/folderrow';
+import Button from '../../../components/core/button';
+import FileCard from '../../../components/core/filecard';
+import FileRow from '../../../components/core/filerow';
+import FolderCard from '../../../components/core/foldercard';
+import FolderRow from '../../../components/core/folderrow';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaTh, FaList, FaChevronDown } from 'react-icons/fa';
@@ -24,7 +24,7 @@ const files: File[] = [
   { name: 'image.png', size: '1.2 MB', date: '22 July 2024' },
 ];
 
-const MyStorage = () => {
+const Recents = () => {
   const [isListView, setIsListView] = useState(false);
 
   const isEmpty = folders.length === 0 && files.length === 0;
@@ -34,7 +34,7 @@ const MyStorage = () => {
       <div className="flex justify-between items-center mb-16 mt-20">
         <div className="flex items-center gap-x-12">
           <div className="flex items-center gap-x-2">
-            <h2 className="text-3xl font-normal">My Storage</h2>
+            <h2 className="text-3xl font-normal">Recents</h2>
             <button>
               <FaChevronDown />
             </button>
@@ -87,8 +87,8 @@ const MyStorage = () => {
       </div>
       {isEmpty ? (
         <div className="flex flex-col items-center justify-center h-[400px] text-center">
-          <Image src={add} alt="No files or folders" />
-          <p className="text-2xl text-gray-400">No files or folders</p>
+          <Image src={add} alt="No recent items" />
+          <p className="text-2xl text-gray-400">No recent items</p>
         </div>
       ) : (
         <>
@@ -134,4 +134,4 @@ const MyStorage = () => {
   );
 };
 
-export default MyStorage;
+export default Recents;

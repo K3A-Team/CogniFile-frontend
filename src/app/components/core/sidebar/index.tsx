@@ -53,19 +53,19 @@ const Sidebar = () => {
 
   const moreLinks = [
     {
-      href: '/more/recents',
+      href: '/storage/recents',
       label: 'Recents',
       icon: <Image src={stared} alt="Logo" className="w-5" />,
       iconSelected: <Image src={staredSelected} alt="Logo" className="w-5" />,
     },
     {
-      href: '/more/stared',
+      href: '/storage/starred',
       label: 'Stared',
       icon: <Image src={recents} alt="Logo" className="w-5" />,
       iconSelected: <Image src={recentsSelected} alt="Logo" className="w-5" />,
     },
     {
-      href: '/more/trash',
+      href: '/storage/trash',
       label: 'Trash',
       icon: <Image src={trash} alt="Logo" className="w-5" />,
       iconSelected: <Image src={trashSelected} alt="Logo" className="w-5" />,
