@@ -1,17 +1,19 @@
 const Page = () => {
-  /* Const handleCreate = () => () => {
-    console.log(`created`);
-  };
-
-  const handleCancel = () => () => {
-    console.log(` cancelled`);
-  }; */
   return (
     <div className="bg-black flex gap-4 justify-center items-center h-screen">
       {/* <Simulation /> */}
       {/* <CardSuggestions /> */}
       {/* <CardVersion /> */}
-      {/* <Cardadd
+      {/* 
+      
+ Const handleCreate = () => () => {
+    console.log(`created`);
+  };
+
+  const handleCancel = () => () => {
+    console.log(` cancelled`);
+  }; 
+      <Cardadd
         title="New Folder"
         inputPlaceholder="Folder name"
         onCancel={handleCancel()}
