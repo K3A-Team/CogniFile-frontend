@@ -16,6 +16,10 @@ import params from '@/public/params.svg';
 const Home = () => {
   const [isListView, setIsListView] = useState(false);
 
+  const handleClick = () => {
+    return 'clicked';
+  };
+
   return (
     <div className="flex gap-0 w-screen">
       <Sidebar />
@@ -37,6 +41,7 @@ const Home = () => {
                   text="Enhanced File Hierarchy"
                   icon={<Image src={magicBlue} alt="" />}
                   color={1}
+                  onClick={handleClick}
                 />
               </div>
               <div className="hover:cursor-pointer">
@@ -44,6 +49,7 @@ const Home = () => {
                   text="Remove duplications"
                   icon={<Image src={magicOrange} alt="" />}
                   color={2}
+                  onClick={handleClick}
                 />
               </div>
               <div className="hover:cursor-pointer">
@@ -51,6 +57,7 @@ const Home = () => {
                   text="Malicious file detector"
                   icon={<Image src={magicRed} alt="" />}
                   color={3}
+                  onClick={handleClick}
                 />
               </div>
             </div>
