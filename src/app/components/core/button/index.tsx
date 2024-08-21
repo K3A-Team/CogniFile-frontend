@@ -1,10 +1,8 @@
-import { MouseEventHandler } from 'react';
-
 interface buttonParams {
   text: string;
   icon: JSX.Element;
   color: number;
-  onClick: MouseEventHandler;
+  onClick?: () => void;
 }
 
 function Button({ text, icon, color, onClick }: buttonParams) {
