@@ -15,8 +15,15 @@ import magicBlue from '@/public/magicBlue.png';
 import { Folder, File } from '@/src/types/shared';
 
 const folders: Folder[] = [
-  { id: 1, name: 'Important Docs', items: 12, size: '150 MB', color: 'blue', date: '15 June 2024' },
-  { id: 2, name: 'Projects', items: 58, size: '700 MB', color: 'yellow', date: '20 May 2024' },
+  {
+    id: '1',
+    name: 'Important Docs',
+    items: 12,
+    size: '150 MB',
+    color: 'blue',
+    date: '15 June 2024',
+  },
+  { id: '2', name: 'Projects', items: 58, size: '700 MB', color: 'yellow', date: '20 May 2024' },
 ];
 
 const files: File[] = [
