@@ -1,13 +1,17 @@
+import { MouseEventHandler } from 'react';
+
 interface buttonParams {
   text: string;
   icon: JSX.Element;
   color: number;
+  onClick: MouseEventHandler;
 }
 
-function Button({ text, icon, color }: buttonParams) {
+function Button({ text, icon, color, onClick }: buttonParams) {
   return (
-    <div
+    <button
       className={`p-[1px] ${color === 1 ? 'bg-Blue-gradient' : color === 2 ? 'bg-Orange-gradient' : 'bg-Red-gradient'} rounded-full flex items-center justify-center gap-2`}
+      onClick={onClick}
     >
       <div className="bg-[#1f1f1f] flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-clip-border">
         {icon}
@@ -17,7 +21,7 @@ function Button({ text, icon, color }: buttonParams) {
           {text}
         </span>
       </div>
-    </div>
+    </button>
   );
 }
 

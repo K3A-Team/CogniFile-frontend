@@ -1,205 +1,128 @@
+/* eslint-disable camelcase */
 'use client';
 
 import FolderCard from '../foldercard';
+import axios from 'axios';
 import Image from 'next/image';
-import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, MouseEventHandler } from 'react';
 import settingsBlue from '@/public/settings_blue.svg';
+import { FolderHierarchy } from '@/src/types/responses';
 
-const CombinedComponent = () => {
+/* eslint-disable camelcase */
+
+/* eslint-disable camelcase */
+
+const CombinedComponent = ({
+  folderId,
+  onClose,
+}: {
+  folderId: string;
+  onClose: MouseEventHandler;
+}) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(true);
-  const [folders, setFolders] = useState([
-    { id: 1, color: 'blue', name: 'Documents', items: 10, size: '120 MB', customAnimation: '' },
-    { id: 2, color: 'green', name: 'Music', items: 54, size: '2.3 GB', customAnimation: '' },
-    { id: 3, color: 'yellow', name: 'Pictures', items: 230, size: '5.1 GB', customAnimation: '' },
-    { id: 4, color: 'blue', name: 'Videos', items: 120, size: '8.2 GB', customAnimation: '' },
-  ]);
+  const [folders, setFolders] = useState<
+    { id: number; color: string; name: string; items: number; size: string }[]
+  >([]);
+  const [aiExplanation, setAiExplanation] = useState('');
+  const [transactionId, setTransactionId] = useState('');
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const mergeFolders = useCallback(
-    (folderIds: number[], newName: string) => {
-      if (folderIds.length < 2) return;
-
-      const firstFolderIndex = folders.findIndex(folder => folder.id === folderIds[0]);
-
-      const mergedFolder = folderIds.reduce(
-        (acc, folderId) => {
-          const folder = folders.find(folder => folder.id === folderId) as (typeof folders)[number];
-          return {
-            ...acc,
-            name: newName,
-            items: acc.items + folder.items,
-            size: `${parseInt(acc.size) + parseInt(folder.size)} GB`,
-            customAnimation: '',
-          };
-        },
-        {
-          id: folders.length + 1,
-          color: 'green',
-          name: '',
-          items: 0,
-          size: '0 GB',
-          customAnimation: '',
-        },
-      );
-
-      const fadeAnimations = folders.map((folder, index) => {
-        if (folderIds.includes(folder.id)) {
-          if (index < firstFolderIndex) return 'animate-fade-out-right';
-          if (index > firstFolderIndex) return 'animate-fade-out-left';
-        }
-        return '';
-      });
-
-      folders.forEach((folder, index) => {
-        if (folderIds.includes(folder.id)) {
-          setTimeout(() => {
-            const newFolder = {
-              ...folder,
-              customAnimation: fadeAnimations[index],
-            };
-            setFolders(prevFolders =>
-              prevFolders.map(folderItem => (folderItem.id === folder.id ? newFolder : folderItem)),
-            );
-          }, 0);
-        }
-      });
-
-      setTimeout(() => {
-        const updatedFolders = folders.filter(folder => !folderIds.includes(folder.id));
-        updatedFolders.splice(firstFolderIndex, 0, mergedFolder);
-        setFolders(updatedFolders);
-      }, 500);
-    },
-    [folders, setFolders],
-  );
-
-  const divideFolder = useCallback(
-    (folderId: number, parts: number, customNames: string[]) => {
-      const folder = folders.find(folder => folder.id === folderId);
-
-      if (!folder || parts < 2 || customNames.length !== parts) return;
-
-      const folderIndex = folders.findIndex(folder => folder.id === folderId);
-
-      setFolders(prevFolders =>
-        prevFolders.map(folder =>
-          folder.id === folderId ? { ...folder, customAnimation: 'animate-fade-out-down' } : folder,
-        ),
-      );
-
-      setTimeout(() => {
-        const fadeAnimations = Array(parts).fill('');
-
-        for (let index = 0; index < parts; index++) {
-          if (index === 0) {
-            fadeAnimations[index] = 'animate-fade-in-up';
-          } else {
-            fadeAnimations[index] = 'animate-fade-in-right';
-          }
-        }
-
-        const dividedFolders = Array.from({ length: parts }, (_element, index) => ({
-          id: folders.length + 1 + index,
-          color: ['yellow', 'blue', 'green'][index % 3],
-          name: customNames[index],
-          items: Math.floor(folder.items / parts),
-          size: `${(parseInt(folder.size) / parts).toFixed(1)} GB`,
-          customAnimation: fadeAnimations[index],
-        }));
-
-        setFolders(prevFolders =>
-          prevFolders
-            .filter(folder => folder.id !== folderId)
-            .slice(0, folderIndex)
-            .concat(dividedFolders)
-            .concat(prevFolders.slice(folderIndex + 1)),
+    // Function to fetch the AI-generated structure
+    const fetchAiStructure = async () => {
+      try {
+        const response = await axios.post('/api/hierarchy', { folderID: folderId });
+        const { ai_structure, ai_explanation, id: transactionId } = response.data.result;
+        setTransactionId(transactionId);
+        // Transform the ai_structure into the format required by the FolderCard
+        const transformedFolders = ai_structure.children.map(
+          (folder: FolderHierarchy, index: number) => ({
+            id: index + 1, // Assuming you need a unique id for each folder
+            color: index % 2 === 0 ? 'blue' : 'green', // Example logic to alternate colors
+            name: folder.name,
+            items: folder.files.length + folder.children.length, // Count files and subfolders as items
+            size: 'Unknown', // Size is not provided, you may calculate or set a default
+          }),
         );
-      }, 500);
-    },
-    [folders],
-  );
 
-  useEffect(() => {
-    if (!loading) {
-      let timeout = 500;
-      const mergeTimeout = setTimeout(() => {
-        mergeFolders([1, 2], 'Custom Merged Folder');
-      }, timeout);
+        setFolders(transformedFolders);
+        setAiExplanation(ai_explanation);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
 
-      timeout += 500;
+    fetchAiStructure();
+  }, [folderId]);
 
-      const divideTimeout = setTimeout(() => {
-        divideFolder(3, 3, ['Pictures Part 1', 'Pictures Part 2', 'Pictures Part 3']);
-      }, timeout);
-
-      return () => {
-        clearTimeout(mergeTimeout);
-        clearTimeout(divideTimeout);
-      };
+  const handleApprove = async () => {
+    try {
+      await axios.get(`/api/hierarchy/${transactionId}`);
+      router.push(`/storage/${folderId}`);
+    } catch (error) {
+      throw new Error(String(error));
     }
-  }, [loading, mergeFolders, folders, divideFolder]);
-
-  useEffect(() => {
-    if (!loading) {
-      let timeout = 500;
-      const mergeTimeout = setTimeout(() => {
-        mergeFolders([1, 2], 'Custom Merged Folder');
-      }, timeout);
-
-      timeout += 500;
-
-      const divideTimeout = setTimeout(() => {
-        divideFolder(3, 3, ['Pictures Part 1', 'Pictures Part 2', 'Pictures Part 3']);
-      }, timeout);
-
-      return () => {
-        clearTimeout(mergeTimeout);
-        clearTimeout(divideTimeout);
-      };
-    }
-  }, [loading, divideFolder, mergeFolders]);
+  };
 
   return (
-    <div className="w-2/3 h-[600px] bg-dar-card rounded-2xl">
-      {loading ? (
-        <div className="flex items-center justify-center gap-6 p-32 h-full">
-          <div className="text-center">
-            <Image
-              src={settingsBlue}
-              alt="Loading Icon"
-              className={`mx-auto mb-4 ${loading ? 'animate-spin' : ''}`}
-            />
-            <p className="text-4xl bg-Blue-gradient bg-clip-text text-transparent">
-              Generating the new hierarchy
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className="p-6 overflow-hidden">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 h-full">
-            {folders.map(folder => (
-              <FolderCard
-                key={folder.id}
-                color={folder.color}
-                name={folder.name}
-                items={folder.items}
-                size={folder.size}
-                animateIn={true}
-                customAnimation={folder.customAnimation}
-                onRemove={() =>
-                  setFolders(prevFolders =>
-                    prevFolders.filter(folderItem => folderItem.id !== folder.id),
-                  )
-                }
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-dar-card rounded-2xl w-2/3 h-[700px] p-6 overflow-hidden relative">
+        {loading ? (
+          <div className="flex items-center justify-center gap-6 p-32 h-full">
+            <div className="text-center">
+              <Image
+                src={settingsBlue}
+                alt="Loading Icon"
+                className={`mx-auto mb-4 ${loading ? 'animate-spin' : ''}`}
               />
-            ))}
+              <p className="text-4xl bg-Blue-gradient bg-clip-text text-transparent">
+                Generating the new hierarchy
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        ) : (
+          <div>
+            <h2 className="text-4xl font-medium text-white text-center mb-12">
+              AI-Generated Folder Structure
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 h-full">
+              {folders.map(folder => (
+                <FolderCard
+                  key={folder.id}
+                  color={folder.color}
+                  name={folder.name}
+                  items={folder.items}
+                  size={folder.size}
+                />
+              ))}
+            </div>
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold text-white">AI Explanation</h3>
+              <p className="text-gray-400 mt-2">{aiExplanation}</p>
+            </div>
+            <div className="mt-12 flex justify-center gap-4">
+              <button className="text-gray-400" onClick={onClose}>
+                Discard
+              </button>
+              <button
+                className="px-4 py-2 bg-white text-black rounded-full"
+                onClick={handleApprove}
+              >
+                Approve changes
+              </button>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 bg-red-500 text-white py-1 px-3 rounded-full"
+        >
+          x
+        </button>
+      </div>
     </div>
   );
 };

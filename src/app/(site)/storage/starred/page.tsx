@@ -36,6 +36,10 @@ const Starred = () => {
 
   const isEmpty = folders.length === 0 && files.length === 0;
 
+  const handleClick = () => {
+    return 'hello';
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
@@ -47,7 +51,12 @@ const Starred = () => {
             </button>
           </div>
           <div className="hover:cursor-pointer">
-            <Button text="Manage Starred" icon={<Image src={magicBlue} alt="" />} color={1} />
+            <Button
+              text="Manage Starred"
+              icon={<Image src={magicBlue} alt="" />}
+              color={1}
+              onClick={handleClick}
+            />
           </div>
         </div>
         <div className="flex gap-8 items-center">

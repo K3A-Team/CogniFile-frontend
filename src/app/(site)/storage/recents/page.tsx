@@ -29,6 +29,10 @@ const Recents = () => {
 
   const isEmpty = folders.length === 0 && files.length === 0;
 
+  const handleClick = () => {
+    return 'hello';
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
@@ -44,6 +48,7 @@ const Recents = () => {
               text="Enhanced File Hierarchy"
               icon={<Image src={magicBlue} alt="" />}
               color={1}
+              onClick={handleClick}
             />
           </div>
         </div>
