@@ -31,6 +31,7 @@ const SharedStorage = () => {
               text="Enhanced File Hierarchy"
               icon={<Image src={magicBlue} alt="" />}
               color={1}
+              onClick={() => 'clicked'}
             />
           </div>
         </div>
