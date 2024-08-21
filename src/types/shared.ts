@@ -1,5 +1,5 @@
 export type Folder = {
-  id: number | undefined;
+  id: string | undefined;
   name: string;
   items: number;
   size: string;
