@@ -1,3 +1,5 @@
+'use client';
+
 interface buttonParams {
   text: string;
   icon: JSX.Element;
