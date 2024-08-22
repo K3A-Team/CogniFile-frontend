@@ -6,6 +6,7 @@ import React from 'react';
 interface MenuItem {
   iconSrc?: string;
   label: string;
+  handler?: () => void;
 }
 
 interface MenuCardProps {
@@ -20,6 +21,14 @@ const MenuCard: React.FC<MenuCardProps> = ({ items }) => {
           <li
             key={index}
             className="flex items-center py-2 px-2 w-full cursor-pointer hover:bg-[#1E1E1E]"
+            onClick={item.handler}
+            role="button"
+            tabIndex={0}
+            onKeyDown={event => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                item.handler;
+              }
+            }}
           >
             {item.iconSrc && (
               <Image src={item.iconSrc} alt={item.label} width={18} height={18} className="mr-3" />
