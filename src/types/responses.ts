@@ -25,3 +25,9 @@ export type FolderResponse = {
   success: boolean;
   folder: Folder;
 };
+
+export type FolderHierarchy = {
+  name: string;
+  children: Folder[]; // Recursive type to handle nested folders
+  files: File[]; // List of files in the folder
+};

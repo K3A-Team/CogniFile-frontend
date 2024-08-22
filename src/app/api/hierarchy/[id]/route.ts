@@ -1,13 +1,10 @@
 import { verifySession } from '@/src/lib/session';
 import api from '@/src/utils/axios';
 
-// Route for fetching user profile data after a google auth
-export async function POST(request: Request) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const { token } = await verifySession();
-    const body = await request.json();
-    const { folderId } = body;
-    const response = await api.get(`storage/folder/${folderId}`, {
+    const response = await api.get(`hierarchy/file_hierarchy_suggestion/${params.id}`, {
       headers: {
         Authorization: `Bearer ${token + process.env.MAGIC_SPLITTER + process.env.SECRET_CODE}`,
       },

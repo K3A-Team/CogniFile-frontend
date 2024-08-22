@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import React from 'react';
 import { FaChevronDown } from 'react-icons/fa';
@@ -31,6 +33,7 @@ const SharedStorage = () => {
               text="Enhanced File Hierarchy"
               icon={<Image src={magicBlue} alt="" />}
               color={1}
+              onClick={() => 'clicked'}
             />
           </div>
         </div>

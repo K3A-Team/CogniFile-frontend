@@ -6,6 +6,7 @@ import Cardadd from '../../core/cardadd';
 import FileCard from '../../core/filecard';
 import FileRow from '../../core/filerow';
 import FolderCard from '../../core/foldercard';
+import CombinedComponent from '../../core/foldergrid';
 import FolderRow from '../../core/folderrow';
 import MenuCard from '../../core/menucard';
 import Image from 'next/image';
@@ -17,41 +18,43 @@ import arrowbtm from '@/public/arrow_btm.png';
 import arrowUp from '@/public/arrow_up.png';
 import magicBlue from '@/public/magicBlue.png';
 import settingsOrange from '@/public/settings_orange.svg';
-// Import the loading icon
 import { FolderResponse } from '@/src/types/responses';
 import { Folder, File } from '@/src/types/shared';
 import api from '@/src/utils/axios';
+
+// Import the modal
 
 const MyPage = ({ folderId }: { folderId: string }) => {
   const [isListView, setIsListView] = useState(false);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [files, setFiles] = useState<File[]>([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const [breadcrumbItems, setBreadcrumbItems] = useState<
     { folderId: string; folderName: string }[]
   >([]);
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const transformResponse = (res: FolderResponse) => {
       let idCounter = 1;
       const { folder } = res;
-      // Transform files
+
       const filespart = folder.files.map(file => ({
         id: idCounter++,
         name: file.name,
         size: file.size,
-        date: 'Unknown', // Date is not available in your response, set it to a default or derived value
+        date: 'Unknown',
       }));
 
-      // Transform subfolders
       const folderspart = folder.subFolders.map(subFolder => ({
         id: subFolder.id,
         name: subFolder.name,
-        items: subFolder.children, // Assuming 'children' represents the number of items
-        size: 'Unknown', // Size is not available in your response, set it to a default or derived value
-        color: 'blue', // Default color, adjust as needed
-        date: 'Unknown', // Date is not available in your response, set it to a default or derived value
+        items: subFolder.children,
+        size: 'Unknown',
+        color: 'blue',
+        date: 'Unknown',
       }));
 
       return { folderspart, filespart };
@@ -59,7 +62,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
 
     const fetchBreadcrumbs = async (initialFolderId: string) => {
       const items = [];
-      let currentFolderId = initialFolderId; // Create a new variable to hold the current folder ID
+      let currentFolderId = initialFolderId;
       let currentFolder = null;
 
       while (currentFolderId) {
@@ -71,7 +74,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
           folderName: currentFolder.parent ? currentFolder.name : 'My Storage',
         });
 
-        currentFolderId = currentFolder.parent; // Move to the parent folder
+        currentFolderId = currentFolder.parent ? currentFolder.parent.id : null;
       }
 
       setBreadcrumbItems(items);
@@ -87,12 +90,16 @@ const MyPage = ({ folderId }: { folderId: string }) => {
         fetchBreadcrumbs(folderId).then(() => setLoading(false));
       })
       .catch(err => {
-        setLoading(false); // Set loading to false even if there's an error
+        setLoading(false);
         throw new Error(err.message);
       });
   }, [folderId]);
 
   const isEmpty = folders.length === 0 && files.length === 0;
+
+  const handleEnhancedFileStructureClick = () => {
+    setIsModalOpen(true);
+  };
 
   if (loading) {
     return (
@@ -219,6 +226,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
               text="Enhanced File Hierarchy"
               icon={<Image src={magicBlue} alt="" />}
               color={1}
+              onClick={handleEnhancedFileStructureClick}
             />
           </div>
         </div>
@@ -307,7 +315,6 @@ const MyPage = ({ folderId }: { folderId: string }) => {
           )}
         </>
       )}
-
       {isCreatingFolder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <Cardadd
@@ -317,6 +324,8 @@ const MyPage = ({ folderId }: { folderId: string }) => {
             onCreate={handleFolderCreate}
           />
         </div>
+      {isModalOpen && (
+        <CombinedComponent onClose={() => setIsModalOpen(false)} folderId={folderId} />
       )}
     </>
   );

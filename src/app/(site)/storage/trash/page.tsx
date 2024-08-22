@@ -40,7 +40,12 @@ const Trash = () => {
             </button>
           </div>
           <div className="hover:cursor-pointer">
-            <Button text="Empty Trash" icon={<Image src={magicBlue} alt="" />} color={1} />
+            <Button
+              text="Empty Trash"
+              icon={<Image src={magicBlue} alt="" />}
+              color={1}
+              onClick={() => 'clicked'}
+            />
           </div>
         </div>
         <div className="flex gap-8 items-center">
