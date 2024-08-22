@@ -324,6 +324,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
             onCreate={handleFolderCreate}
           />
         </div>
+      )}
       {isModalOpen && (
         <CombinedComponent onClose={() => setIsModalOpen(false)} folderId={folderId} />
       )}
