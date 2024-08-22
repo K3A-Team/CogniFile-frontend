@@ -4,10 +4,12 @@ import api from '@/src/utils/axios';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, password } = body;
+    const { email, password, firstName, lastName } = body;
     const authRes = await api.post('auth/register', {
       email,
       password,
+      firstName,
+      lastName,
     });
     if (!authRes.data.success) {
       return new Response(JSON.stringify({ message: 'Invalid credentials', success: false }), {
