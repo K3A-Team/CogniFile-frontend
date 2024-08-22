@@ -7,7 +7,7 @@ interface CardProps {
   title: string;
   inputPlaceholder: string;
   onCancel: () => void;
-  onCreate: () => void;
+  onCreate: (Name: string) => void;
 }
 
 const Cardadd: React.FC<CardProps> = ({ title, inputPlaceholder, onCancel, onCreate }) => {
@@ -35,7 +35,7 @@ const Cardadd: React.FC<CardProps> = ({ title, inputPlaceholder, onCancel, onCre
           Cancel
         </button>
         <button
-          onClick={onCreate}
+          onClick={() => onCreate(inputValue)}
           className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Create

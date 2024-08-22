@@ -2,10 +2,12 @@
 
 import Breadcrumb from '../../core/breadcrumb';
 import Button from '../../core/button';
+import Cardadd from '../../core/cardadd';
 import FileCard from '../../core/filecard';
 import FileRow from '../../core/filerow';
 import FolderCard from '../../core/foldercard';
 import FolderRow from '../../core/folderrow';
+import MenuCard from '../../core/menucard';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -28,6 +30,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
   const [breadcrumbItems, setBreadcrumbItems] = useState<
     { folderId: string; folderName: string }[]
   >([]);
+  const [isCreatingFolder, setIsCreatingFolder] = useState(false);
 
   useEffect(() => {
     const transformResponse = (res: FolderResponse) => {
@@ -108,11 +111,109 @@ const MyPage = ({ folderId }: { folderId: string }) => {
     );
   }
 
+  const handleUploadFile = async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    // Set up the event handler for file selection
+    input.onchange = async (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files ? target.files[0] : null;
+      if (file) {
+        try {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('folderId', folderId);
+
+          const response = await fetch('/api/files/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error('File upload failed');
+          }
+
+          const result = await response.json();
+          setFiles(prev => [
+            ...prev,
+            {
+              id: result.file.id,
+              name: result.file.name,
+              size: result.file.size,
+              date: result.file.interactionDate.split('T')[0],
+            },
+          ]);
+        } catch (error) {
+          throw new Error('File upload failed');
+        }
+      }
+    };
+    input.click();
+  };
+
+  const handleCreatingFolder = async () => {
+    setIsCreatingFolder(true);
+  };
+
+  const handleFolderCancel = () => {
+    setIsCreatingFolder(false);
+  };
+
+  const handleFolderCreate = async (Name: string) => {
+    try {
+      const formData = new FormData();
+      formData.append('folderName', Name);
+      formData.append('folderId', folderId);
+
+      const response = await fetch('/api/folders/create', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Folder creation failed');
+      }
+
+      const result = await response.json();
+
+      setFolders(prev => [
+        ...prev,
+        {
+          id: result.folder.id,
+          name: result.folder.name,
+          items: 0,
+          size: 'Unknown',
+          color: 'blue',
+          date: result.folder.interactionDate.split('T')[0],
+        },
+      ]);
+    } catch (error) {
+      throw new Error('Folder creation failed');
+    }
+    setIsCreatingFolder(false);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
         <div className="flex items-center gap-x-12">
           <Breadcrumb items={breadcrumbItems} />
+          <MenuCard
+            items={[
+              {
+                iconSrc: '/iconCards/addfolder.png',
+                label: 'New Folder',
+                handler: handleCreatingFolder,
+              },
+              {
+                iconSrc: '/iconCards/importfile.png',
+                label: 'Import File',
+                handler: handleUploadFile,
+              },
+              { iconSrc: '/iconCards/importfolder.png', label: 'Import Folder' },
+              { iconSrc: '/iconCards/color.png', label: 'Apply Theme' },
+            ]}
+          />
           <div className="hover:cursor-pointer">
             <Button
               text="Enhanced File Hierarchy"
@@ -205,6 +306,17 @@ const MyPage = ({ folderId }: { folderId: string }) => {
             </div>
           )}
         </>
+      )}
+
+      {isCreatingFolder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <Cardadd
+            title="New Folder"
+            inputPlaceholder="Folder Name"
+            onCancel={handleFolderCancel}
+            onCreate={handleFolderCreate}
+          />
+        </div>
       )}
     </>
   );
