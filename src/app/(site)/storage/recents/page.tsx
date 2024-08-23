@@ -20,8 +20,8 @@ const folders: Folder[] = [
 ];
 
 const files: File[] = [
-  { id: 3, name: 'report.pdf', size: '2.3 MB', date: '21 July 2024' },
-  { id: 4, name: 'image.png', size: '1.2 MB', date: '22 July 2024' },
+  { id: 3, name: 'report.pdf', size: '2.3 MB', date: '21 July 2024', url: '' },
+  { id: 4, name: 'image.png', size: '1.2 MB', date: '22 July 2024', url: '' },
 ];
 
 const Recents = () => {
