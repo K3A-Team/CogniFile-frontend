@@ -27,6 +27,7 @@ interface LoginErrorResponse {
 }
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -35,6 +36,7 @@ export default function Login() {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const response = await axios.post<LoginSuccessResponse | LoginErrorResponse>(
@@ -56,6 +58,8 @@ export default function Login() {
       } else {
         setError('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,9 +108,16 @@ export default function Login() {
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark font-semibold rounded-full px-16 py-4 text-2xl"
+              className={`w-full bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark font-semibold rounded-full px-16 py-4 text-2xl transition duration-300 ease-in-out transform hover:from-[#c0c0c0] hover:to-[#5e5e5e] hover:shadow-lg hover:scale-105 flex items-center justify-center ${
+                loading ? 'cursor-not-allowed' : ''
+              }`}
+              disabled={loading}
             >
-              Login
+              {loading ? (
+                <div className="w-6 h-6 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+              ) : (
+                'Login'
+              )}
             </button>
           </form>
         </div>

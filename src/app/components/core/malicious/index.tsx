@@ -8,13 +8,13 @@ import settingsRed from '@/public/settings_red.svg';
 import { File } from '@/src/types/shared';
 
 const maliciousFiles: File[] = [
-  { id: 1, name: 'virus1.exe', size: '2.3 MB', date: '2022-01-01' },
-  { id: 2, name: 'virus1.exe', size: '2.3 MB', date: '2022-01-02' },
-  { id: 3, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-01' },
-  { id: 4, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-03' },
-  { id: 5, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-04' },
-  { id: 6, name: 'worm3.exe', size: '4.7 MB', date: '2022-01-01' },
-  { id: 7, name: 'worm3.exe', size: '4.7 MB', date: '2022-01-02' },
+  { id: 1, name: 'virus1.exe', size: '2.3 MB', date: '2022-01-01', url: '' },
+  { id: 2, name: 'virus1.exe', size: '2.3 MB', date: '2022-01-02', url: '' },
+  { id: 3, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-01', url: '' },
+  { id: 4, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-03', url: '' },
+  { id: 5, name: 'trojan2.exe', size: '1.8 MB', date: '2022-01-04', url: '' },
+  { id: 6, name: 'worm3.exe', size: '4.7 MB', date: '2022-01-01', url: '' },
+  { id: 7, name: 'worm3.exe', size: '4.7 MB', date: '2022-01-02', url: '' },
 ];
 
 const MaliciousFilesDetection = () => {

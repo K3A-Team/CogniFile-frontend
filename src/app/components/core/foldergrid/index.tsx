@@ -13,6 +13,8 @@ import { FolderHierarchy } from '@/src/types/responses';
 
 /* eslint-disable camelcase */
 
+/* eslint-disable camelcase */
+
 const CombinedComponent = ({
   folderId,
   onClose,
@@ -21,7 +23,7 @@ const CombinedComponent = ({
   onClose: MouseEventHandler;
 }) => {
   const router = useRouter();
-
+  const [loadingTwo, setLoadingTwo] = useState(false);
   const [loading, setLoading] = useState(true);
   const [folders, setFolders] = useState<
     { id: number; color: string; name: string; items: number; size: string }[]
@@ -59,17 +61,20 @@ const CombinedComponent = ({
   }, [folderId]);
 
   const handleApprove = async () => {
+    setLoadingTwo(true);
     try {
       await axios.get(`/api/hierarchy/${transactionId}`);
       router.push(`/storage/${folderId}`);
     } catch (error) {
       throw new Error(String(error));
+    } finally {
+      setLoadingTwo(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-dar-card rounded-2xl w-2/3 h-[700px] p-6 overflow-hidden relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-16">
+      <div className="bg-dar-card rounded-2xl w-2/3 h-[700px] p-16 overflow-y-scroll relative">
         {loading ? (
           <div className="flex items-center justify-center gap-6 p-32 h-full">
             <div className="text-center">
@@ -108,10 +113,18 @@ const CombinedComponent = ({
                 Discard
               </button>
               <button
-                className="px-4 py-2 bg-white text-black rounded-full"
+                type="submit"
                 onClick={handleApprove}
+                className={`px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 hover:text-gray-800 transform hover:scale-105 transition duration-300 ease-in-out ${
+                  loadingTwo ? 'cursor-not-allowed' : ''
+                }`}
+                disabled={loadingTwo}
               >
-                Approve changes
+                {loadingTwo ? (
+                  <div className="w-6 h-6 border-4 border-t-transparent border-[#191919] rounded-full animate-spin"></div>
+                ) : (
+                  'Approve changes'
+                )}
               </button>
             </div>
           </div>

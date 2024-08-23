@@ -11,6 +11,7 @@ export type File = {
   name: string;
   size: string;
   date: string;
+  url: string | undefined;
 };
 
 export type User = {

@@ -16,17 +16,16 @@ interface Message {
 interface ChatbotResponse {
   success: boolean;
   result: string;
+  message?: string;
 }
 
-function Bot() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      text: "Hi, I'm Cognibot, I'm so excited to make your file manipulation smooth and easier than ever!",
-      isUser: false,
-    },
-  ]);
+interface BotProps {
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+}
+
+function Bot({ messages, setMessages }: BotProps) {
   const [input, setInput] = useState('');
-  const [token, setToken] = useState('');
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -35,41 +34,20 @@ function Bot() {
     }
   }, [messages]);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!input.trim() || !token) return;
-
     setMessages(prev => [...prev, { text: input, isUser: true }]);
+    const prompt = input;
     setInput('');
-
     try {
-      const response = await axios.post<ChatbotResponse>(
-        'http://34.41.104.20:8000/chatbot/chatbot',
-        { question: input },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const response = await axios.post<ChatbotResponse>('/api/chatbot', { question: prompt });
 
       const data = await response.data;
 
       if (data.success) {
         setMessages(prev => [...prev, { text: data.result, isUser: false }]);
       } else {
-        setMessages(prev => [
-          ...prev,
-          { text: "Sorry, I couldn't process that request.", isUser: false },
-        ]);
+        throw new Error(data.message);
       }
     } catch (error) {
       setMessages(prev => [
@@ -77,8 +55,6 @@ function Bot() {
         { text: 'An error occurred. Please try again.', isUser: false },
       ]);
     }
-
-    setInput('');
   };
 
   return (
@@ -130,16 +106,50 @@ function Bot() {
 
 function Chatbot() {
   const [toggle, setToggle] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      text: "Hi, I'm Cognibot, I'm so excited to make your file manipulation smooth and easier than ever!",
+      isUser: false,
+    },
+  ]);
+
+  const handleClear = async () => {
+    const response = await axios.delete('/api/chatbot');
+
+    const data = await response.data;
+
+    if (data.success) {
+      setMessages([
+        {
+          text: "Hi, I'm Cognibot, I'm so excited to make your file manipulation smooth and easier than ever!",
+          isUser: false,
+        },
+      ]);
+    }
+  };
+
   return (
-    <div className="rleative h-screen w-screen flex items-center justify-center">
+    <div
+      className={`absolute bottom-0 flex items-end w-full ${toggle ? 'h-[736px]' : 'h-[64px] z-[-1]'}  justify-center`}
+    >
       <div className="flex flex-col gap-8 items-center w-full h-[736px] relative">
         <div
-          className={` ${toggle ? 'block' : 'hidden'} xl:w-[40%] sm:w-[80%] w-[90%] px-6 py-8 lg:p-12 bg-[#191919] h-[640px] rounded-[1rem] absolute top-0 overflow-clip`}
+          className={` ${toggle ? 'block z-10' : 'hidden z-[-1]'} xl:w-[40%] sm:w-[80%] w-[90%] px-6 py-8 lg:p-12 bg-[#191919] h-[640px] rounded-[1rem] absolute top-0 overflow-clip`}
         >
           <div className="absolute w-full px-12 py-6 bg-[#191919] flex justify-between items-center top-0 left-0 z-10 shadow-lg">
             <h2 className="text-xl">CogniBot</h2>
             <div className="flex gap-4 items-center">
-              <p className="text-[#ffffff] opacity-50 underline font-medium text-md hover:cursor-pointer">
+              <p
+                className="text-[#ffffff] opacity-50 underline font-medium text-md hover:cursor-pointer"
+                onClick={handleClear}
+                role="button"
+                tabIndex={0}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    setToggle(!toggle);
+                  }
+                }}
+              >
                 clear
               </p>
               <Image
@@ -150,7 +160,7 @@ function Chatbot() {
               />
             </div>
           </div>
-          <Bot />
+          <Bot messages={messages} setMessages={setMessages} />
         </div>
 
         <div

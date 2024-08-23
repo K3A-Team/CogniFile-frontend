@@ -58,7 +58,7 @@ const FileCard = ({
 
   return (
     <div
-      className={`flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
+      className={`hover:bg-[#252525] flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
         mounted ? (customAnimation ? customAnimation : 'animate-fade-in-up') : ''
       }`}
       onClick={handleRemove}

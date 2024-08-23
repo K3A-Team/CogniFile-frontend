@@ -8,17 +8,17 @@ import { File } from '@/src/types/shared';
 
 const duplicatedFiles: { [key: string]: File[] } = {
   'file1.pdf': [
-    { id: 1, name: 'file1.pdf', size: '2.3 MB', date: '2022-01-01' },
-    { id: 2, name: 'file1.pdf', size: '2.3 MB', date: '2022-01-02' },
+    { id: 1, name: 'file1.pdf', size: '2.3 MB', date: '2022-01-01', url: '' },
+    { id: 2, name: 'file1.pdf', size: '2.3 MB', date: '2022-01-02', url: '' },
   ],
   'file2.pdf': [
-    { id: 3, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-01' },
-    { id: 4, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-03' },
-    { id: 5, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-04' },
+    { id: 3, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-01', url: '' },
+    { id: 4, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-03', url: '' },
+    { id: 5, name: 'file2.pdf', size: '1.8 MB', date: '2022-01-04', url: '' },
   ],
   'file3.pdf': [
-    { id: 6, name: 'file3.pdf', size: '4.7 MB', date: '2022-01-01' },
-    { id: 7, name: 'file3.pdf', size: '4.7 MB', date: '2022-01-02' },
+    { id: 6, name: 'file3.pdf', size: '4.7 MB', date: '2022-01-01', url: '' },
+    { id: 7, name: 'file3.pdf', size: '4.7 MB', date: '2022-01-02', url: '' },
   ],
 };
 

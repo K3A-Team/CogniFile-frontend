@@ -1,3 +1,4 @@
+import Chatbot from '../../components/core/chatbot';
 import ProfileIcon from '../../components/core/profileicon';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +10,7 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 p-16 bg-cf-dark">
+      <div className="flex-1 px-16 pt-16 bg-cf-dark h-screen overflow-hidden w-full relative z-[5]">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
             <Search />
@@ -24,6 +25,7 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         {children}
+        <Chatbot />
       </div>
     </div>
   );
