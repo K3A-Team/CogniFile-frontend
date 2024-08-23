@@ -27,6 +27,7 @@ interface RegisterErrorResponse {
 }
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -38,7 +39,7 @@ export default function Register() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
-
+    setLoading(true);
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -67,6 +68,8 @@ export default function Register() {
       } else {
         setError('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,9 +139,16 @@ export default function Register() {
             {error && <p className="text-[#b73939] font-medium text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark font-semibold rounded-full px-16 py-4 text-2xl"
+              className={`w-full bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark font-semibold rounded-full px-16 py-4 text-2xl transition duration-300 ease-in-out transform hover:from-[#c0c0c0] hover:to-[#5e5e5e] hover:shadow-lg hover:scale-105 flex items-center justify-center ${
+                loading ? 'cursor-not-allowed' : ''
+              }`}
+              disabled={loading}
             >
-              Register
+              {loading ? (
+                <div className="w-6 h-6 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+              ) : (
+                'Register'
+              )}
             </button>
           </form>
         </div>

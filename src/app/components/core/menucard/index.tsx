@@ -15,7 +15,7 @@ interface MenuCardProps {
 
 const MenuCard: React.FC<MenuCardProps> = ({ items }) => {
   return (
-    <div className="bg-dar-card text-white p-4 rounded-[8px] shadow-md w-64 flex items-center justify-center">
+    <div className="bg-dar-card text-white p-4 rounded-[8px] shadow-md w-64 flex items-center justify-center absolute top-16 z-[99]">
       <ul className="w-full">
         {items.map((item, index) => (
           <li

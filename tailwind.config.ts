@@ -136,6 +136,10 @@ const config: Config = {
           '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
           '100%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
         },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',
@@ -149,6 +153,7 @@ const config: Config = {
         'fade-in-down': 'fadeInDown 0.5s ease-out forwards',
         'slide-fade-in': 'slideFadeIn 0.5s ease-out forwards',
         'slide-fade-out': 'slideFadeOut 0.5s ease-out forwards',
+        spin: 'spin 1s linear infinite',
       },
     },
   },

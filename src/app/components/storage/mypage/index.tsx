@@ -33,7 +33,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
     { folderId: string; folderName: string }[]
   >([]);
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
-
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
         name: file.name,
         size: file.size,
         date: 'Unknown',
+        url: file.url,
       }));
 
       const folderspart = folder.subFolders.map(subFolder => ({
@@ -121,7 +122,6 @@ const MyPage = ({ folderId }: { folderId: string }) => {
   const handleUploadFile = async () => {
     const input = document.createElement('input');
     input.type = 'file';
-    // Set up the event handler for file selection
     input.onchange = async (event: Event) => {
       const target = event.target as HTMLInputElement;
       const file = target.files ? target.files[0] : null;
@@ -148,6 +148,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
               name: result.file.name,
               size: result.file.size,
               date: result.file.interactionDate.split('T')[0],
+              url: result.file.URL,
             },
           ]);
         } catch (error) {
@@ -200,27 +201,39 @@ const MyPage = ({ folderId }: { folderId: string }) => {
     setIsCreatingFolder(false);
   };
 
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
         <div className="flex items-center gap-x-12">
-          <Breadcrumb items={breadcrumbItems} />
-          <MenuCard
-            items={[
-              {
-                iconSrc: '/iconCards/addfolder.png',
-                label: 'New Folder',
-                handler: handleCreatingFolder,
-              },
-              {
-                iconSrc: '/iconCards/importfile.png',
-                label: 'Import File',
-                handler: handleUploadFile,
-              },
-              { iconSrc: '/iconCards/importfolder.png', label: 'Import Folder' },
-              { iconSrc: '/iconCards/color.png', label: 'Apply Theme' },
-            ]}
-          />
+          <div className="relative">
+            <Breadcrumb
+              items={breadcrumbItems}
+              onToggleMenu={toggleMenu}
+              isMenuVisible={isMenuVisible}
+            />
+            {isMenuVisible && (
+              <MenuCard
+                items={[
+                  {
+                    iconSrc: '/iconCards/addfolder.png',
+                    label: 'New Folder',
+                    handler: handleCreatingFolder,
+                  },
+                  {
+                    iconSrc: '/iconCards/importfile.png',
+                    label: 'Import File',
+                    handler: handleUploadFile,
+                  },
+                  { iconSrc: '/iconCards/importfolder.png', label: 'Import Folder' },
+                  { iconSrc: '/iconCards/color.png', label: 'Apply Theme' },
+                ]}
+              />
+            )}
+          </div>
           <div className="hover:cursor-pointer">
             <Button
               text="Enhanced File Hierarchy"
@@ -278,9 +291,13 @@ const MyPage = ({ folderId }: { folderId: string }) => {
           {isListView ? (
             <div className="w-full">
               <table className="table-auto w-full text-left">
-                <tbody className="space-y-6">
+                <tbody className="space-y-8 w-full">
                   {folders.map((folder, index) => (
-                    <Link key={index} href={`/storage/${folder.id}`}>
+                    <Link
+                      key={index}
+                      href={`/storage/${folder.id}`}
+                      className="w-full justify-between"
+                    >
                       <FolderRow
                         color={folder.color}
                         name={folder.name}
@@ -308,8 +325,15 @@ const MyPage = ({ folderId }: { folderId: string }) => {
                   />
                 </Link>
               ))}
-              {files.map((file, index) => (
-                <FileCard key={index} fileName={file.name} fileSize={file.size} />
+              {files.map(file => (
+                <a href={file.url} download key={file.id}>
+                  <FileCard
+                    fileName={file.name}
+                    fileSize={file.size}
+                    animateIn={true}
+                    customAnimation="animate-fade-in-up"
+                  />
+                </a>
               ))}
             </div>
           )}

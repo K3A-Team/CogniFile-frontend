@@ -7,12 +7,18 @@ interface BreadcrumbItem {
   folderName: string;
 }
 
-const Breadcrumb = ({
-  items,
-  maxDisplay = 3,
-}: {
+interface BreadcrumbProps {
   items: BreadcrumbItem[];
   maxDisplay?: number;
+  onToggleMenu: () => void;
+  isMenuVisible: boolean;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({
+  items,
+  maxDisplay = 3,
+  onToggleMenu,
+  isMenuVisible,
 }) => {
   const shouldTruncate = items.length > maxDisplay;
   const displayedItems = shouldTruncate
@@ -33,7 +39,10 @@ const Breadcrumb = ({
           {index < displayedItems.length - 1 && <span className="mx-2">›</span>}
         </React.Fragment>
       ))}
-      <button>
+      <button
+        onClick={onToggleMenu}
+        className={`transition-transform duration-300 ease-in-out ${isMenuVisible ? 'rotate-180' : ''}`}
+      >
         <FaChevronDown />
       </button>
     </div>

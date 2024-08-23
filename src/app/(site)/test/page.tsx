@@ -1,6 +1,9 @@
+import Chatbot from '../../components/core/chatbot';
+
 const Page = () => {
   return (
     <div className="bg-black flex gap-4 justify-center items-center h-screen">
+      <Chatbot />
       {/* <Simulation /> */}
       {/* <CardSuggestions /> */}
       {/* <CardVersion /> */}
