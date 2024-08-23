@@ -1,6 +1,7 @@
 'use client';
 
 import Input from '../../components/core/input';
+import ProfileIcon from '../../components/core/profileicon';
 import Image from 'next/image';
 import React from 'react';
 import arrowLeft from '@/public/arrow_left.png';
@@ -11,9 +12,7 @@ function Settings() {
     <div className="flex px-20 w-full flex-col gap-10 h-screen">
       <div className="w-full h-16 flex justify-between items-center">
         <Image src={arrowLeft} alt="arrow_left" />
-        <div className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center">
-          <p>AB</p>
-        </div>
+        <ProfileIcon />
       </div>
 
       <div className="w-full flex justify-between items-start">
