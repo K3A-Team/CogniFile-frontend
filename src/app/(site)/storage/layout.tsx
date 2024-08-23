@@ -1,3 +1,4 @@
+import ProfileIcon from '../../components/core/profileicon';
 import Image from 'next/image';
 import params from '@/public/params.svg';
 import Search from '@/src/app/components/core/search';
@@ -14,9 +15,7 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-full h-16 flex justify-end items-center">
               <div className="flex gap-8 items-center">
                 <Image src={params} alt="params" className="w-10" />
-                <div className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center">
-                  <p>AB</p>
-                </div>
+                <ProfileIcon />
               </div>
             </div>
           </div>

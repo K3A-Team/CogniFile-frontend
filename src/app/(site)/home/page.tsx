@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '../../components/core/button';
+import ProfileIcon from '../../components/core/profileicon';
 import Search from '../../components/core/search';
 import Sidebar from '../../components/core/sidebar';
 import Image from 'next/image';
@@ -27,9 +28,7 @@ const Home = () => {
         <div className="w-full h-16 flex justify-end items-center">
           <div className="flex gap-8 items-center">
             <Image src={params} alt="params" className="w-10" />
-            <div className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center">
-              <p>AB</p>
-            </div>
+            <ProfileIcon />
           </div>
         </div>
 
