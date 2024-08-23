@@ -1,5 +1,7 @@
 import Chatbot from '../../components/core/chatbot';
+import ProfileIcon from '../../components/core/profileicon';
 import Image from 'next/image';
+import Link from 'next/link';
 import params from '@/public/params.svg';
 import Search from '@/src/app/components/core/search';
 import Sidebar from '@/src/app/components/core/sidebar';
@@ -14,10 +16,10 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
             <Search />
             <div className="w-full h-16 flex justify-end items-center">
               <div className="flex gap-8 items-center">
-                <Image src={params} alt="params" className="w-10" />
-                <div className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center">
-                  <p>AB</p>
-                </div>
+                <Link href="/settings">
+                  <Image src={params} alt="params" className="w-10" />
+                </Link>
+                <ProfileIcon />
               </div>
             </div>
           </div>

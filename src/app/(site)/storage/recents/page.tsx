@@ -5,33 +5,91 @@ import FileCard from '../../../components/core/filecard';
 import FileRow from '../../../components/core/filerow';
 import FolderCard from '../../../components/core/foldercard';
 import FolderRow from '../../../components/core/folderrow';
+import axios from 'axios';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTh, FaList, FaChevronDown } from 'react-icons/fa';
 import add from '@/public/add.png';
 import arrowbtm from '@/public/arrow_btm.png';
 import arrowUp from '@/public/arrow_up.png';
 import magicBlue from '@/public/magicBlue.png';
+import settingsOrange from '@/public/settings_orange.svg';
 import { Folder, File } from '@/src/types/shared';
 
-const folders: Folder[] = [
-  { id: '1', name: 'Slide', items: 54, size: '223 MB', color: 'blue', date: '20 July 2024' },
-  { id: '2', name: 'Gathering', items: 230, size: '322 MB', color: 'yellow', date: '20 July 2024' },
-];
-
-const files: File[] = [
-  { id: 3, name: 'report.pdf', size: '2.3 MB', date: '21 July 2024', url: '' },
-  { id: 4, name: 'image.png', size: '1.2 MB', date: '22 July 2024', url: '' },
-];
+type RecentItem = {
+  name: string;
+  size: string;
+  children: number; // Assuming 'children' represents the number of child items
+  interactionDate: string; // ISO date string
+  type: 'folder' | 'file'; // Type can be either 'folder' or 'file'
+};
 
 const Recents = () => {
   const [isListView, setIsListView] = useState(false);
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/storage/recent');
+        const { result } = response.data;
+
+        // Parse folders and files
+        const parsedFolders: Folder[] = result
+          .filter((item: RecentItem) => item.type === 'folder')
+          .map((folder: RecentItem, index: number) => ({
+            id: index.toString(), // Or use a unique identifier if available
+            name: folder.name,
+            items: folder.children,
+            size: folder.size,
+            color: index % 2 === 0 ? 'blue' : 'yellow', // Just an example, adjust as needed
+            date: new Date(folder.interactionDate).toLocaleDateString(), // Format the date
+          }));
+
+        const parsedFiles: File[] = result
+          .filter((item: RecentItem) => item.type === 'file')
+          .map((file: RecentItem, index: number) => ({
+            id: index + parsedFolders.length, // Ensure unique IDs for files
+            name: file.name,
+            size: file.size,
+            date: new Date(file.interactionDate).toLocaleDateString(), // Format the date
+          }));
+
+        setFolders(parsedFolders);
+        setFiles(parsedFiles);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const isEmpty = folders.length === 0 && files.length === 0;
 
   const handleClick = () => {
-    return 'hello';
+    return 'clicked';
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center gap-6 h-full mt-60">
+        <div className="text-center">
+          <Image
+            src={settingsOrange} // Use the orange version of the settings icon
+            alt="Loading Icon"
+            className={`mx-auto mb-4 ${loading ? 'animate-spin' : ''}`}
+          />
+          <p className="text-4xl bg-Orange-gradient bg-clip-text text-transparent">
+            Loading files and folders...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
