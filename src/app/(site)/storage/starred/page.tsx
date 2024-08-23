@@ -27,8 +27,8 @@ const folders: Folder[] = [
 ];
 
 const files: File[] = [
-  { id: 3, name: 'contract.pdf', size: '2.1 MB', date: '10 July 2024' },
-  { id: 4, name: 'design.psd', size: '120 MB', date: '02 July 2024' },
+  { id: 3, name: 'contract.pdf', size: '2.1 MB', date: '10 July 2024', url: '' },
+  { id: 4, name: 'design.psd', size: '120 MB', date: '02 July 2024', url: '' },
 ];
 
 const Starred = () => {
