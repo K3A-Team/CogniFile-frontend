@@ -3,10 +3,10 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import cognibot from '@/public/Cognibot.svg';
 import Microphone from '@/public/Microphone.svg';
 import Send from '@/public/Send.svg';
 import close from '@/public/close.webp';
-import cognibot from '@/public/cognibot.svg';
 
 interface Message {
   text: string;
