@@ -1,29 +1,23 @@
-import { createSession } from '@/src/lib/session';
 import api from '@/src/utils/axios';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, password } = body;
-    const authRes = await api.post('auth/login', {
-      email,
-      password,
+    const resetRes = await api.post('auth/reset-password', {
+      ...body
     });
 
-    if (!authRes.data.success) {
-      return new Response(JSON.stringify({ message: 'Invalid credentials', success: false }), {
+    if (!resetRes.data.success) {
+      return new Response(JSON.stringify({ message: resetRes?.data?.message ?? "Something went wrong, try again later!", success: false }), {
         status: 400,
         headers: {},
       });
     }
 
-    await createSession(authRes.data.user, authRes.data.token);
-
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Successfully logged in',
-        user: authRes.data.user,
+        message: resetRes?.data?.message ?? "Password updated successfully, you will be redirected to login page",
       }),
       {
         status: 200,

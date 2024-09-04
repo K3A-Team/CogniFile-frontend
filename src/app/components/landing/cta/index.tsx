@@ -13,13 +13,13 @@ const CTA = () => {
         </p>
         <div className="flex justify-center flex-col lg:flex-row items-center gap-4">
           <Link
-            className="bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
+            className="bg-gradient-to-r from-[#DEDEDE] to-[#787878] transition-all hover:opacity-60 text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
             href="/auth/register"
           >
             Try For Free
           </Link>
           <Link
-            className=" bg-transparent border border-white text-white rounded-full px-16 py-4 font-bold text-lg"
+            className=" bg-transparent border border-white text-white transition-all hover:bg-white hover:text-black rounded-full px-16 py-4 font-bold text-lg"
             href="/auth/login"
           >
             Sign in

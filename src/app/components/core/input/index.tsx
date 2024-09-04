@@ -1,18 +1,21 @@
 'use client';
 
 import Image from 'next/image';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, InputHTMLAttributes, useState } from 'react';
 import eyeOff from '@/public/eye-off.webp';
 import eyeOn from '@/public/eye-on.webp';
+import { UseFormRegister } from 'react-hook-form';
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   isPassword: boolean;
   isOTP: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value?: string;
+  register?: UseFormRegister<any>;
 }
-const Input = ({ placeholder, isPassword, isOTP, onChange, value }: InputProps) => {
+
+const Input = ({ placeholder, isPassword, isOTP, onChange, value, register, ...rest }: InputProps) => {
   const [inputType, setInputType] = useState(isPassword ? 'password' : 'text');
 
   const togglePasswordVisibility = () => {
@@ -27,6 +30,8 @@ const Input = ({ placeholder, isPassword, isOTP, onChange, value }: InputProps) 
         onChange={onChange}
         value={value}
         className={`${isOTP ? '2xl:w-24 2xl:h-24 md:w-18 md:h-18 h-16 w-16 bg-[#474747] rounded-[16px] 2xl:rounded-[20px] border-2 border-[#474747] font-semibold text-3xl focus:border-white focus:outline-none text-white text-center flex items-center justify-center' : 'w-full px-8 py-4 placeholder:text-[#989898] text-[16px] text-white bg-[#303030] rounded-full outline-none'}`}
+        {...register}
+        {...rest}
       />
       {isPassword && (
         <button
