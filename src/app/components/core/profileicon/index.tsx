@@ -53,7 +53,7 @@ const ProfileIcon = () => {
       </button>
 
       {isMenuVisible && (
-        <div className="absolute top-20 right-0">
+        <div className="absolute top-2 -left-60">
           <MenuCard items={menuItems} />
         </div>
       )}
