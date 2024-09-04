@@ -19,9 +19,9 @@ import { Folder, File } from '@/src/types/shared';
 type RecentItem = {
   name: string;
   size: string;
-  children: number; // Assuming 'children' represents the number of child items
-  interactionDate: string; // ISO date string
-  type: 'folder' | 'file'; // Type can be either 'folder' or 'file'
+  children: number;
+  interactionDate: string;
+  type: 'folder' | 'file';
 };
 
 const Recents = () => {
@@ -36,25 +36,24 @@ const Recents = () => {
         const response = await axios.get('/api/storage/recent');
         const { result } = response.data;
 
-        // Parse folders and files
         const parsedFolders: Folder[] = result
           .filter((item: RecentItem) => item.type === 'folder')
           .map((folder: RecentItem, index: number) => ({
-            id: index.toString(), // Or use a unique identifier if available
+            id: index.toString(),
             name: folder.name,
             items: folder.children,
             size: folder.size,
-            color: index % 2 === 0 ? 'blue' : 'yellow', // Just an example, adjust as needed
-            date: new Date(folder.interactionDate).toLocaleDateString(), // Format the date
+            color: index % 2 === 0 ? 'blue' : 'yellow',
+            date: new Date(folder.interactionDate).toLocaleDateString(),
           }));
 
         const parsedFiles: File[] = result
           .filter((item: RecentItem) => item.type === 'file')
           .map((file: RecentItem, index: number) => ({
-            id: index + parsedFolders.length, // Ensure unique IDs for files
+            id: index + parsedFolders.length,
             name: file.name,
             size: file.size,
-            date: new Date(file.interactionDate).toLocaleDateString(), // Format the date
+            date: new Date(file.interactionDate).toLocaleDateString(),
           }));
 
         setFolders(parsedFolders);
@@ -70,20 +69,16 @@ const Recents = () => {
 
   const isEmpty = folders.length === 0 && files.length === 0;
 
-  const handleClick = () => {
-    return 'clicked';
-  };
-
   if (loading) {
     return (
-      <div className="flex justify-center gap-6 h-full mt-60">
+      <div className="flex justify-center gap-6 h-full mt-20">
         <div className="text-center">
           <Image
-            src={settingsOrange} // Use the orange version of the settings icon
+            src={settingsOrange}
             alt="Loading Icon"
             className={`mx-auto mb-4 ${loading ? 'animate-spin' : ''}`}
           />
-          <p className="text-4xl bg-Orange-gradient bg-clip-text text-transparent">
+          <p className="text-2xl lg:text-4xl bg-Orange-gradient bg-clip-text text-transparent">
             Loading files and folders...
           </p>
         </div>
@@ -93,70 +88,92 @@ const Recents = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-16 mt-20">
-        <div className="flex items-center gap-x-12">
+      <div className="flex flex-col-reverse gap-6 lg:flex-row lg:justify-between items-start lg:items-center mb-8 lg:mb-16 mt-10 lg:mt-20">
+        {/* Breadcrumb (always aligned left) and second Enhanced File Hierarchy Button for large screens */}
+        <div className="w-full lg:w-auto flex justify-start items-center gap-4">
           <div className="flex items-center gap-x-2">
-            <h2 className="text-3xl font-normal">Recents</h2>
-            <button>
+            <h2 className="text-xl lg:text-3xl font-normal">Recents</h2>
+            <button className="text-lg lg:text-2xl">
               <FaChevronDown />
             </button>
           </div>
-          <div className="hover:cursor-pointer">
+
+          {/* Second Enhanced File Hierarchy Button for large screens */}
+          <div className="hidden lg:block hover:cursor-pointer">
             <Button
               text="Enhanced File Hierarchy"
               icon={<Image src={magicBlue} alt="" />}
               color={1}
-              onClick={handleClick}
             />
           </div>
         </div>
-        <div className="flex gap-8 items-center">
-          <div className="flex gap-4 items-center">
-            <div
-              className="flex items-center cursor-pointer justify-center w-14 h-14 rounded-[4px] bg-[#222222]"
-              onClick={() => setIsListView(false)}
-              onKeyDown={event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  setIsListView(false);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              <FaTh className={`text-white w-6 ${!isListView && 'text-blue-500'}`} />
-            </div>
-            <div
-              className="flex items-center cursor-pointer justify-center w-14 h-14 rounded-[4px] bg-[#222222]"
-              onClick={() => setIsListView(true)}
-              onKeyDown={event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  setIsListView(true);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              <FaList className={`text-white w-6 ${isListView && 'text-blue-500'}`} />
-            </div>
+
+        {/* Layout buttons and first Enhanced File Hierarchy button for mobile */}
+        <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-12 justify-center lg:justify-end w-full lg:w-auto">
+          {/* First Enhanced File Hierarchy Button for mobile */}
+          <div className="block lg:hidden hover:cursor-pointer">
+            <Button
+              text="Enhanced File Hierarchy"
+              icon={<Image src={magicBlue} alt="" />}
+              color={1}
+            />
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center px-4 py-2 rounded-full gap-2 bg-[#252525]">
-              <p className="text-white font-regular">Name</p>
-              <Image src={arrowbtm} alt="arrowUp rotate-90" />
+
+          {/* Layout view buttons (grid/list) */}
+          <div className="flex gap-6 lg:gap-8 items-center">
+            <div className="flex gap-2 lg:gap-4 items-center">
+              <div
+                className="flex items-center cursor-pointer justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-[4px] bg-[#222222]"
+                onClick={() => setIsListView(false)}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    setIsListView(false);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <FaTh
+                  className={`text-white w-5 lg:w-6 ${!isListView && 'text-selected-sidebar'}`}
+                />
+              </div>
+              <div
+                className="flex items-center cursor-pointer justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-[4px] bg-[#222222]"
+                onClick={() => setIsListView(true)}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    setIsListView(true);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <FaList
+                  className={`text-white w-5 lg:w-6 ${isListView && 'text-selected-sidebar'}`}
+                />
+              </div>
             </div>
-            <Image src={arrowUp} alt="arrowUp" />
+
+            {/* Sort by Name */}
+            <div className="flex items-center gap-2 lg:gap-4">
+              <div className="flex items-center px-3 py-2 lg:px-4 lg:py-2 rounded-full gap-2 bg-[#252525]">
+                <p className="text-white font-regular">Name</p>
+                <Image src={arrowbtm} alt="arrowUp rotate-90" />
+              </div>
+              <Image src={arrowUp} alt="arrowUp" />
+            </div>
           </div>
         </div>
       </div>
       {isEmpty ? (
         <div className="flex flex-col items-center justify-center h-[400px] text-center">
           <Image src={add} alt="No recent items" />
-          <p className="text-2xl text-gray-400">No recent items</p>
+          <p className="text-lg lg:text-2xl text-gray-400">No recent items</p>
         </div>
       ) : (
         <>
           {isListView ? (
-            <div className="w-full">
+            <div className="w-full overflow-x-auto">
               <table className="table-auto w-full text-left">
                 <tbody className="space-y-6">
                   {folders.map((folder, index) => (
@@ -176,7 +193,7 @@ const Recents = () => {
               </table>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
               {folders.map((folder, index) => (
                 <FolderCard
                   key={index}
