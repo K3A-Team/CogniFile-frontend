@@ -13,7 +13,9 @@ const Navbar = () => {
     <nav className="absolute top-0 w-screen py-6 px-12 border-b border-b-[#787878] flex flex-col gap-8 z-10 bg-[#1F1F1F]">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <Image src={shortLogo} alt="Logo" className="lg:w-20 w-16" />
+          <Link href="/">
+            <Image src={shortLogo} alt="Logo" className="lg:w-20 w-16" />
+          </Link>
         </div>
         <div className="lg:flex hidden gap-x-8 items-center">
           <button>
@@ -55,7 +57,7 @@ const Navbar = () => {
             >
               Sign up - For free
             </Link>
-            <Link href="/auth/login" className="text-white mr-4">
+            <Link href="/auth/login" className="text-white hover:underline">
               Sign in
             </Link>
             <button>

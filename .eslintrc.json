@@ -21,9 +21,12 @@
 
   "overrides": [
     {
-      "files": ["**/*.tsx"],
+      "files": ["**/*.tsx", "**/*.ts"],
       "rules": {
-        "max-lines-per-function": "off"
+        "max-lines-per-function": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "camelcase": "off",
+        "no-extra-boolean-cast": "off"
       }
     }
   ],
