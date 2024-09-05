@@ -68,7 +68,7 @@ function ForgetFormView() {
                     placeholder="Email"
                     isPassword={false}
                     isOTP={false}
-                    //@ts-ignore
+                    //@ts-expect-error
                     register={
                         register('email', {
                             required: 'Email is required',

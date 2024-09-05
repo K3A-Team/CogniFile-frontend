@@ -12,7 +12,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   isOTP: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   value?: string;
-  register?: UseFormRegister<any>;
+  //eslint-disable-next-line
+  register?: UseFormRegister<any>; //disable to pass generics setup for react-hook-form as all filds are name based
 }
 
 const Input = ({ placeholder, isPassword, isOTP, onChange, value, register, ...rest }: InputProps) => {
@@ -29,7 +30,7 @@ const Input = ({ placeholder, isPassword, isOTP, onChange, value, register, ...r
         placeholder={placeholder}
         onChange={onChange}
         value={value}
-        className={`${isOTP ? '2xl:w-24 2xl:h-24 md:w-18 md:h-18 h-16 w-16 bg-[#474747] rounded-[16px] 2xl:rounded-[20px] border-2 border-[#474747] font-semibold text-3xl focus:border-white focus:outline-none text-white text-center flex items-center justify-center' : 'w-full px-8 py-4 placeholder:text-[#989898] text-[16px] text-white bg-[#303030] rounded-full outline-none'}`}
+        className={`${isOTP ? '2xl:w-24 2xl:h-24 md:w-18 md:h-18 h-16 w-16 bg-[#474747] rounded-[16px] 2xl:rounded-[20px] border-2 border-[#474747] font-semibold text-3xl focus:border-white focus:outline-none text-white text-center flex items-center justify-center' : 'w-full px-8 py-5 placeholder:text-[#989898] text-[16px] text-white bg-[#303030] rounded-full outline-none'}`}
         {...register}
         {...rest}
       />

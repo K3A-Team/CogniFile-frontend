@@ -98,7 +98,7 @@ function RegisterFormView() {
                             placeholder="Firstname"
                             isPassword={false}
                             isOTP={false}
-                            //@ts-ignore
+                            //@ts-expect-error
                             register={
                             register('firstName', {
                                 required: 'First name is required',
@@ -114,7 +114,7 @@ function RegisterFormView() {
                             placeholder="Lastname"
                             isPassword={false}
                             isOTP={false}
-                            //@ts-ignore
+                            //@ts-expect-error
                             register={
                                 register('lastName', {
                                     required: 'Last name is required',
@@ -131,7 +131,7 @@ function RegisterFormView() {
                         placeholder="Email"
                         isPassword={false}
                         isOTP={false}
-                        //@ts-ignore
+                        //@ts-expect-error
                         register={
                             register('email', {
                             required: 'Email is required',
@@ -151,7 +151,7 @@ function RegisterFormView() {
                         placeholder="Password"
                         isPassword
                         isOTP={false}
-                        //@ts-ignore
+                        //@ts-expect-error
                         register={
                             register(
                                 'password',
@@ -174,7 +174,7 @@ function RegisterFormView() {
                         placeholder="Confirm Password"
                         isPassword
                         isOTP={false}
-                        //@ts-ignore
+                        //@ts-expect-error
                         register={
                             register(
                                 'confirmPassword',

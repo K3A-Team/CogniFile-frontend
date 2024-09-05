@@ -3,6 +3,7 @@ import MiniFooter from '@/src/app/components/core/miniFooter';
 import MiniNavbar from '@/src/app/components/core/miniNavbar';
 import LoginFormView from '@/src/app/components/auth/loginformview';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata : Metadata = {
   title: 'CogniFile | Login',
@@ -25,7 +26,9 @@ export default function Login() {
                 Try Cognifile for free. No credit card required
               </p>
             </div>
-            <LoginFormView />
+            <Suspense>
+              <LoginFormView />
+            </Suspense>
           </div>
           <div className="flex gap-1">
             <p className="text-white opacity-30 font-medium text-[1rem]">

@@ -3,9 +3,10 @@
 import axios from 'axios';
 import { useState } from 'react';
 import Input from '@/src/app/components/core/input';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import OAuthButton from '../../core/oauthbutton';
 
 type Form = {
     email: string;
@@ -32,10 +33,17 @@ interface LoginErrorResponse {
 
 function LoginFormView() {
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string>('');
-    const [success, setSuccess] = useState<string>('');
     const router = useRouter();
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+
+    const nextSearchParams = new URLSearchParams(searchParams.toString())
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string>(
+        nextSearchParams.get('error') ?? ''
+    );
+    const [success, setSuccess] = useState<string>('');
 
     const { register, formState: { errors }, handleSubmit: onSubmit } = useForm<Form>({
         defaultValues: {
@@ -43,6 +51,9 @@ function LoginFormView() {
             password: ''
         },
     });
+    
+    nextSearchParams.delete('error')
+    router.replace(`${pathname}?${nextSearchParams}`)
     
     const handleLogin = async (data: Form) => {
         setError('');
@@ -80,7 +91,7 @@ function LoginFormView() {
                         placeholder="Email"
                         isPassword={false}
                         isOTP={false}
-                        //@ts-ignore
+                        //@ts-expect-error
                         register={
                             register('email', {
                             required: 'Email field is required',
@@ -100,7 +111,7 @@ function LoginFormView() {
                         placeholder="Password"
                         isPassword
                         isOTP={false}
-                        //@ts-ignore
+                        //@ts-expect-error
                         register={
                             register('password', {
                             required: 'Password field is required',
@@ -115,6 +126,14 @@ function LoginFormView() {
                         errors.password && <p className="text-[#b73939] font-medium text-sm w-full text-left ml-4">{errors.password.message}</p>
                     }
                 </div>
+                <div className='flex flex-col w-full md:flex-row items-start gap-3'>
+                    <div className='flex justify-center gap-2 flex-col w-full'>
+                        <OAuthButton type='google' />
+                    </div>
+                    <div className='flex justify-center gap-2 flex-col w-full'>
+                        <OAuthButton type='github' />
+                    </div>
+                </div>
                 <div className="flex justify-between items-center w-full">
                     <Link
                         className="text-[#397AB7] underline font-medium text-sm hover:cursor-pointer"
@@ -127,7 +146,7 @@ function LoginFormView() {
                     !!error && <p className="text-[#b73939] font-medium text-xl w-full flex text-center justify-center" style={{ lineBreak: 'anywhere' }}>{error}</p>
                 }
                 {
-                    !!success && <p className="text-green font-medium text-sm w-full flex text-center justify-center" style={{ lineBreak: 'anywhere' }}>{success}</p>
+                    !!success && <p className="text-green font-medium text-xl w-full flex text-center justify-center" style={{ lineBreak: 'anywhere' }}>{success}</p>
                 }
             </div>
             <button

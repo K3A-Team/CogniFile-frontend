@@ -44,10 +44,13 @@ function ResetFormView({ email, token } : { email?: string, token?: string }) {
         setLoading(true);
 
         try {
-            const { new_password_confirm, ...toSend } = data;
             const response = await axios.post<LoginSuccessResponse | LoginErrorResponse>(
                 '/api/auth/reset-password',
-                { ...toSend },
+                {
+                    email: data.email,
+                    token: data.token,
+                    new_password: data.new_password,
+                },
             );
 
             if (response.data.success) {
