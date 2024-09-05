@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Input from '@/src/app/components/core/input';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import OAuthButton from '../../core/oauthbutton';
 
 type Form = {
     email: string;
@@ -188,6 +189,14 @@ function RegisterFormView() {
                     {
                         errors.confirmPassword && <p className="text-[#b73939] font-medium text-sm w-full text-left ml-4">{errors.confirmPassword.message}</p>
                     }
+                </div>
+                <div className='flex flex-col w-full md:flex-row items-start gap-3'>
+                    <div className='flex justify-center gap-2 flex-col w-full'>
+                        <OAuthButton type='google' />
+                    </div>
+                    <div className='flex justify-center gap-2 flex-col w-full'>
+                        <OAuthButton type='github' />
+                    </div>
                 </div>
             </div>
             {
