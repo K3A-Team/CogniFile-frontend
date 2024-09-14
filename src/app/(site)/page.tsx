@@ -6,6 +6,7 @@ import Features from '../components/landing/features';
 import Hero from '../components/landing/hero';
 import Plans from '../components/landing/plans';
 import Stats from '../components/landing/stats';
+import { getSession } from '@/src/lib/session';
 
 export const metadata: Metadata = {
   title: 'CogniFile | Secure Cloud Storage and File Sharing Platform',
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const session = getSession();
   return (
     <div>
       <Navbar />
@@ -43,7 +45,7 @@ export default function Home() {
         <Stats />
         <Plans />
         <Features />
-        <CTA />
+        {!!!session && <CTA />}
       </div>
       <Footer />
     </div>

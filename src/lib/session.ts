@@ -45,6 +45,11 @@ export async function verifySession() {
   }
 }
 
+export const getSession = () : Record<string, string> | null => {
+  const session = JSON.parse(cookies().get('session')?.value || '{}');
+  return (Object.keys(session).length === 0) ? null : session;
+}
+
 export function deleteSession() {
   cookies().delete('session');
 }

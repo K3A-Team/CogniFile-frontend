@@ -6,8 +6,10 @@ import shape1 from '@/public/shape1.png';
 import shape2 from '@/public/shape2.png';
 import shape3 from '@/public/shape3.png';
 import shape4 from '@/public/shape4.png';
+import { getSession } from '@/src/lib/session';
 
 const Hero = () => {
+  const session = getSession();
   return (
     <section className="relative lg:scale-100 scale-60">
       <div className="w-full px-20 text-center lg:px-40">
@@ -29,9 +31,11 @@ const Hero = () => {
         </h1>
         <Link
           className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] transition-all hover:opacity-60 text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
-          href="/auth/register"
+          href={!!session ? "/home" : "/auth/register"}
         >
-          Try For Free
+          {
+            !!session ? 'Go Home' : 'Try For Free'
+          }
         </Link>
         <p className="mt-12 lg:text-xl leading-8 lg:w-auto max-w-[80%] m-auto">
           Over <span className="font-bold">200+ tools</span> and graphic design, Lorem ipsum is a

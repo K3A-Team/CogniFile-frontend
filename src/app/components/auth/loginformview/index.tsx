@@ -116,7 +116,7 @@ function LoginFormView() {
                             register('password', {
                             required: 'Password field is required',
                             minLength: {
-                                value: 6,
+                                value: 1,
                                 message: 'Password must be at least 6 characters',
                             },
                             })

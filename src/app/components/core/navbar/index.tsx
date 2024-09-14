@@ -6,7 +6,11 @@ import { useState } from 'react';
 import dark from '@/public/dark.png';
 import shortLogo from '@/public/logo_short.png';
 
-const Navbar = () => {
+type Props = {
+  session?: Record<string, string>;
+}
+
+const Navbar = ({ session } : Props) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -21,15 +25,25 @@ const Navbar = () => {
           <button>
             <Image src={dark} alt="Dark" className="h-12 w-12" />
           </button>
-          <Link href="/auth/login" className="text-white mr-4">
-            Sign in
-          </Link>
-          <Link
-            href="/auth/register"
-            className="text-white border border-white bg-cf-dark rounded-full px-4 py-2 hover:invert"
-          >
-            Sign up - For free
-          </Link>
+          <>
+            {!!session ? (
+              <Link href="/home" className="text-white hover:underline">
+                Home
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth/login" className="text-white mr-4">
+                  Sign in
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="text-white border border-white bg-cf-dark rounded-full px-4 py-2 hover:invert"
+                >
+                  Sign up - For free
+                </Link>
+              </>
+            )}
+          </>
         </div>
 
         <button
