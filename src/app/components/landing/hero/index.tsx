@@ -28,7 +28,7 @@ const Hero = () => {
           Discover The Best Productivity Tool Effortlessly
         </h1>
         <Link
-          className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
+          className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] transition-all hover:opacity-60 text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
           href="/auth/register"
         >
           Try For Free

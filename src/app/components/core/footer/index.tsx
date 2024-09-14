@@ -16,7 +16,7 @@ const Footer = () => {
           <p className="text-2xl lg:text-3xl xl:text-2xl font-semibold xl:text-left text-center">
             We growing up your organization with AI supported storage.
           </p>
-          <p className="text-400">Sofiane, 2024.</p>
+          <p className="text-400">K3A, {new Date().getFullYear()}.</p>
         </div>
 
         <div className="hidden xl:flex justify-between gap-20">
@@ -57,7 +57,7 @@ const Footer = () => {
       {/*Bottom*/}
       <div className="bg-[#191919]">
         <div className="py-6 px-16 xl:px-0 container m-auto flex lg:justify-between items-center justify-center text-lg">
-          <p>&copy; 2024 CogniFile. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} CogniFile. All rights reserved.</p>
           <div className="hidden lg:flex align-center justify-center space-x-8">
             <Link href="#" className="hover:cursor-pointer">
               Terms of Service
