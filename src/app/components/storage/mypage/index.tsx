@@ -128,14 +128,18 @@ const MyPage = ({ folderId }: { folderId: string }) => {
           const formData = new FormData();
           formData.append('file', file);
           formData.append('folderId', folderId);
-
           const response = await fetch('/api/files/upload', {
             method: 'POST',
             body: formData,
           });
 
           if (!response.ok) {
-            throw new Error('File upload failed');
+            return response
+              .clone()
+              .json()
+              .then(data => {
+                throw new Error(data.message);
+              });
           }
 
           const result = await response.json();
@@ -150,7 +154,11 @@ const MyPage = ({ folderId }: { folderId: string }) => {
             },
           ]);
         } catch (error) {
-          throw new Error('File upload failed');
+          if (error instanceof Error) {
+            throw new Error(error.message);
+          } else {
+            throw new Error('An unknown error occurred');
+          }
         }
       }
     };
@@ -314,7 +322,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
           {isListView ? (
             <div className="w-full">
               <table className="table-auto w-full text-left">
-                <tbody className="space-y-8 w-full">
+                <tbody className="space-y-2 w-full">
                   {folders.map((folder, index) => (
                     <Link
                       key={index}

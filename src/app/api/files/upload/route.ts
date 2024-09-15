@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     if (!response.data.success) {
       return new Response(
         JSON.stringify({
-          message: 'An issue occurred while fetching user profile data',
+          message: response.data.message,
         }),
         {
           status: 400,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return new Response(
       JSON.stringify({
-        message: 'An issue occurred while fetching user profile data',
+        message: error,
       }),
       {
         status: 400,
