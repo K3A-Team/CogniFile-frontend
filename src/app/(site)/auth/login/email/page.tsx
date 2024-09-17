@@ -1,16 +1,15 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Suspense } from 'react';
+import LoginFormView from '@/src/app/components/auth/loginformview';
 import MiniFooter from '@/src/app/components/core/miniFooter';
 import MiniNavbar from '@/src/app/components/core/miniNavbar';
-import OAuthButton from '@/src/app/components/core/oauthbutton';
 
 export const metadata: Metadata = {
-  title: 'CogniFile | Register',
-  description: 'Create your CogniFile account, your AI powered smart file manager!',
+  title: 'CogniFile | Login',
+  description: 'Login to your CogniFile account, your AI powered smart file manager!',
 };
 
-export default function Login() {
+export default function Email() {
   return (
     <div className="min-h-screen w-screen flex items-center justify-center flex-col">
       <MiniNavbar />
@@ -25,23 +24,17 @@ export default function Login() {
                 Try Cognifile for free. No credit card required
               </p>
             </div>
-            <Suspense>
-              <div className="flex flex-col w-full gap-3">
-                <OAuthButton type="Email" operation="register" />
-                <OAuthButton type="Google" operation="register" />
-                <OAuthButton type="Github" operation="register" />
-              </div>
-            </Suspense>
+            <LoginFormView />
           </div>
           <div className="flex gap-1">
             <p className="text-white opacity-30 font-medium text-[1rem]">
-              Already have an account ?
+              You don’t have an account ?
             </p>
             <Link
               className="text-white opacity-70 font-medium text-[1rem] underline hover:cursor-pointer"
-              href={'/auth/login'}
+              href={'/auth/register'}
             >
-              Login
+              Register
             </Link>
           </div>
         </div>

@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  body {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}
+
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 *::-webkit-scrollbar {
   display: none;

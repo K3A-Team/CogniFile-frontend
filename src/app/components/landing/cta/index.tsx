@@ -13,7 +13,7 @@ const CTA = () => {
         </p>
         <div className="flex justify-center flex-col lg:flex-row items-center gap-4">
           <Link
-            className="bg-gradient-to-r from-[#DEDEDE] to-[#787878] transition-all hover:opacity-60 text-cf-dark rounded-full px-16 py-4 font-bold text-lg"
+            className="lg:scale-100 scale-75 bg-gradient-to-r from-[#DEDEDE] to-[#787878] transition-all opacity-80 hover:opacity-100 text-cf-dark rounded-full px-16 py-4 font-bold text-lg text-center text-nowrap"
             href="/auth/register"
           >
             Try For Free

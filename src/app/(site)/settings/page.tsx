@@ -3,15 +3,68 @@
 import Input from '../../components/core/input';
 import ProfileIcon from '../../components/core/profileicon';
 import Image from 'next/image';
-import React from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import arrowLeft from '@/public/arrow_left.png';
 import whiteCheck from '@/public/check_white.png';
+import axios from '@/src/utils/axios';
+
+interface UserProfile {
+  lastName: string;
+  firstName: string;
+  id: string;
+  portfolioId: string;
+  trial: string;
+  trashFolderId: string;
+  rootFolderId: string;
+  authId: string | null;
+  userSpace: string;
+  email: string;
+}
 
 function Settings() {
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [storage, setStorage] = useState<number>(0);
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get<{ success: boolean; user: UserProfile }>('/api/profile');
+        const { trial } = response.data.user;
+        setUserProfile(response.data.user);
+
+        switch (trial) {
+          case 'basic':
+            setStorage(100);
+            break;
+
+          case 'standard':
+            setStorage(500);
+            break;
+
+          case 'premium':
+            setStorage(2);
+            break;
+
+          default:
+            setStorage(5);
+        }
+      } catch (error) {
+        setUserProfile(null);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
   return (
     <div className="flex px-20 w-full flex-col gap-10 h-screen">
       <div className="w-full h-16 flex justify-between items-center">
-        <Image src={arrowLeft} alt="arrow_left" />
+        <Link href="/home">
+          <Image src={arrowLeft} alt="arrow_left" />
+        </Link>
         <ProfileIcon />
       </div>
 
@@ -19,8 +72,11 @@ function Settings() {
         <div className="flex flex-col gap-10 w-[55%]">
           <div className="flex flex-col gap-4">
             <div className="flex gap-4 items-end">
-              <p className="font-regular text-3xl">1,18 GO</p>
-              <p className="text-white opacity-40">used from 100GO</p>
+              <p className="font-regular text-3xl">{userProfile?.userSpace || '0'} GO</p>
+              <p className="text-white opacity-40">
+                {' '}
+                used from {storage.toString()} {Number(storage) < 10 ? 'TB' : 'GB'}
+              </p>
             </div>
             <div className="rounded-full bg-[#F2F2F2] h-1 w-full">
               <div className="rounded-full bg-[#E63C18] h-1 w-4"></div>
@@ -34,28 +90,75 @@ function Settings() {
               </button>
             </div>
 
-            <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[640px]">
-              <div className="flex flex-col gap-2">
-                <h3 className="text-3xl font-extrabold">Basic Plan</h3>
-                <p className="text-[#6EBA57] text-2xl">9.99 $US/month</p>
+            {userProfile?.trial === 'basic' ? (
+              <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[640px]">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-3xl font-extrabold">Basic Plan</h3>
+                  <p className="text-[#6EBA57] text-2xl">9.99 $US/month</p>
+                </div>
+                <ul className="text-[#E3E3E3]">
+                  {[
+                    '100 GB Storage',
+                    'Chatbot',
+                    'Natural language search',
+                    'Automatic file categorization and tagging',
+                    'Duplicate files detection',
+                    'Automatic version control detection',
+                    'Data backup',
+                  ].map((feature, index) => (
+                    <li key={index} className="flex items-center mb-4">
+                      <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
+                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="text-[#E3E3E3]">
-                {[
-                  '100 GB Storage',
-                  'Chatbot',
-                  'Natural language search',
-                  'Automatic file categorization and tagging',
-                  'Duplicate files detection',
-                  'Automatic version control detection',
-                  'Data backup',
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center mb-4">
-                    <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
-                    <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            ) : userProfile?.trial === 'standard' ? (
+              <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[760px]">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-3xl font-extrabold">Standard Plan</h3>
+                  <p className="text-[#BA9457] text-2xl">24.99 $US/month</p>
+                </div>
+                <ul className="text-[#E3E3E3]">
+                  {[
+                    '500 GB Storage',
+                    'All features of the Basic Plan',
+                    'Natural language search (multiple languages + voice search)',
+                    'Automatic file hierarchy suggestion',
+                    'Malicious files detection',
+                    'Advanced file search (search by image, voice)',
+                    'Automatic file translation (limited to 10 files per week)',
+                  ].map((feature, index) => (
+                    <li key={index} className="flex items-center mb-4">
+                      <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
+                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[760px]">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-3xl font-extrabold">Premium Plan</h3>
+                  <p className="text-[#8C57BA] text-2xl">49.99 $US/month</p>
+                </div>
+                <ul className="text-[#E3E3E3]">
+                  {[
+                    '2 TB Storage',
+                    'All features of the Standard Plan',
+                    'Unlimited automatic file translation',
+                    'Enhanced data backup with versioning',
+                    'Priority customer support',
+                    'Possibility to deploy the app locally',
+                  ].map((feature, index) => (
+                    <li key={index} className="flex items-center mb-4">
+                      <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
+                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 
@@ -63,18 +166,37 @@ function Settings() {
           <div className="rounded-[24px] bg-dar-card p-12 flex flex-col gap-20">
             <div className="flex flex-col gap-6 items-center">
               <div className="rounded-full bg-[#151515] text-3xl h-24 w-24 font-regular flex items-center justify-center">
-                <p>AB</p>
+                <p>
+                  {userProfile ? getInitials(userProfile.firstName, userProfile.lastName) : 'AB'}
+                </p>
               </div>
-              <p className="font-regular text-2xl">Abdelkarim Bengherbia</p>
+              <p className="font-regular text-2xl">
+                {userProfile
+                  ? `${userProfile.firstName} ${userProfile.lastName}`
+                  : 'Abdelkarim Bengherbia'}
+              </p>
             </div>
             <div className="flex flex-col gap-2 w-full">
+              <div className="flex justify-between">
+                <Input
+                  placeholder="Firstname"
+                  isPassword={false}
+                  isOTP={false}
+                  value={userProfile ? userProfile.firstName : ''}
+                />
+                <Input
+                  placeholder="LastName"
+                  isPassword={false}
+                  isOTP={false}
+                  value={userProfile ? userProfile.lastName : ''}
+                />
+              </div>
               <Input
                 placeholder="Email"
                 isPassword={false}
                 isOTP={false}
-                value={'la_bengherbia@esi.dz'}
+                value={userProfile ? userProfile.email : ''}
               />
-              <Input placeholder="Email" isPassword={true} isOTP={false} value={'***********'} />
             </div>
           </div>
           <div className="flex flex-col gap-8 w-full items-start">
