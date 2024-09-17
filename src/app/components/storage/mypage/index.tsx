@@ -207,6 +207,74 @@ const MyPage = ({ folderId }: { folderId: string }) => {
     setIsCreatingFolder(false);
   };
 
+  const handleUploadFolder = async () => {
+    try {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.webkitdirectory = true;
+      input.multiple = true;
+  
+      const fileSelectionPromise = new Promise<FileList | null>((resolve) => {
+        input.onchange = (event) => {
+          const target = event.target as HTMLInputElement;
+          resolve(target.files);
+        };
+      });
+  
+      input.click();
+  
+      const files = await fileSelectionPromise;
+  
+      if (!files || files.length === 0) {
+        console.log('No folder selected');
+        alert('No folder selected');
+        return;
+      }
+
+      toggleMenu();
+    
+      const formData = new FormData();
+
+      formData.append('folderId', folderId);
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fullPath = file.webkitRelativePath || file.name;
+        formData.append('files', file, fullPath);
+      }
+
+
+      const response = await fetch('/api/folders/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Folder upload failed');
+      }
+
+      const result = await response.json();
+
+      console.log(result)  
+
+      setFolders(prev => [
+        ...prev,
+        {
+          id: result.folder.id,
+          name: result.folder.name,
+          items: result.folder.subFolders.length + result.folder.files.length,
+          size: 'Unknown',
+          color: 'blue',
+          date: result.folder.interactionDate.split('T')[0],
+        },
+      ]);
+
+    } catch (error) {
+      console.error('Error uploading folder:', error);
+      alert('An error occurred while uploading the folder');
+    }
+  };
+
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -235,7 +303,10 @@ const MyPage = ({ folderId }: { folderId: string }) => {
                     label: 'Import File',
                     handler: handleUploadFile,
                   },
-                  { iconSrc: '/iconCards/importfolder.png', label: 'Import Folder' },
+                  { iconSrc: '/iconCards/importfolder.png',
+                    label: 'Import Folder',
+                    handler: handleUploadFolder
+                  },
                   { iconSrc: '/iconCards/color.png', label: 'Apply Theme' },
                 ]}
               />
