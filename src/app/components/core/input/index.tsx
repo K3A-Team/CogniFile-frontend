@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import React, { ChangeEvent, InputHTMLAttributes, useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 import eyeOff from '@/public/eye-off.webp';
 import eyeOn from '@/public/eye-on.webp';
-import { UseFormRegister } from 'react-hook-form';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
@@ -13,10 +13,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   //eslint-disable-next-line
-  register?: UseFormRegister<any>; //disable to pass generics setup for react-hook-form as all filds are name based
+  register?: UseFormRegister<any>;
 }
 
-const Input = ({ placeholder, isPassword, isOTP, onChange, value, register, ...rest }: InputProps) => {
+const Input = ({
+  placeholder,
+  isPassword,
+  isOTP,
+  onChange,
+  value,
+  register,
+  ...rest
+}: InputProps) => {
   const [inputType, setInputType] = useState(isPassword ? 'password' : 'text');
 
   const togglePasswordVisibility = () => {

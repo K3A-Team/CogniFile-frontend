@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import arrow from '@/public/arrow.png';
 import whiteCheck from '@/public/check_white.png';
 
@@ -36,10 +37,13 @@ const Plans = () => {
                 </li>
               ))}
             </ul>
-            <button className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#6EBA57]">
+            <Link
+              className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#6EBA57]"
+              href="/auth/register"
+            >
               <span className="group-hover:text-[#191919]">Buy plan</span>
               <Image src={arrow} alt="Arrow" className="ml-2" />
-            </button>
+            </Link>
           </div>
           <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[760px]">
             <div className="flex flex-col gap-2">
@@ -62,10 +66,13 @@ const Plans = () => {
                 </li>
               ))}
             </ul>
-            <button className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#BA9457]">
+            <Link
+              className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#BA9457]"
+              href="/auth/register"
+            >
               <span className="group-hover:text-[#191919]">Buy plan</span>
               <Image src={arrow} alt="Arrow" className="ml-2" />
-            </button>
+            </Link>
           </div>
           <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[760px]">
             <div className="flex flex-col gap-2">
@@ -87,10 +94,13 @@ const Plans = () => {
                 </li>
               ))}
             </ul>
-            <button className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#8C57BA]">
+            <Link
+              className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-[#8C57BA]"
+              href="/auth/register"
+            >
               <span>Buy plan</span>
               <Image src={arrow} alt="Arrow" className="ml-2" />
-            </button>
+            </Link>
           </div>
           <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex lg:hidden flex-col justify-between h-[760px]">
             <div className="flex flex-col gap-2">
@@ -112,10 +122,13 @@ const Plans = () => {
                 </li>
               ))}
             </ul>
-            <button className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-[#68A7DB] hover:to-[#3376AD]">
+            <Link
+              className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-[#68A7DB] hover:to-[#3376AD]"
+              href="/auth/register"
+            >
               <span>Buy plan</span>
               <Image src={arrow} alt="Arrow" className="ml-2" />
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -126,10 +139,13 @@ const Plans = () => {
                 <h3 className="text-3xl font-extrabold">Entreprise Plan</h3>
                 <p className="text-[#68A7DB] text-2xl">Entreprise</p>
               </div>
-              <button className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-[#68A7DB] hover:to-[#3376AD]">
+              <Link
+                className="flex items-center justify-between bg-[#333333] text-white rounded-[6px] px-6 py-2 group transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:from-[#68A7DB] hover:to-[#3376AD]"
+                href="/auth/register"
+              >
                 <span>Buy plan</span>
                 <Image src={arrow} alt="Arrow" className="ml-2" />
-              </button>
+              </Link>
             </div>
             <ul className="text-[#E3E3E3]">
               {[
