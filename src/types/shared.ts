@@ -7,7 +7,7 @@ export type Folder = {
   date: string;
 };
 export type File = {
-  id: number | undefined;
+  id: string | undefined;
   name: string;
   size: string;
   date: string;

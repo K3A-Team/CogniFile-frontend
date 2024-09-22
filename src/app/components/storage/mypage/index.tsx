@@ -11,6 +11,7 @@ import FolderRow from '../../core/folderrow';
 import MenuCard from '../../core/menucard';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaTh, FaList } from 'react-icons/fa';
 import add from '@/public/add.png';
@@ -23,6 +24,7 @@ import { Folder, File } from '@/src/types/shared';
 import api from '@/src/utils/axios';
 
 const MyPage = ({ folderId }: { folderId: string }) => {
+  const router = useRouter();
   const [isListView, setIsListView] = useState(false);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [files, setFiles] = useState<File[]>([]);
@@ -36,11 +38,10 @@ const MyPage = ({ folderId }: { folderId: string }) => {
 
   useEffect(() => {
     const transformResponse = (res: FolderResponse) => {
-      let idCounter = 1;
       const { folder } = res;
 
       const filespart = folder.files.map(file => ({
-        id: idCounter++,
+        id: file.id,
         name: file.name,
         size: file.size,
         date: 'Unknown',
@@ -98,6 +99,31 @@ const MyPage = ({ folderId }: { folderId: string }) => {
 
   const handleEnhancedFileStructureClick = () => {
     setIsModalOpen(true);
+  };
+
+  const handleRemoveFile = (id: string) => {
+    api.delete(`/api/files/${id}`).then(() => {
+      setFiles(prev => prev.filter(file => file.id !== id));
+    });
+  };
+
+  const handleRemoveFolder = (id: string) => {
+    api.delete(`/api/folders/${id}`).then(() => {
+      setFolders(prev => prev.filter(folder => folder.id !== id));
+    });
+  };
+
+  const handleDownload = (url: string, fileName: string) => {
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    document.body.appendChild(anchor); // Append to the DOM
+    anchor.click(); // Trigger download
+    document.body.removeChild(anchor); // Remove from the DOM
+  };
+
+  const handleNavigation = (folderId: string) => {
+    router.push(`/storage/${folderId}`);
   };
 
   if (loading) {
@@ -346,25 +372,49 @@ const MyPage = ({ folderId }: { folderId: string }) => {
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-              {folders.map((folder, index) => (
-                <Link key={index} href={`/storage/${folder.id}`}>
+              {folders.map(folder => (
+                <button
+                  type="button"
+                  key={folder.id}
+                  onClick={() => folder.id && handleNavigation(folder.id)}
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      folder.id && handleNavigation(folder.id);
+                    }
+                  }}
+                >
                   <FolderCard
                     color={folder.color}
                     name={folder.name}
                     items={folder.items}
                     size={folder.size}
+                    onRemove={() => folder.id !== undefined && handleRemoveFolder(folder.id)}
                   />
-                </Link>
+                </button>
               ))}
               {files.map(file => (
-                <a href={file.url} download key={file.id}>
+                <div
+                  key={file.id}
+                  onClick={() => file.url && file.name && handleDownload(file.url, file.name)} // Trigger download on click
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      if (file.url && file.name) {
+                        handleDownload(file.url, file.name); // Trigger download on Enter or Space key press
+                      }
+                    }
+                  }}
+                >
                   <FileCard
                     fileName={file.name}
                     fileSize={file.size}
                     animateIn={true}
                     customAnimation="animate-fade-in-up"
+                    onRemove={() => file.id !== undefined && handleRemoveFile(file.id)}
                   />
-                </a>
+                </div>
               ))}
             </div>
           )}

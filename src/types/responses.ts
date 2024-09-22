@@ -2,6 +2,7 @@ type File = {
   name: string;
   size: string;
   url: string;
+  id: string;
 };
 
 type SubFolder = {

@@ -6,7 +6,7 @@ import React from 'react';
 interface MenuItem {
   iconSrc?: string;
   label: string;
-  handler?: () => void;
+  handler?: (event: React.MouseEvent<HTMLLIElement>) => void; // Pass the event to the handler
 }
 
 interface MenuCardProps {
@@ -21,12 +21,20 @@ const MenuCard: React.FC<MenuCardProps> = ({ items }) => {
           <li
             key={index}
             className="flex items-center py-2 px-2 w-full cursor-pointer hover:bg-[#1E1E1E]"
-            onClick={item.handler}
+            onClick={event => {
+              event.stopPropagation(); // Stop the event from propagating
+              if (item.handler) {
+                item.handler(event); // Call the handler function with the event
+              }
+            }}
             role="button"
             tabIndex={0}
             onKeyDown={event => {
               if (event.key === 'Enter' || event.key === ' ') {
-                item.handler;
+                event.stopPropagation(); // Stop the keydown event from propagating
+                if (item.handler) {
+                  item.handler(event as unknown as React.MouseEvent<HTMLLIElement>); // Trigger the handler on Enter or Space
+                }
               }
             }}
           >
