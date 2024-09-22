@@ -27,7 +27,11 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleEmptyTrash = () => {
-    // Console.log('Trash emptied');
+    // Call API to empty trash
+    api.delete(`/api/trash`).then(() => {
+      setFolders([]);
+      setFiles([]);
+    });
     setShowModal(false);
   };
 
