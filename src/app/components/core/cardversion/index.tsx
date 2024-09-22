@@ -4,7 +4,7 @@ import info from '@/public/iconCards/info.png';
 
 function CardVersion() {
   return (
-    <div className="rounded-[8px] bg-dar-card p-5 gap-8 flex flex-col items-center">
+    <div className="rounded-[8px] bg-dar-card p-5 gap-8 flex flex-col items-center z-[30]">
       <Image src={info} alt="info" />
       <div className="flex flex-col gap-2 text-lg">
         <p className="text-white opacity-45 text-center leading-relaxed">
