@@ -2,7 +2,7 @@ import React from 'react';
 
 function CardSuggestions() {
   return (
-    <div className="rounded-[8px] bg-dar-card p-5 gap-8 flex flex-col items-center">
+    <div className="rounded-[8px] bg-dar-card p-5 gap-8 flex flex-col items-center z-[30]">
       <h3 className="text-sm text-[#52C41A]">Suggested impovements</h3>
       <div className="flex flex-col gap-2 text-lg">
         {[

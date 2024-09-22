@@ -58,7 +58,7 @@ function Bot({ messages, setMessages }: BotProps) {
   };
 
   return (
-    <div className="h-full w-full relative">
+    <div className="h-full w-full relative z-[10]">
       <div className="flex flex-col items-start absolute bottom-0 w-full">
         <div
           className="flex flex-col h-[400px] overflow-y-scroll p-4 space-y-4 w-full gap-8 md:gap-0 "
@@ -130,11 +130,17 @@ function Chatbot() {
 
   return (
     <div
-      className={`absolute bottom-0 flex items-end w-full ${toggle ? 'h-[736px]' : 'h-[64px] z-[-1]'}  justify-center`}
+      className={`absolute bottom-0 flex items-end w-full ${
+        toggle ? 'h-[736px]' : 'h-[64px]'
+      } justify-center`}
+      style={{ zIndex: toggle ? 1000 : 1 }}
     >
-      <div className="flex flex-col gap-8 items-center w-full h-[736px] relative">
+      <div className="flex flex-col gap-8 items-center w-full h-full relative">
         <div
-          className={` ${toggle ? 'block z-10' : 'hidden z-[-1]'} xl:w-[40%] sm:w-[80%] w-[90%] px-6 py-8 lg:p-12 bg-[#191919] h-[640px] rounded-[1rem] absolute top-0 overflow-clip`}
+          className={`${
+            toggle ? 'block' : 'hidden'
+          } xl:w-[40%] sm:w-[80%] w-[90%] px-6 py-8 lg:p-12 bg-[#191919] h-[640px] rounded-[1rem] absolute top-0 overflow-clip`}
+          style={{ zIndex: 10 }}
         >
           <div className="absolute w-full px-12 py-6 bg-[#191919] flex justify-between items-center top-0 left-0 z-10 shadow-lg">
             <h2 className="text-xl">CogniBot</h2>
@@ -164,7 +170,7 @@ function Chatbot() {
         </div>
 
         <div
-          className="bg-[#191919] h-20 w-20 rounded-full absolute bottom-0 flex items-center justify-center"
+          className="bg-[#191919] h-20 w-20 rounded-full absolute bottom-0 flex items-center justify-center z-[1000]"
           role="button"
           tabIndex={0}
           onClick={() => setToggle(!toggle)}
