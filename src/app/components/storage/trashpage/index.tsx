@@ -33,11 +33,10 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
 
   useEffect(() => {
     const transformResponse = (res: FolderResponse) => {
-      let idCounter = 1;
       const { folder } = res;
 
       const filespart = folder.files.map(file => ({
-        id: idCounter++,
+        id: file.id,
         name: file.name,
         size: file.size,
         date: 'Unknown',
