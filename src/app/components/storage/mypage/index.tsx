@@ -189,6 +189,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
       }
     };
     input.click();
+    setIsMenuVisible(false);
   };
 
   const handleCreatingFolder = async () => {
@@ -231,6 +232,7 @@ const MyPage = ({ folderId }: { folderId: string }) => {
       throw new Error('Folder creation failed');
     }
     setIsCreatingFolder(false);
+    setIsMenuVisible(false);
   };
 
   const toggleMenu = () => {
