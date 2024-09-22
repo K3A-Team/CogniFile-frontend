@@ -15,11 +15,6 @@ const ProfileIcon = () => {
     setIsMenuVisible(!isMenuVisible);
   };
 
-  const handleProfileClick = () => {
-    // Handle profile logic here
-    return 'profile clicked';
-  };
-
   const handleLogoutClick = () => {
     // Handle logout logic here
     axios
@@ -33,10 +28,6 @@ const ProfileIcon = () => {
   };
 
   const menuItems = [
-    {
-      label: 'Profile',
-      handler: handleProfileClick,
-    },
     {
       label: 'Logout',
       handler: handleLogoutClick,
