@@ -3,13 +3,14 @@
 import MenuCard from '../menucard';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Adjust the import path as necessary
 
 const ProfileIcon = () => {
   const router = useRouter();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [initials, setInitials] = useState('');
 
   const handleMenuToggle = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -34,13 +35,28 @@ const ProfileIcon = () => {
     },
   ];
 
+  useEffect(() => {
+    const getInitials = (firstName: string, lastName: string) => {
+      return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+    };
+
+    const fetchUserProfile = async () => {
+      return await axios.get('/api/profile');
+    };
+
+    fetchUserProfile().then(response => {
+      const { firstName, lastName } = response.data.user;
+      setInitials(getInitials(firstName, lastName));
+    });
+  }, []);
+
   return (
     <div className="relative">
       <button
         className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center"
         onClick={handleMenuToggle}
       >
-        <p>AB</p>
+        <p>{initials}</p>
       </button>
 
       {isMenuVisible && (
