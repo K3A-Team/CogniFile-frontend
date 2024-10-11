@@ -16,7 +16,7 @@ import arrowUp from '@/public/arrow_up.png';
 import LightarrowUp from '@/public/arrow_up_light.png';
 import magicBlue from '@/public/magicBlue.png';
 import settingsOrange from '@/public/settings_orange.svg';
-import { useTheme } from '@/src/app/components/core/theme';
+import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 
 type RecentItem = {

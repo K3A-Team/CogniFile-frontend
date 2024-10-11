@@ -1,12 +1,12 @@
 'use client';
 
-import { useTheme } from '../theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import shortLogoLight from '@/public/ShortLogoLight.png';
 import shortLogoDark from '@/public/logo_short.png';
 import macos from '@/public/macos.png';
 import windows from '@/public/windows.png';
+import useTheme from '@/src/hooks/useTheme';
 
 const Footer = () => {
   const { theme } = useTheme();

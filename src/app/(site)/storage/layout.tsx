@@ -3,7 +3,6 @@
 import Chatbot from '../../components/core/chatbot';
 import ProfileIcon from '../../components/core/profileicon';
 import Search from '../../components/core/search';
-import { useTheme } from '../../components/core/theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import dark from '@/public/dark.png';
@@ -11,6 +10,7 @@ import light from '@/public/light.png';
 import params from '@/public/params.svg';
 import Lightparams from '@/public/params_light.svg';
 import Sidebar from '@/src/app/components/core/sidebar';
+import useTheme from '@/src/hooks/useTheme';
 
 const StorageLayout = ({ children }: { children: React.ReactNode }) => {
   const { theme, setTheme } = useTheme();
