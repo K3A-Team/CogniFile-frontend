@@ -1,18 +1,24 @@
 'use client';
 
-import Chatbot from '../../components/core/chatbot';
-import ProfileIcon from '../../components/core/profileicon';
-import Search from '../../components/core/search';
+import './globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import dark from '@/public/dark.png';
 import light from '@/public/light.png';
 import params from '@/public/params.svg';
 import Lightparams from '@/public/params_light.svg';
+import Chatbot from '@/src/app/components/core/chatbot';
+import ProfileIcon from '@/src/app/components/core/profileicon';
+import Search from '@/src/app/components/core/search';
 import Sidebar from '@/src/app/components/core/sidebar';
 import useTheme from '@/src/hooks/useTheme';
 
-const StorageLayout = ({ children }: { children: React.ReactNode }) => {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+  showSearch?: boolean;
+}) {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -45,6 +51,4 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
     </div>
   );
-};
-
-export default StorageLayout;
+}

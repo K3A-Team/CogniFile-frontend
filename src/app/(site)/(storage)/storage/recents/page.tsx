@@ -1,10 +1,10 @@
 'use client';
 
-import Button from '../../../components/core/button';
-import FileCard from '../../../components/core/filecard';
-import FileRow from '../../../components/core/filerow';
-import FolderCard from '../../../components/core/foldercard';
-import FolderRow from '../../../components/core/folderrow';
+import Button from '../../../../components/core/button';
+import FileCard from '../../../../components/core/filecard';
+import FileRow from '../../../../components/core/filerow';
+import FolderCard from '../../../../components/core/foldercard';
+import FolderRow from '../../../../components/core/folderrow';
 import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';

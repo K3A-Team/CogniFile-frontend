@@ -1,4 +1,4 @@
-import TrashPage from '../../../components/storage/trashpage';
+import TrashPage from '../../../../components/storage/trashpage';
 import { verifySession } from '@/src/lib/session';
 
 const Trash = async () => {

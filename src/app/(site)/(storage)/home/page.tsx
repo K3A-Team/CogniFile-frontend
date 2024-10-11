@@ -1,11 +1,5 @@
 'use client';
 
-import Button from '../../components/core/button';
-import FileCard from '../../components/core/filecard';
-import FileRow from '../../components/core/filerow';
-import FolderCard from '../../components/core/foldercard';
-import FolderRow from '../../components/core/folderrow';
-import Search from '../../components/core/search';
 import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -19,6 +13,12 @@ import magicBlue from '@/public/magicBlue.png';
 import magicOrange from '@/public/magicOrange.png';
 import magicRed from '@/public/magicRed.png';
 import settingsOrange from '@/public/settings_orange.svg';
+import Button from '@/src/app/components/core/button';
+import FileCard from '@/src/app/components/core/filecard';
+import FileRow from '@/src/app/components/core/filerow';
+import FolderCard from '@/src/app/components/core/foldercard';
+import FolderRow from '@/src/app/components/core/folderrow';
+import Search from '@/src/app/components/core/search';
 import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 

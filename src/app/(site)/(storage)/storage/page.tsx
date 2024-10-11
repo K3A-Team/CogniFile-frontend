@@ -1,4 +1,4 @@
-import MyPage from '../../components/storage/mypage';
+import MyPage from '../../../components/storage/mypage';
 import { verifySession } from '@/src/lib/session';
 
 const MyStorage = async () => {
