@@ -200,7 +200,7 @@ const SharedStorage = () => {
               >
                 <Image src={addCollaborator} alt="Collaborator" width={24} height={24} />
               </div>
-              <img
+              <Image
                 src={workspace.imagePath}
                 className="w-60 h-52 object-cover rounded-md"
                 alt="shared storage"
