@@ -1,7 +1,6 @@
 'use client';
 
 import FileCard from '../filecard';
-import { useTheme } from '../theme';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import Image from 'next/image';
@@ -14,6 +13,7 @@ import shape7 from '@/public/Power-light.png';
 import shape5 from '@/public/Power.png';
 import SearchIcon from '@/public/Search.svg';
 import LightSearchIcon from '@/public/search_light.svg';
+import useTheme from '@/src/hooks/useTheme';
 
 interface Query {
   text: string;

@@ -1,7 +1,6 @@
 'use client';
 
 import ProfileIcon from '../profileicon';
-import { useTheme } from '../theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -22,6 +21,7 @@ import staredSelected from '@/public/stared-selected.png';
 import stared from '@/public/stared.png';
 import trashSelected from '@/public/trash-selected.png';
 import trash from '@/public/trash.png';
+import useTheme from '@/src/hooks/useTheme';
 
 const Sidebar = () => {
   const pathname = usePathname();

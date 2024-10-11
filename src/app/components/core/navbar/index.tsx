@@ -1,6 +1,5 @@
 'use client';
 
-import { useTheme } from '../theme';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,6 +7,7 @@ import shortLogoLight from '@/public/ShortLogoLight.png';
 import dark from '@/public/dark.png';
 import light from '@/public/light.png';
 import shortLogoDark from '@/public/logo_short.png';
+import useTheme from '@/src/hooks/useTheme';
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
