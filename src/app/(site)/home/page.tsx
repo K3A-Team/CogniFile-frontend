@@ -6,7 +6,6 @@ import FileRow from '../../components/core/filerow';
 import FolderCard from '../../components/core/foldercard';
 import FolderRow from '../../components/core/folderrow';
 import Search from '../../components/core/search';
-import { useTheme } from '../../components/core/theme';
 import axios from 'axios';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -20,6 +19,7 @@ import magicBlue from '@/public/magicBlue.png';
 import magicOrange from '@/public/magicOrange.png';
 import magicRed from '@/public/magicRed.png';
 import settingsOrange from '@/public/settings_orange.svg';
+import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 
 type RecentItem = {

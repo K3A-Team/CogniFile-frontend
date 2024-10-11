@@ -42,8 +42,6 @@ const StorageLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 lg:static lg:left-auto lg:transform-none">
           <Chatbot />
         </div>
-
-        {/* Center the chatbot icon horizontally at the bottom */}
       </div>
     </div>
   );

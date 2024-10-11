@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ThemeProviderContext from '@/src/context/theme';
 
 type Theme = 'dark' | 'light';
 
@@ -10,15 +11,7 @@ type ThemeProviderProps = {
   storageKey?: string;
 };
 
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined);
-
-export function ThemeProvider({
+function ThemeProvider({
   children,
   defaultTheme = 'light',
   storageKey = 'theme',
@@ -57,10 +50,4 @@ export function ThemeProvider({
   );
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-
-  if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider');
-
-  return context;
-};
+export default ThemeProvider;
