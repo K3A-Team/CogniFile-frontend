@@ -15,13 +15,13 @@ export default function Login() {
     <div className="min-h-screen w-screen flex items-center justify-center flex-col">
       <MiniNavbar />
       <div className="flex-1 flex items-center justify-center">
-        <div className="sm:my-10 md:px-36 py-16 px-8 w-full sm:w-[90%] max-w-[815px] md:w-auto flex-1 bg-[#191919] rounded-[1rem] flex flex-col items-center justify-center gap-12">
+        <div className="sm:my-10 md:px-36 py-16 px-8 w-full sm:w-[90%] max-w-[815px] md:w-auto flex-1 dark:bg-[#191919] bg-[#F9F9F9] rounded-[1rem] flex flex-col items-center justify-center gap-12">
           <div className="flex flex-col gap-10 items-center justify-center w-full">
             <div className="flex flex-col gap-4 items-center justify-center w-full">
-              <h2 className="font-semibold text-white text-3xl text-center">
+              <h2 className="font-semibold dark:text-white text-[#191919] text-3xl text-center">
                 Connect to your CogniFile account
               </h2>
-              <p className="text-white opacity-40 font-medium text-sm text-center">
+              <p className="dark:text-white text-[#191919] opacity-40 font-medium text-sm text-center">
                 Try Cognifile for free. No credit card required
               </p>
             </div>
@@ -34,11 +34,11 @@ export default function Login() {
             </Suspense>
           </div>
           <div className="flex gap-1">
-            <p className="text-white opacity-30 font-medium text-[1rem]">
+            <p className="dark:text-white text-[#191919] opacity-30 font-medium text-[1rem]">
               Already have an account ?
             </p>
             <Link
-              className="text-white opacity-70 font-medium text-[1rem] underline hover:cursor-pointer"
+              className="dark:text-white text-[#191919] opacity-70 font-medium text-[1rem] underline hover:cursor-pointer"
               href={'/auth/login'}
             >
               Login

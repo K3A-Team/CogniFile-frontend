@@ -79,7 +79,7 @@ const FileCard = ({
   return (
     <div
       ref={cardRef}
-      className={`relative hover:bg-[#252525] flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
+      className={`relative dark:hover:bg-[#252525] hover:bg-[#EFEFEF] flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
         mounted ? (customAnimation ? customAnimation : 'animate-fade-in-up') : ''
       }`}
       onContextMenu={handleRightClick} // Right-click to show the context menu

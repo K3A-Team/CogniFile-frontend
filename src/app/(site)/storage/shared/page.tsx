@@ -2,15 +2,13 @@
 
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
 import addCollaborator from '@/public/add_collaborator.png';
 import arrowbtm from '@/public/arrow_btm.png';
 import arrowUp from '@/public/arrow_up.png';
 import close from '@/public/close.webp';
-import magicBlue from '@/public/magicBlue.png';
 import settingsOrange from '@/public/settings_orange.svg';
-import Button from '@/src/app/components/core/button';
 import Input from '@/src/app/components/core/input';
 
 interface Workspace {
@@ -31,7 +29,7 @@ const ShareCard = ({ SharedInfos, onClose }: { SharedInfos: Workspace; onClose: 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [members, setMembers] = useState(SharedInfos.members); // New state for members list
+  const [members, setMembers] = useState(SharedInfos.members);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -39,8 +37,7 @@ const ShareCard = ({ SharedInfos, onClose }: { SharedInfos: Workspace; onClose: 
     formData.append('workspaceId', SharedInfos.id);
     setIsSubmitting(true);
     setError(null);
-    setSuccessMessage(null); // Clear previous messages
-
+    setSuccessMessage(null);
     try {
       const response = await fetch('/api/storage/shared/add', {
         method: 'POST',
@@ -48,11 +45,11 @@ const ShareCard = ({ SharedInfos, onClose }: { SharedInfos: Workspace; onClose: 
       });
 
       if (response.status === 200) {
-        const newCollaborator = await response.json(); // Assuming API returns the newly added collaborator
-        setMembers([...members, newCollaborator]); // Update members list
+        const newCollaborator = await response.json();
+        setMembers([...members, newCollaborator]);
         setSuccessMessage('Collaborator added successfully!');
         setEmail('');
-        setTimeout(() => setSuccessMessage(null), 3000); // Optional: Clear message after 3 seconds
+        setTimeout(() => setSuccessMessage(null), 3000);
         window.location.reload();
       } else {
         throw new Error('Failed to add collaborator');
@@ -88,7 +85,6 @@ const ShareCard = ({ SharedInfos, onClose }: { SharedInfos: Workspace; onClose: 
       {error && <p className="text-red-500 mt-2">{error}</p>}
 
       <div className="mt-4">
-        <h3 className="text-sm font-semibold">Users with access</h3>
         <div className="items-center mt-8">
           {members.map(infos => (
             <div key={infos.id} className="w-full flex justify-between items-start mt-4">
@@ -120,6 +116,7 @@ const SharedStorage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null); // Track the selected workspace
   const [isCardOpen, setIsCardOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,20 +135,21 @@ const SharedStorage = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
-        <div className="flex items-center gap-x-12">
+        <div className="flex items-center gap-x-6">
           <div className="flex items-center gap-x-2">
             <h2 className="text-3xl font-normal">My Storage</h2>
-            <button>
-              <FaChevronDown />
-            </button>
           </div>
           <div className="hover:cursor-pointer">
-            <Button
-              text="Enhanced File Hierarchy"
-              icon={<Image src={magicBlue} alt="" />}
-              color={1}
+            <button
+              className={`p-[1px] bg-white rounded-full flex items-center justify-center gap-2`}
               onClick={() => 'clicked'}
-            />
+            >
+              <div className="bg-[#1f1f1f] flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-clip-border">
+                <span className={`bg-white text-transparent bg-clip-text text-lg`}>
+                  Add a shared storage
+                </span>
+              </div>
+            </button>
           </div>
         </div>
         <div className="flex gap-8 items-center">
@@ -185,14 +183,53 @@ const SharedStorage = () => {
               className="flex flex-col gap-y-4 items-center p-5 rounded-lg bg-dar-card"
               onClick={() => {
                 setSelectedWorkspace(workspace);
-                setIsCardOpen(true);
               }}
             >
-              <div className="w-full bg-[#1E1E1E] rounded hover:bg-[#282828] flex items-center justify-center py-3">
+              <div
+                className="w-full bg-[#1E1E1E] rounded hover:bg-[#282828] flex items-center justify-center py-3"
+                onClick={() => {
+                  setIsCardOpen(true);
+                }}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    setIsCardOpen(true);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
                 <Image src={addCollaborator} alt="Collaborator" width={24} height={24} />
               </div>
-              <img src={workspace.imagePath} className="w-60 h-52 object-cover rounded-md" />
-              <h3 className="text-lg font-semibold text-white">{workspace.name}</h3>
+              <img
+                src={workspace.imagePath}
+                className="w-60 h-52 object-cover rounded-md"
+                alt="shared storage"
+                onClick={() => {
+                  router.push(`/storage/shared/${workspace.rootFolderId}`);
+                }}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    router.push(`/storage/shared/${workspace.rootFolderId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              />
+              <h3
+                className="text-lg font-semibold text-white"
+                onClick={() => {
+                  router.push(`/storage/shared/${workspace.rootFolderId}`);
+                }}
+                onKeyDown={event => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    router.push(`/storage/shared/${workspace.rootFolderId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {workspace.name}
+              </h3>
             </button>
           ))}
         </div>

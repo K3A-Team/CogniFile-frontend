@@ -53,7 +53,7 @@ const ProfileIcon = () => {
   return (
     <div className="relative">
       <button
-        className="rounded-full bg-dar-card text-xl h-16 w-16 font-regular flex items-center justify-center"
+        className="rounded-full dark:bg-dar-card bg-white text-xl h-16 w-16 font-regular flex items-center justify-center dark:text-white text-[#AAAAAA]"
         onClick={handleMenuToggle}
       >
         <p>{initials}</p>

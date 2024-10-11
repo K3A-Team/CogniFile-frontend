@@ -24,7 +24,7 @@ export default function RootLayout({
       <body
         className={`${poppins.className} dark:bg-cf-dark text-cf-dark dark:text-white bg-white transition-colors duration-300 ease-in-out`}
       >
-        <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
       </body>
     </html>
   );

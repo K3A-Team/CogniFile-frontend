@@ -16,6 +16,7 @@ const Hero = () => {
           <div className="lg:scale-100 scale-75 flex items-center justify-between mb-8 px-2 border border-[#191919] dark:border-white rounded-full">
             <Image src={shape5} alt="Shape 5" className="dark:block hidden h-6 w-auto" />
             <Image src={shape7} alt="Shape 5" className="block dark:hidden h-6 w-auto" />
+
             <input
               type="text"
               placeholder="Find The Best Productivity software"

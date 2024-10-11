@@ -38,7 +38,7 @@ const Input = ({
         placeholder={placeholder}
         onChange={onChange}
         value={value}
-        className={`${isOTP ? '2xl:w-24 2xl:h-24 md:w-18 md:h-18 h-16 w-16 bg-[#474747] rounded-[16px] 2xl:rounded-[20px] border-2 border-[#474747] font-semibold text-3xl focus:border-white focus:outline-none text-white text-center flex items-center justify-center' : 'w-full px-8 py-5 placeholder:text-[#989898] text-[16px] text-white bg-[#303030] rounded-full outline-none'}`}
+        className={`${isOTP ? '2xl:w-24 2xl:h-24 md:w-18 md:h-18 h-16 w-16 bg-[#474747] rounded-[16px] 2xl:rounded-[20px] border-2 border-[#474747] font-semibold text-3xl focus:border-white focus:outline-none text-white text-center flex items-center justify-center' : 'w-full px-8 py-5 placeholder:text-[#989898] dark:placeholder:text-[#5F5F5F] text-[16px] dark:text-white text-[#191919] dark:bg-[#303030] bg-[#EEEEEE] rounded-full outline-none'}`}
         {...register}
         {...rest}
       />

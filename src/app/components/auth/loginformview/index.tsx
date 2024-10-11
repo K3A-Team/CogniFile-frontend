@@ -126,7 +126,7 @@ function LoginFormView() {
       )}
       <button
         type="submit"
-        className={`w-full bg-gradient-to-r from-[#DEDEDE] to-[#787878] text-cf-dark font-semibold rounded-full px-16 py-4 text-xl transition duration-300 ease-in-out transform hover:from-[#c0c0c0] hover:to-[#5e5e5e] hover:shadow-lg flex items-center justify-center ${
+        className={`w-full dark:bg-Gray-gradient bg-Blue-gradient dark:text-cf-dark text-white font-semibold rounded-full px-16 py-4 text-xl transition duration-300 ease-in-out transform hover:from-[#c0c0c0] hover:to-[#5e5e5e] hover:shadow-lg flex items-center justify-center ${
           loading ? 'cursor-not-allowed' : ''
         }`}
         disabled={loading}

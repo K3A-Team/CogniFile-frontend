@@ -25,7 +25,7 @@ const FolderRow = ({
   const imageSrc = colorToImageMap[color]; // Map the color string to the corresponding imagereturn (
 
   return (
-    <tr className="hover:bg-[#252525] w-full grid grid-cols-5 items-center justify-between">
+    <tr className="dark:hover:bg-[#252525] hover:bg-[#EFEFEF] w-full grid grid-cols-5 items-center justify-between">
       <td className="px-4 py-3 flex items-center">
         <Image src={imageSrc} alt={name} className="w-6 mr-3" />
         {name}

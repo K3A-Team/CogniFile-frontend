@@ -75,7 +75,7 @@ function Bot({ messages, setMessages }: BotProps) {
                 </div>
               )}
               <div
-                className={`bg-[#303030] text-white py-4 px-6 border-[0.5px] border-white rounded-[4px] max-w-xs text-sm lg:text-md ${message.isUser ? '' : ''}`}
+                className={`bg-[#303030] text-white py-4 px-6 dark:border-[0.5px] border-white rounded-[4px] max-w-xs text-sm lg:text-md ${message.isUser ? '' : ''}`}
               >
                 {message.text}
               </div>
@@ -130,7 +130,7 @@ function Chatbot() {
 
   return (
     <div
-      className={`absolute bottom-0 flex items-end w-full ${
+      className={`dark:invert-0 invert absolute bottom-0 flex items-end w-full ${
         toggle ? 'h-[736px]' : 'h-[64px]'
       } justify-center`}
       style={{ zIndex: toggle ? 1000 : 1 }}
@@ -143,7 +143,7 @@ function Chatbot() {
           style={{ zIndex: 10 }}
         >
           <div className="absolute w-full px-12 py-6 bg-[#191919] flex justify-between items-center top-0 left-0 z-10 shadow-lg">
-            <h2 className="text-xl">CogniBot</h2>
+            <h2 className="text-xl text-white">CogniBot</h2>
             <div className="flex gap-4 items-center">
               <p
                 className="text-[#ffffff] opacity-50 underline font-medium text-md hover:cursor-pointer"
