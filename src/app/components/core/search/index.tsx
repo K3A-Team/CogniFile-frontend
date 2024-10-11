@@ -1,14 +1,19 @@
 'use client';
 
 import FileCard from '../filecard';
+import { useTheme } from '../theme';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import Image from 'next/image';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Camera from '@/public/Camera.svg';
+import LightCamera from '@/public/LightCamera.svg';
+import LightMicrophone from '@/public/LightMicrophone.svg';
 import Microphone from '@/public/Microphone.svg';
+import shape7 from '@/public/Power-light.png';
 import shape5 from '@/public/Power.png';
 import SearchIcon from '@/public/Search.svg';
+import LightSearchIcon from '@/public/search_light.svg';
 
 interface Query {
   text: string;
@@ -37,6 +42,7 @@ function Search() {
   const [error, setError] = useState('');
   const [query, setQuery] = useState<Query>({ text: '' });
   const [isSearching, setIsSearching] = useState(false);
+  const { theme } = useTheme();
 
   const performSearch = useCallback(async (searchText: string) => {
     if (!searchText.trim()) {
@@ -71,24 +77,33 @@ function Search() {
 
   return (
     <div className="relative z-[99]">
-      <form className="h-14 sm:w-[540px] w-[80vw] border border-white rounded-full flex px-2 py-2 justify-between">
-        <div className="flex items-center justify-center gap-2 w-[70%]">
+      <form className="h-14 sm:w-[540px] w-[80vw] border dark:border-white border-[#7D7D7D] rounded-full flex px-2 py-2 justify-between">
+        <div className="flex items-center justify-center gap-2 w-[70%] z-10">
           <div className="w-8 h-8 flex items-center justify-center cursor-pointer">
-            <Image src={shape5} alt="Shape 5" className="h-6 w-auto" />
+            <Image src={shape5} alt="Shape 5" className="dark:block hidden h-6 w-auto" />
+            <Image src={shape7} alt="Shape 5" className="block dark:hidden h-6 w-auto" />
           </div>
           <input
             type="text"
             value={query.text}
             onChange={event => setQuery({ text: event.target.value })}
             placeholder={'Search in the storage'}
-            className="bg-transparent outline-none placeholder:text-[#FFFFFF] placeholder:sm:text-lg placeholder:text-sm w-full"
+            className="bg-transparent outline-none dark:placeholder:text-[#FFFFFF] placeholder:text-[#262626] placeholder:sm:text-lg placeholder:text-sm w-full"
           />
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Image src={Camera} alt="Camera" className="w-7" />
-          <Image src={Microphone} alt="Microphone" className="w-6" />
-          <div className="bg-[#4C4C4C] h-10 w-10 rounded-full flex items-center justify-center hover:cursor-pointer">
-            <Image src={SearchIcon} alt="Search" className="w-5" />
+          <Image src={theme === 'dark' ? Camera : LightCamera} alt="Camera" className="w-7" />
+          <Image
+            src={theme === 'dark' ? Microphone : LightMicrophone}
+            alt="Microphone"
+            className="w-6"
+          />
+          <div className="dark:bg-[#4C4C4C] bg-[#F0F0F0] h-10 w-10 rounded-full flex items-center justify-center hover:cursor-pointer">
+            <Image
+              src={theme === 'dark' ? SearchIcon : LightSearchIcon}
+              alt="Search"
+              className="w-5"
+            />
           </div>
         </div>
       </form>

@@ -26,7 +26,7 @@ const FileRow = ({ name, size, date }: { name: string; size: string; date: strin
   const imageSrc = extensionToImageMap[fileExtension] || documentIcon;
 
   return (
-    <tr className="hover:bg-[#252525] w-full grid grid-cols-5">
+    <tr className="dark:hover:bg-[#252525] hover:bg-[#EFEFEF] w-full grid grid-cols-5">
       <td className="px-4 py-3 flex items-center">
         <Image src={imageSrc} alt={name} className="w-6 mr-3" />
         {name}

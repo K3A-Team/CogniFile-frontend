@@ -1,17 +1,27 @@
+'use client';
+
+import { useTheme } from '../theme';
 import Image from 'next/image';
 import Link from 'next/link';
-import logoShort from '@/public/logo_short.png';
+import shortLogoLight from '@/public/ShortLogoLight.png';
+import shortLogoDark from '@/public/logo_short.png';
 import macos from '@/public/macos.png';
 import windows from '@/public/windows.png';
 
 const Footer = () => {
+  const { theme } = useTheme();
+
   return (
     <footer className="border-t border-t-[#787878]">
       {/*Top*/}
       <div className="xl:py-24 py-16 px-8 xl:px-0 container m-auto flex justify-center xl:justify-between items-center xl:items-start">
         <div className="flex flex-col items-center xl:items-start  gap-4 xl:max-w-[35%]">
           <div className="flex items-center">
-            <Image src={logoShort} alt="Logo" className="lg:w-20 w-16" />
+            <Image
+              src={theme === 'light' ? shortLogoLight : shortLogoDark}
+              alt="Logo"
+              className="lg:w-20 w-16"
+            />
           </div>
           <p className="text-2xl lg:text-3xl xl:text-2xl font-semibold xl:text-left text-center">
             We growing up your organization with AI supported storage.
@@ -55,7 +65,7 @@ const Footer = () => {
       </div>
 
       {/*Bottom*/}
-      <div className="bg-[#191919]">
+      <div className="dark:bg-[#191919] bg-[#F9F9F9]">
         <div className="py-6 px-16 xl:px-0 container m-auto flex lg:justify-between items-center justify-center text-lg">
           <p>&copy; {new Date().getFullYear()} CogniFile. All rights reserved.</p>
           <div className="hidden lg:flex align-center justify-center space-x-8">
