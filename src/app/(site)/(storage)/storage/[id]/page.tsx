@@ -1,4 +1,4 @@
-import MyPage from '@/src/app/components/storage/mypage';
+import Main from '@/src/app/components/storage/main-view';
 import { verifySession } from '@/src/lib/session';
 
 const MyStorage = async ({ params }: { params: { id: string } }) => {
@@ -9,7 +9,7 @@ const MyStorage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <MyPage folderId={idToUse} />
+      <Main folderId={idToUse} />
     </>
   );
 };

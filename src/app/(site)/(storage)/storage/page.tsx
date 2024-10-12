@@ -1,15 +1,11 @@
-import MyPage from '../../../components/storage/mypage';
+import { redirect } from 'next/navigation';
 import { verifySession } from '@/src/lib/session';
 
 const MyStorage = async () => {
   const session = await verifySession();
 
   const { user } = session;
-  return (
-    <>
-      <MyPage folderId={user.rootFolderId} />
-    </>
-  );
+  redirect(`/storage/${user.rootFolderId}`);
 };
 
 export default MyStorage;

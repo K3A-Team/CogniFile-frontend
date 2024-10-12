@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 'use client';
 
-import FolderCard from '../foldercard';
+import FolderCard from '../../core/foldercard';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,11 @@ import { FolderHierarchy } from '@/src/types/responses';
 
 /* eslint-disable camelcase */
 
-const CombinedComponent = ({
+/* eslint-disable camelcase */
+
+/* eslint-disable camelcase */
+
+const HierarchySuggestion = ({
   folderId,
   onClose,
 }: {
@@ -140,4 +144,4 @@ const CombinedComponent = ({
   );
 };
 
-export default CombinedComponent;
+export default HierarchySuggestion;
