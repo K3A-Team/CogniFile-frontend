@@ -20,11 +20,11 @@ import { Folder, File } from '@/src/types/shared';
 import {
   createFolder,
   fetchBreadcrumbs,
+  fetchFolderContent,
   removeFile,
   removeFolder,
   uploadFile,
 } from '@/src/utils/api/storage';
-import api from '@/src/utils/axios';
 import { transformResponse } from '@/src/utils/helpers/file';
 
 const StorageMain = ({ folderId }: { folderId: string }) => {
@@ -42,8 +42,7 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    api
-      .post(`/api/folders`, { folderId })
+    fetchFolderContent(folderId)
       .then(res => {
         const transformed = transformResponse(res.data);
 

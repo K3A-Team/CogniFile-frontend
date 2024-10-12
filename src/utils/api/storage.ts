@@ -19,6 +19,11 @@ export const fetchBreadcrumbs = async (initialFolderId: string) => {
   return items;
 };
 
+export const fetchFolderContent = async (folderId: string) => {
+  const res = await api.post(`/api/folders`, { folderId });
+  return res;
+};
+
 export const fetchRecentFiles = async () => {
   const response = await api.get('/api/storage/recent');
   const { result } = response.data;
