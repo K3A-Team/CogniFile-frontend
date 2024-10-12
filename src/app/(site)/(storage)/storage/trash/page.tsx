@@ -1,15 +1,11 @@
-import TrashPage from '../../../../components/storage/trashpage';
+import TrashView from '../../../../components/storage/trash/main-view';
 import { verifySession } from '@/src/lib/session';
 
 const Trash = async () => {
   const session = await verifySession();
-
   const { user } = session;
-  return (
-    <>
-      <TrashPage folderId={user.trashFolderId} />
-    </>
-  );
+
+  return <TrashView folderId={user.trashFolderId} />;
 };
 
 export default Trash;
