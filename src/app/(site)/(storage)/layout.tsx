@@ -25,10 +25,10 @@ export default function RootLayout({
     <div className="flex flex-col lg:flex-row min-h-screen">
       <Sidebar />
 
-      <div className="flex px-4 py-6 lg:px-20 lg:py-12 lg:w-[85%] flex-col gap-10 bg-[#F9F9F9] dark:bg-[#1F1F1F] relative">
-        <div className="w-full h-16 flex justify-between items-center">
+      <div className="flex px-4 py-6 lg:px-20 lg:py-12 lg:w-[85%] flex-col gap-10 bg-[#F9F9F9] dark:bg-[#1F1F1F] relative mt-12 lg:mt-0">
+        <div className="w-full h-16 flex justify-center lg:justify-between items-center mt-8 lg:mt-0">
           <Search />
-          <div className="flex gap-4 lg:gap-8 items-center">
+          <div className="lg:flex gap-4 lg:gap-8 items-center hidden">
             <button onClick={() => (theme === 'dark' ? setTheme('light') : setTheme('dark'))}>
               <Image src={theme === 'light' ? light : dark} alt="Theme" className="h-12 w-12" />
             </button>

@@ -76,8 +76,8 @@ function Search() {
   }, [query.text, debouncedSearch]);
 
   return (
-    <div className="relative z-[99]">
-      <form className="h-14 sm:w-[540px] w-[80vw] border dark:border-white border-[#7D7D7D] rounded-full flex px-2 py-2 justify-between">
+    <div className="relative z-[99] w-full lg:w-auto">
+      <form className="h-14 w-full lg:w-[500px] border dark:border-white border-[#7D7D7D] rounded-full flex px-2 py-2 justify-between">
         <div className="flex items-center justify-center gap-2 w-[70%] z-10">
           <div className="w-8 h-8 flex items-center justify-center cursor-pointer">
             <Image src={shape5} alt="Shape 5" className="dark:block hidden h-6 w-auto" />

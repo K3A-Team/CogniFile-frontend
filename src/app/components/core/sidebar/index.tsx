@@ -8,10 +8,12 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import shortLogoLight from '@/public/ShortLogoLight.png';
+import dark from '@/public/dark.png';
 import folderSelected from '@/public/folders-selected.png';
 import folders from '@/public/folders.png';
 import homeSelected from '@/public/home-slected.png';
 import home from '@/public/home.png';
+import light from '@/public/light.png';
 import shortLogoDark from '@/public/logo_short.png';
 import params from '@/public/params.svg';
 import recentsSelected from '@/public/recent-selected.png';
@@ -26,7 +28,7 @@ import trash from '@/public/trash.png';
 const Sidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const mainLinks = [
     {
@@ -80,6 +82,9 @@ const Sidebar = () => {
       </button>
 
       <div className="lg:hidden flex justify-end gap-4 items-center fixed top-4 right-4 z-50">
+        <button onClick={() => (theme === 'dark' ? setTheme('light') : setTheme('dark'))}>
+          <Image src={theme === 'light' ? light : dark} alt="Theme" className="h-12 w-12" />
+        </button>
         <Link href="/settings">
           <Image src={params} alt="params" className="w-6 h-6" />
         </Link>
@@ -88,7 +93,7 @@ const Sidebar = () => {
 
       {/* Sidebar for Large Screens and Mobile */}
       <div
-        className={`bg-white text-[#595959] dark:bg-dar-card dark:text-white py-12 lg:w-full fixed z-50 lg:static top-0 h-full flex flex-col transition-transform duration-300 transform lg:translate-x-0 ${
+        className={`bg-white text-[#595959] dark:bg-dar-card dark:text-white py-12 lg:w-full fixed z-[100] lg:static top-0 h-full flex flex-col transition-transform duration-300 transform lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

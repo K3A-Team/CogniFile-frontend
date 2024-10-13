@@ -17,7 +17,6 @@ const FolderCard = ({
   color,
   name,
   items,
-  size,
   animateIn,
   customAnimation,
   onRemove,
@@ -86,7 +85,6 @@ const FolderCard = ({
       <Image src={colorToImageMap[color]} alt={name} className="mb-2" />
       <h3 className="text-lg font-semibold">{name}</h3>
       <p className="text-gray-400 text-sm">{items} Items</p>
-      <p className="text-gray-400 text-sm">{size}</p>
 
       {showMenu && (
         <div
