@@ -74,7 +74,7 @@ function RegisterFormView() {
       if (data.success) {
         setSuccess(data?.message ?? 'Successfully registered');
         await new Promise(resolve => setTimeout(resolve, 2000));
-        router.push('/home');
+        router.push('/storage');
       } else {
         setError(data.message);
       }

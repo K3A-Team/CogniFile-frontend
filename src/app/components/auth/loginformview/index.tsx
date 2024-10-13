@@ -53,7 +53,7 @@ function LoginFormView() {
       if (responseData.success) {
         setSuccess(responseData.message ?? 'Successfully logged in');
         await new Promise(resolve => setTimeout(resolve, 2000));
-        router.push('/home');
+        router.push('/');
       } else {
         setError(responseData.message);
       }

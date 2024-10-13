@@ -9,7 +9,7 @@ function PlansPage() {
   return (
     <div className="overflow-y-scroll flex px-20 w-full flex-col gap-10 h-screen">
       <div className="w-full h-16 flex justify-between items-center">
-        <Link href="/home">
+        <Link href="/storage">
           <Image src={arrowLeft} alt="arrow_left" />
         </Link>
         <ProfileIcon />

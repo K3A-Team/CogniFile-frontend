@@ -32,7 +32,7 @@ const Sidebar = () => {
 
   const mainLinks = [
     {
-      href: '/home',
+      href: '/storage',
       label: 'Home',
       icon: <Image src={home} alt="Logo" className="w-5" />,
       iconSelected: <Image src={homeSelected} alt="Logo" className="w-5" />,
