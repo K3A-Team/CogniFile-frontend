@@ -122,16 +122,18 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
 
   return (
     <>
-      {/* Header with "Trash" title and buttons */}
-      <div className="flex justify-between items-center mb-16 mt-20">
-        <div className="flex items-center gap-x-12">
+      <div className="flex flex-col-reverse gap-6 lg:flex-row lg:justify-between items-start lg:items-center mb-8 lg:mb-16 mt-10 lg:mt-20">
+        {/* Trash title and Empty Trash button for large screens */}
+        <div className="w-full lg:w-auto flex justify-start items-center gap-4">
           <div className="flex items-center gap-x-2">
-            <h2 className="text-3xl font-normal">Trash</h2>
+            <h2 className="text-xl lg:text-3xl font-normal">Trash</h2>
             <button>
               <FaChevronDown />
             </button>
           </div>
-          <div className="hover:cursor-pointer">
+
+          {/* Empty Trash button for large screens */}
+          <div className="hidden lg:block hover:cursor-pointer">
             <Button
               text="Empty Trash"
               icon={<Image src={magicBlue} alt="" />}
@@ -141,21 +143,32 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
           </div>
         </div>
 
-        {/* View Switcher (grid/list) */}
-        <div className="flex gap-4 lg:gap-8 items-center relative z-[50]">
-          <ViewSwitcher isListView={isListView} toggleView={setIsListView} />
-          <div className="flex items-center gap-2 lg:gap-4">
-            <div className="flex items-center px-3 py-2 lg:px-4 lg:py-2 rounded-full gap-2 dark:bg-[#252525] bg-[#ECECEC]">
-              <p className="dark:text-white text-dar-card font-regular">Name</p>
-              <Image src={theme === 'dark' ? arrowbtm : Lightarrowbtm} alt="arrowUp rotate-90" />
+        {/* View Switcher and Name Sort for both mobile and desktop */}
+        <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-12 justify-center lg:justify-end w-full lg:w-auto">
+          {/* Empty Trash button for mobile screens */}
+          <div className="flex lg:hidden hover:cursor-pointer justify-center">
+            <Button
+              text="Empty Trash"
+              icon={<Image src={magicBlue} alt="" />}
+              color={1}
+              onClick={() => setShowModal(true)}
+            />
+          </div>
+          <div className="flex gap-4 lg:gap-8 items-center relative z-[50]">
+            <ViewSwitcher isListView={isListView} toggleView={setIsListView} />
+            <div className="flex items-center gap-2 lg:gap-4">
+              <div className="flex items-center px-3 py-2 lg:px-4 lg:py-2 rounded-full gap-2 dark:bg-[#252525] bg-[#ECECEC]">
+                <p className="dark:text-white text-dar-card font-regular">Name</p>
+                <Image src={theme === 'dark' ? arrowbtm : Lightarrowbtm} alt="arrowUp rotate-90" />
+              </div>
+              <button onClick={handleSort}>
+                <Image
+                  src={theme === 'dark' ? arrowUp : LightarrowUp}
+                  alt="arrowUp"
+                  className={`${isDes ? 'rotate-180' : ''}`}
+                />
+              </button>
             </div>
-            <button onClick={handleSort}>
-              <Image
-                src={theme === 'dark' ? arrowUp : LightarrowUp}
-                alt="arrowUp"
-                className={`${isDes ? 'rotate-180' : ''}`}
-              />
-            </button>
           </div>
         </div>
       </div>
@@ -176,6 +189,7 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
         onClose={() => setShowModal(false)}
         onConfirm={handleEmptyTrash}
       />
+
       <ToastContainer />
     </>
   );
