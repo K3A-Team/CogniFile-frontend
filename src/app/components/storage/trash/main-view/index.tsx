@@ -16,9 +16,10 @@ import LightarrowUp from '@/public/arrow_up_light.png';
 import magicBlue from '@/public/magicBlue.png';
 import settingsOrange from '@/public/settings_orange.svg';
 import useTheme from '@/src/hooks/useTheme';
-import { FolderResponse } from '@/src/types/responses';
 import { Folder, File } from '@/src/types/shared';
+import { fetchFolderContent } from '@/src/utils/api/storage';
 import api from '@/src/utils/axios';
+import { transformResponse } from '@/src/utils/helpers/file';
 
 const TrashPage = ({ folderId }: { folderId: string }) => {
   const { theme } = useTheme();
@@ -27,41 +28,20 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [isDes, setIsDes] = useState(true);
 
   useEffect(() => {
-    const transformResponse = (res: FolderResponse) => {
-      const { folder } = res;
-
-      const filesPart = folder.files.map(file => ({
-        id: file.id,
-        name: file.name,
-        size: file.size,
-        date: 'Unknown',
-        url: file.url,
-      }));
-
-      const foldersPart = folder.subFolders.map(subFolder => ({
-        id: subFolder.id,
-        name: subFolder.name,
-        items: subFolder.children,
-        size: 'Unknown',
-        color: 'blue',
-        date: 'Unknown',
-      }));
-
-      return { foldersPart, filesPart };
-    };
-
-    api
-      .post(`/api/folders`, { folderId })
+    fetchFolderContent(folderId)
       .then(res => {
         const transformed = transformResponse(res.data);
-        setFolders(transformed.foldersPart);
-        setFiles(transformed.filesPart);
+
+        setFolders(transformed.folderspart.sort((a, b) => b.name.localeCompare(a.name)));
+        setFiles(transformed.filespart.sort((a, b) => b.name.localeCompare(a.name)));
         setLoading(false);
       })
-      .catch(() => {
+      .catch(err => {
         setLoading(false);
+        throw new Error(err.message);
       });
   }, [folderId]);
 
@@ -117,6 +97,12 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
     document.body.removeChild(anchor);
   };
 
+  const handleSort = () => {
+    setFolders(folders.reverse());
+    setFiles(files.reverse());
+    setIsDes(!isDes);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center gap-6 h-full mt-20 lg:mt-60">
@@ -163,7 +149,13 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
               <p className="dark:text-white text-dar-card font-regular">Name</p>
               <Image src={theme === 'dark' ? arrowbtm : Lightarrowbtm} alt="arrowUp rotate-90" />
             </div>
-            <Image src={theme === 'dark' ? arrowUp : LightarrowUp} alt="arrowUp" />
+            <button onClick={handleSort}>
+              <Image
+                src={theme === 'dark' ? arrowUp : LightarrowUp}
+                alt="arrowUp"
+                className={`${isDes ? 'rotate-180' : ''}`}
+              />
+            </button>
           </div>
         </div>
       </div>
