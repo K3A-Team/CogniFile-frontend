@@ -53,6 +53,7 @@ const FolderCard = ({
   }, [animateIn]);
 
   const handleRemove = () => {
+    setShowMenu(false);
     setMounted(false);
     if (onRemove) {
       setTimeout(() => onRemove(), 500); // Wait for the animation to finish before removing the element

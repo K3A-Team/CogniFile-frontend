@@ -64,6 +64,7 @@ const FileCard = ({
 
   const handleRemove = () => {
     setMounted(false);
+    setShowMenu(false);
     if (onRemove) {
       setTimeout(() => onRemove(), 500); // Wait for the animation to finish before removing the element
     }

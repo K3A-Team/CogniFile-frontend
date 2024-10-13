@@ -9,6 +9,8 @@ import ViewSwitcher from '../view-switcher';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import arrowbtm from '@/public/arrow_btm.png';
 import Lightarrowbtm from '@/public/arrow_btm_light.png';
 import arrowUp from '@/public/arrow_up.png';
@@ -66,16 +68,70 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
     setIsModalOpen(true);
   };
 
-  const handleRemoveFile = (id: string) => {
-    removeFile(id).then(() => {
-      setFiles(prev => prev.filter(file => file.id !== id));
+  const handleRemoveFile = async (id: string) => {
+    // Show a loading toast notification with dark mode while the file is being removed
+    const toastId = toast.loading('Removing file...', {
+      position: 'bottom-right',
+      theme: 'dark', // Ensure dark mode for the toast
     });
+
+    try {
+      await removeFile(id);
+
+      // Update the files state by removing the file from the list
+      setFiles(prev => prev.filter(file => file.id !== id));
+
+      // Update the loading toast with a success message
+      toast.update(toastId, {
+        render: 'File removed successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    } catch (error) {
+      // Update the loading toast with an error message
+      toast.update(toastId, {
+        render: 'Failed to remove file. Please try again.',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    }
   };
 
-  const handleRemoveFolder = (id: string) => {
-    removeFolder(id).then(() => {
-      setFolders(prev => prev.filter(folder => folder.id !== id));
+  const handleRemoveFolder = async (id: string) => {
+    // Show a loading toast notification with dark mode while the folder is being removed
+    const toastId = toast.loading('Removing folder...', {
+      position: 'bottom-right',
+      theme: 'dark', // Ensure dark mode for the toast
     });
+
+    try {
+      await removeFolder(id);
+
+      // Update the folders state by removing the folder from the list
+      setFolders(prev => prev.filter(folder => folder.id !== id));
+
+      // Update the loading toast with a success message
+      toast.update(toastId, {
+        render: 'Folder removed successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    } catch (error) {
+      // Update the loading toast with an error message
+      toast.update(toastId, {
+        render: 'Failed to remove folder. Please try again.',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    }
   };
   const handleDownload = (url: string, fileName: string) => {
     const anchor = document.createElement('a');
@@ -110,15 +166,30 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
   const handleUploadFile = async () => {
     const input = document.createElement('input');
     input.type = 'file';
+
     input.onchange = async (event: Event) => {
       const target = event.target as HTMLInputElement;
       const file = target.files ? target.files[0] : null;
+
       if (file) {
+        // Hide menu before starting the upload
+        setIsMenuVisible(false);
+
+        // Show a loading toast notification with dark mode while waiting for file upload
+        const toastId = toast.loading('Uploading file...', {
+          position: 'bottom-right',
+          theme: 'dark', // Ensuring dark mode for the toast
+        });
+
         try {
           const formData = new FormData();
           formData.append('file', file);
           formData.append('folderId', folderId);
+
+          // Perform the file upload
           const result = await uploadFile(formData);
+
+          // Update state with the newly uploaded file
           setFiles(prev => [
             ...prev,
             {
@@ -129,21 +200,37 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
               url: result.file.URL,
             },
           ]);
+
+          // Update the loading toast with a success message in dark mode
+          toast.update(toastId, {
+            render: 'File uploaded successfully!',
+            type: 'success',
+            isLoading: false,
+            autoClose: 3000, // Auto close after 3 seconds
+            theme: 'dark', // Ensuring dark mode for the toast
+          });
         } catch (error) {
-          if (error instanceof Error) {
-            throw new Error(error.message);
-          } else {
-            throw new Error('An unknown error occurred');
-          }
+          // Update the loading toast with an error message in dark mode
+          toast.update(toastId, {
+            render: 'File upload failed. Please try again.',
+            type: 'error',
+            isLoading: false,
+            autoClose: 3000, // Auto close after 3 seconds
+            theme: 'dark', // Ensuring dark mode for the toast
+          });
+
+          throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
         }
       }
     };
+
+    // Trigger the file input click
     input.click();
-    setIsMenuVisible(false);
   };
 
   const handleCreatingFolder = async () => {
     setIsCreatingFolder(true);
+    setIsMenuVisible(false);
   };
 
   const handleFolderCancel = () => {
@@ -151,6 +238,16 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
   };
 
   const handleFolderCreate = async (Name: string) => {
+    // Set creating folder and menu to false at the beginning
+    setIsCreatingFolder(false);
+    setIsMenuVisible(false);
+
+    // Show a loading toast notification with dark mode while waiting for folder creation
+    const toastId = toast.loading('Creating folder...', {
+      position: 'bottom-right',
+      theme: 'dark', // Ensuring dark mode for the toast
+    });
+
     try {
       const formData = new FormData();
       formData.append('folderName', Name);
@@ -158,6 +255,7 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
 
       const result = await createFolder(formData);
 
+      // Add the new folder to the state
       setFolders(prev => [
         ...prev,
         {
@@ -169,13 +267,27 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
           date: result.folder.interactionDate.split('T')[0],
         },
       ]);
+
+      // Update the loading toast with a success message in dark mode
+      toast.update(toastId, {
+        render: 'Folder created successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensuring dark mode for the toast
+      });
     } catch (error) {
+      // Update the loading toast with an error message in dark mode
+      toast.update(toastId, {
+        render: 'Folder creation failed. Please try again.',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensuring dark mode for the toast
+      });
       throw new Error('Folder creation failed');
     }
-    setIsCreatingFolder(false);
-    setIsMenuVisible(false);
   };
-
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -268,6 +380,7 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
       {isModalOpen && (
         <HierarchySuggestion onClose={() => setIsModalOpen(false)} folderId={folderId} />
       )}
+      <ToastContainer />
     </>
   );
 };

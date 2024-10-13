@@ -7,6 +7,8 @@ import TrashModal from '../modal';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import arrowbtm from '@/public/arrow_btm.png';
 import Lightarrowbtm from '@/public/arrow_btm_light.png';
 import arrowUp from '@/public/arrow_up.png';
@@ -65,12 +67,41 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
 
   const isEmpty = folders.length === 0 && files.length === 0;
 
-  const handleEmptyTrash = () => {
-    api.delete(`/api/trash`).then(() => {
+  const handleEmptyTrash = async () => {
+    // Close the modal before starting the operation
+    setShowModal(false);
+
+    // Show a loading toast notification with dark mode while the trash is being emptied
+    const toastId = toast.loading('Emptying trash...', {
+      position: 'bottom-right',
+      theme: 'dark', // Ensure dark mode for the toast
+    });
+
+    try {
+      await api.delete(`/api/trash`);
+
+      // Clear the folders and files state after successful trash emptying
       setFolders([]);
       setFiles([]);
-    });
-    setShowModal(false);
+
+      // Update the loading toast with a success message
+      toast.update(toastId, {
+        render: 'Trash emptied successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    } catch (error) {
+      // Update the loading toast with an error message if the operation fails
+      toast.update(toastId, {
+        render: 'Failed to empty trash. Please try again.',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000, // Auto close after 3 seconds
+        theme: 'dark', // Ensure dark mode for the toast
+      });
+    }
   };
 
   const handleNavigation = () => {
@@ -153,6 +184,7 @@ const TrashPage = ({ folderId }: { folderId: string }) => {
         onClose={() => setShowModal(false)}
         onConfirm={handleEmptyTrash}
       />
+      <ToastContainer />
     </>
   );
 };
