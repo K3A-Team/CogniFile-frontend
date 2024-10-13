@@ -40,14 +40,15 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDes, setIsDes] = useState(true);
 
   useEffect(() => {
     fetchFolderContent(folderId)
       .then(res => {
         const transformed = transformResponse(res.data);
 
-        setFolders(transformed.folderspart);
-        setFiles(transformed.filespart);
+        setFolders(transformed.folderspart.sort((a, b) => b.name.localeCompare(a.name)));
+        setFiles(transformed.filespart.sort((a, b) => b.name.localeCompare(a.name)));
         fetchBreadcrumbs(folderId).then(items => {
           setLoading(false);
           setBreadcrumbItems(items);
@@ -179,6 +180,12 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
     setIsMenuVisible(!isMenuVisible);
   };
 
+  const handleSort = () => {
+    setFolders(folders.reverse());
+    setFiles(files.reverse());
+    setIsDes(!isDes);
+  };
+
   return (
     <>
       <div className="flex flex-col-reverse gap-6 lg:flex-row lg:justify-between items-start lg:items-center mb-8 lg:mb-16 mt-10 lg:mt-20">
@@ -223,7 +230,13 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
                 <p className="dark:text-white text-dar-card font-regular">Name</p>
                 <Image src={theme === 'dark' ? arrowbtm : Lightarrowbtm} alt="arrowUp rotate-90" />
               </div>
-              <Image src={theme === 'dark' ? arrowUp : LightarrowUp} alt="arrowUp" />
+              <button onClick={handleSort}>
+                <Image
+                  src={theme === 'dark' ? arrowUp : LightarrowUp}
+                  alt="arrowUp"
+                  className={`${isDes ? 'rotate-180' : ''}`}
+                />
+              </button>
             </div>
           </div>
         </div>
