@@ -5,6 +5,7 @@ import FileCard from '../../../../components/core/filecard';
 import FileRow from '../../../../components/core/filerow';
 import FolderCard from '../../../../components/core/foldercard';
 import FolderRow from '../../../../components/core/folderrow';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaTh, FaList, FaChevronDown } from 'react-icons/fa';
@@ -14,7 +15,6 @@ import Lightarrowbtm from '@/public/arrow_btm_light.png';
 import arrowUp from '@/public/arrow_up.png';
 import LightarrowUp from '@/public/arrow_up_light.png';
 import magicBlue from '@/public/magicBlue.png';
-import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 
 const folders: Folder[] = [

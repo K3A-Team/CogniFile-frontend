@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import dark from '@/public/dark.png';
@@ -10,7 +11,6 @@ import Chatbot from '@/src/app/components/core/chatbot';
 import ProfileIcon from '@/src/app/components/core/profileicon';
 import Search from '@/src/app/components/core/search';
 import Sidebar from '@/src/app/components/core/sidebar';
-import useTheme from '@/src/hooks/useTheme';
 import '@/src/styles/globals.css';
 
 export default function RootLayout({

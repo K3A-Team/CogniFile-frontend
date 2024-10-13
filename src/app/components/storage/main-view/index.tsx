@@ -6,6 +6,7 @@ import BreadcrumbComponent from '../breadcrumb';
 import StorageContainer from '../container';
 import HierarchySuggestion from '../hiarechy-suggestion';
 import ViewSwitcher from '../view-switcher';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -17,7 +18,6 @@ import arrowUp from '@/public/arrow_up.png';
 import LightarrowUp from '@/public/arrow_up_light.png';
 import magicBlue from '@/public/magicBlue.png';
 import settingsOrange from '@/public/settings_orange.svg';
-import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 import {
   createFolder,

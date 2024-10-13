@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
@@ -12,7 +13,6 @@ import settingsOrange from '@/public/settings_orange.svg';
 import Button from '@/src/app/components/core/button';
 import StorageContainer from '@/src/app/components/storage/container';
 import ViewSwitcher from '@/src/app/components/storage/view-switcher';
-import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 import { fetchRecentFiles } from '@/src/utils/api/storage';
 

@@ -1,6 +1,7 @@
 'use client';
 
 import axios from 'axios';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { FaList, FaTh } from 'react-icons/fa';
@@ -19,7 +20,6 @@ import FileRow from '@/src/app/components/core/filerow';
 import FolderCard from '@/src/app/components/core/foldercard';
 import FolderRow from '@/src/app/components/core/folderrow';
 import Search from '@/src/app/components/core/search';
-import useTheme from '@/src/hooks/useTheme';
 import { Folder, File } from '@/src/types/shared';
 
 type RecentItem = {

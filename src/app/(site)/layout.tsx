@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import ThemeProvider from '@/src/providers/theme';
+import { ThemeProviders } from '@/src/providers/theme';
 import '@/src/styles/globals.css';
 
 const poppins = Poppins({
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body
         className={`${poppins.className} dark:bg-cf-dark text-cf-dark dark:text-white bg-white transition-colors duration-300 ease-in-out`}
       >
-        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
+        <ThemeProviders>{children}</ThemeProviders>
       </body>
     </html>
   );

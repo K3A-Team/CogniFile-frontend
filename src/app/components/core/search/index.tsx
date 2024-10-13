@@ -3,6 +3,7 @@
 import FileCard from '../filecard';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Camera from '@/public/Camera.svg';
@@ -13,7 +14,6 @@ import shape7 from '@/public/Power-light.png';
 import shape5 from '@/public/Power.png';
 import SearchIcon from '@/public/Search.svg';
 import LightSearchIcon from '@/public/search_light.svg';
-import useTheme from '@/src/hooks/useTheme';
 
 interface Query {
   text: string;

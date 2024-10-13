@@ -1,10 +1,10 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import shortLogoLight from '@/public/ShortLogoLight.png';
 import shortLogoDark from '@/public/logo_short.png';
-import useTheme from '@/src/hooks/useTheme';
 
 const MiniNavbar = () => {
   const { theme } = useTheme();
