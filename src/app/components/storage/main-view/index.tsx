@@ -440,7 +440,7 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
       />
 
       {isCreatingFolder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[110]">
           <Cardadd
             title="New Folder"
             inputPlaceholder="Folder Name"

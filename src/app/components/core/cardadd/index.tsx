@@ -18,7 +18,7 @@ const Cardadd: React.FC<CardProps> = ({ title, inputPlaceholder, onCancel, onCre
     setInputValue('');
   }; */
   return (
-    <div className="bg-dar-card text-white p-4 rounded-[8px] shadow-md w-64 z-[30]">
+    <div className="bg-dar-card text-white p-4 rounded-[8px] shadow-md w-64 z-[110]">
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <Input
         isPassword={false}
