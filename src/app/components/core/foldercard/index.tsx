@@ -69,7 +69,7 @@ const FolderCard = ({
   return (
     <div
       ref={cardRef}
-      className={`relative dark:hover:bg-[#252525] hover:bg-[#EFEFEF] flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform ${
+      className={`relative dark:hover:bg-[#252525] hover:bg-[#EFEFEF] flex flex-col gap-2 items-center p-4 rounded-lg text-center transition-all transform z-[100] ${
         mounted ? (customAnimation ? customAnimation : 'animate-fade-in-up') : ''
       }`}
       onKeyDown={e => {
@@ -88,7 +88,7 @@ const FolderCard = ({
 
       {showMenu && (
         <div
-          className="absolute z-50"
+          className="absolute z-[100]"
           style={{ top: `${menuPosition.y / 5}px`, left: `${menuPosition.x / 10}px` }}
         >
           <MenuCard
@@ -98,6 +98,12 @@ const FolderCard = ({
                 handler: e => {
                   e.stopPropagation(); // Prevent event propagation
                   handleRemove();
+                },
+              },
+              {
+                label: 'File Details',
+                handler: () => {
+                  return 'hello';
                 },
               },
             ]}

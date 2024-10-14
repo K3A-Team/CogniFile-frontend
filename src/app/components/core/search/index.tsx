@@ -76,7 +76,7 @@ function Search() {
   }, [query.text, debouncedSearch]);
 
   return (
-    <div className="relative z-[99] w-full lg:w-auto">
+    <div className="relative z-[60] w-full lg:w-auto">
       <form className="h-14 w-full lg:w-[500px] border dark:border-white border-[#7D7D7D] rounded-full flex px-2 py-2 justify-between">
         <div className="flex items-center justify-center gap-2 w-[70%] z-10">
           <div className="w-8 h-8 flex items-center justify-center cursor-pointer">
