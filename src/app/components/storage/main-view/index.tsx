@@ -232,7 +232,8 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
   const handleUploadFolder = async () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.webkitdirectory = true; // Allow folder selection
+    input.multiple = true;
+    input.webkitdirectory = true;
 
     input.onchange = async (event: Event) => {
       const target = event.target as HTMLInputElement;
