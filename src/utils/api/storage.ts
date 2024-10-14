@@ -72,3 +72,23 @@ export const uploadFile = async (formData: FormData) => {
 
   return result;
 };
+
+export const uploadFolder = async (formData: FormData) => {
+  const response = await fetch('/api/folders/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    return response
+      .clone()
+      .json()
+      .then(data => {
+        throw new Error(data.message);
+      });
+  }
+
+  const result = await response.json();
+
+  return result;
+};

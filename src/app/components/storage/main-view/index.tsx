@@ -26,6 +26,7 @@ import {
   removeFile,
   removeFolder,
   uploadFile,
+  uploadFolder,
 } from '@/src/utils/api/storage';
 import { transformResponse } from '@/src/utils/helpers/file';
 
@@ -228,6 +229,78 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
     input.click();
   };
 
+  const handleUploadFolder = async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.webkitdirectory = true; // Allow folder selection
+
+    input.onchange = async (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const files = target.files ? target.files : null;
+
+      if (files) {
+        // Hide menu before starting the upload
+        setIsMenuVisible(false);
+
+        // Show a loading toast notification with dark mode while waiting for folder upload
+        const toastId = toast.loading('Uploading folder...', {
+          position: 'bottom-right',
+          theme: 'dark', // Ensuring dark mode for the toast
+        });
+
+        try {
+          const formData = new FormData();
+
+          // Loop through all the selected files in the folder and append them to formData
+          for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]); // Append all files to formData
+          }
+
+          formData.append('folderId', folderId); // Add folderId to the formData
+
+          // Perform the folder upload
+          const result = await uploadFolder(formData); // This is your API call
+
+          // Update state with the newly uploaded folder's files
+          setFolders(prev => [
+            ...prev,
+            {
+              id: result.folder.id,
+              name: result.folder.name,
+              size: 'Unknown',
+              color: 'blue',
+              items: result.folder.items,
+              date: result.folder.interactionDate.split('T')[0],
+            },
+          ]);
+
+          // Update the loading toast with a success message in dark mode
+          toast.update(toastId, {
+            render: 'Folder uploaded successfully!',
+            type: 'success',
+            isLoading: false,
+            autoClose: 3000, // Auto close after 3 seconds
+            theme: 'dark', // Ensuring dark mode for the toast
+          });
+        } catch (error) {
+          // Update the loading toast with an error message in dark mode
+          toast.update(toastId, {
+            render: 'Folder upload failed. Please try again.',
+            type: 'error',
+            isLoading: false,
+            autoClose: 3000, // Auto close after 3 seconds
+            theme: 'dark', // Ensuring dark mode for the toast
+          });
+
+          throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
+        }
+      }
+    };
+
+    // Trigger the folder input click
+    input.click();
+  };
+
   const handleCreatingFolder = async () => {
     setIsCreatingFolder(true);
     setIsMenuVisible(false);
@@ -307,6 +380,7 @@ const StorageMain = ({ folderId }: { folderId: string }) => {
             items={breadcrumbItems}
             handleCreatingFolder={handleCreatingFolder}
             handleUploadFile={handleUploadFile}
+            handleUploadFolder={handleUploadFolder}
             toggleMenu={toggleMenu}
             isMenuVisible={isMenuVisible}
           />

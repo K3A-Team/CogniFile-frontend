@@ -7,6 +7,7 @@ interface BreadcrumbComponentProps {
   isMenuVisible: boolean;
   handleCreatingFolder: () => void;
   handleUploadFile: () => void;
+  handleUploadFolder?: () => void;
 }
 
 const BreadcrumbComponent: React.FC<BreadcrumbComponentProps> = ({
@@ -32,7 +33,11 @@ const BreadcrumbComponent: React.FC<BreadcrumbComponentProps> = ({
               label: 'Import File',
               handler: handleUploadFile,
             },
-            { iconSrc: '/iconCards/importfolder.png', label: 'Import Folder' },
+            {
+              iconSrc: '/iconCards/importfolder.png',
+              label: 'Import Folder',
+              handler: handleUploadFile,
+            },
             { iconSrc: '/iconCards/color.png', label: 'Apply Theme' },
           ]}
         />

@@ -111,7 +111,10 @@ const Sidebar = () => {
               <li
                 key={link.href}
                 className={`flex items-center px-5 py-3 text-lg  ${
-                  pathname === link.href || pathname.includes(link.href)
+                  pathname === link.href ||
+                  new RegExp(
+                    `^${link.href}/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$`,
+                  ).test(pathname)
                     ? 'dark:bg-Gray-gradient bg-Blue-gradient dark:text-selected-sidebar text-white'
                     : 'dark:text-cf-white-text text-[#8C8C8C]'
                 }`}
