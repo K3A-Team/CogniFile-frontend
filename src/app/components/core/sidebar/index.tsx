@@ -11,8 +11,6 @@ import shortLogoLight from '@/public/ShortLogoLight.png';
 import dark from '@/public/dark.png';
 import folderSelected from '@/public/folders-selected.png';
 import folders from '@/public/folders.png';
-import homeSelected from '@/public/home-slected.png';
-import home from '@/public/home.png';
 import light from '@/public/light.png';
 import shortLogoDark from '@/public/logo_short.png';
 import params from '@/public/params.svg';
@@ -31,12 +29,6 @@ const Sidebar = () => {
   const { theme, setTheme } = useTheme();
 
   const mainLinks = [
-    {
-      href: '/storage',
-      label: 'Home',
-      icon: <Image src={home} alt="Logo" className="w-5" />,
-      iconSelected: <Image src={homeSelected} alt="Logo" className="w-5" />,
-    },
     {
       href: '/storage',
       label: 'My Storage',
@@ -119,7 +111,7 @@ const Sidebar = () => {
               <li
                 key={link.href}
                 className={`flex items-center px-5 py-3 text-lg  ${
-                  pathname === link.href
+                  pathname === link.href || pathname.includes(link.href)
                     ? 'dark:bg-Gray-gradient bg-Blue-gradient dark:text-selected-sidebar text-white'
                     : 'dark:text-cf-white-text text-[#8C8C8C]'
                 }`}
