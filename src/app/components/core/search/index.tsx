@@ -45,6 +45,7 @@ function Search() {
   const { theme } = useTheme();
 
   const performSearch = useCallback(async (searchText: string) => {
+    setError('');
     if (!searchText.trim()) {
       setSearchResults([]);
       setIsSearching(false);
@@ -61,7 +62,7 @@ function Search() {
         setError('No results found.');
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      setError('No results found.');
       setSearchResults([]);
     }
     setIsSearching(false);
