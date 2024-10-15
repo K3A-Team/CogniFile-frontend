@@ -23,6 +23,10 @@ import { FolderHierarchy } from '@/src/types/responses';
 
 /* eslint-disable camelcase */
 
+/* eslint-disable camelcase */
+
+/* eslint-disable camelcase */
+
 const HierarchySuggestion = ({
   folderId,
   onClose,
@@ -74,6 +78,7 @@ const HierarchySuggestion = ({
       await axios.get(`/api/hierarchy/${transactionId}`);
       router.push(`/storage/${folderId}`);
     } catch (error) {
+      router.refresh();
       throw new Error(String(error));
     } finally {
       setLoadingTwo(false);
