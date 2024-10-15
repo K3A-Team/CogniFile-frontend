@@ -206,7 +206,7 @@ const Sidebar = () => {
         <div className="mt-auto px-5">
           <h2 className="font-medium text-[#595959] text-sm mb-4">Storage</h2>
           <div className="flex justify-between mb-2">
-            <span>{usedSpace} of 50 GB</span>
+            <span>{usedSpace} of 100 GB</span>
           </div>
           <div className="w-full dark:bg-white bg-[#F5F5F5] h-2 rounded-full mb-4">
             <div className="bg-cf-blue h-2 rounded-full" style={{ width: '1%' }}></div>

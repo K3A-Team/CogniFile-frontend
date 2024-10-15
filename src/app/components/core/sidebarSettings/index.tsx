@@ -28,7 +28,7 @@ const SidebarSettings = () => {
   const pathname = usePathname();
 
   return (
-    <div className="bg-dar-card text-white h-full py-12 w-[15vw] flex flex-col justify-between relative ">
+    <div className="bg-dar-card text-white h-full py-12 w-[15vw] flex flex-col justify-between relative">
       <div className="flex flex-col">
         <div className="flex justify-center items-center mb-20 px-2">
           <Image src={logoShort} alt="Logo" className="w-20" />

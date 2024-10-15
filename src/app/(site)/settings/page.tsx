@@ -218,26 +218,26 @@ function Settings() {
           </div>
           <div className="flex flex-col gap-8 w-full items-start">
             <p className="text-2xl font-regular">Usage</p>
-            <div className="grid gap-2 grid-cols-3">
+            <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col p-5 gap-4 text-xl bg-dar-card rounded-[8px] w-[150px]">
                 <p>Photos</p>
-                <p className="text-[#98429C]">302</p>
+                <p className="text-[#98429C]">0</p>
               </div>
               <div className="flex flex-col p-5 gap-4 text-xl bg-dar-card rounded-[8px] w-[150px]">
                 <p>Documents</p>
-                <p className="text-[#819C42]">600</p>
+                <p className="text-[#819C42]">6</p>
               </div>
               <div className="flex flex-col p-5 gap-4 text-xl bg-dar-card rounded-[8px] w-[150px]">
                 <p>Videos</p>
-                <p className="text-[#FF8418]">40</p>
+                <p className="text-[#FF8418]">0</p>
               </div>
               <div className="flex flex-col p-5 gap-4 text-xl bg-dar-card rounded-[8px] w-[150px]">
                 <p>Folder</p>
-                <p className="text-[#1890FF]">40</p>
+                <p className="text-[#1890FF]">3</p>
               </div>
               <div className="flex flex-col p-5 gap-4 text-xl bg-dar-card rounded-[8px] w-[150px]">
                 <p>Tags</p>
-                <p className="text-[#FADB14]">4</p>
+                <p className="text-[#FADB14]">6</p>
               </div>
             </div>
           </div>
