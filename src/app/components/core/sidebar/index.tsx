@@ -81,7 +81,7 @@ const Sidebar = () => {
     <div className="relative lg:w-[15%]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 dark:bg-dar-card bg-white p-2 rounded-md z-50"
+        className="lg:hidden fixed top-4 left-4 dark:bg-dar-card bg-white p-2 rounded-md z-[120]"
       >
         <FaBars className="dark:text-white text-dar-card text-2xl" />
       </button>
@@ -98,7 +98,7 @@ const Sidebar = () => {
 
       {/* Sidebar for Large Screens and Mobile */}
       <div
-        className={`bg-white text-[#595959] dark:bg-dar-card dark:text-white py-12 lg:w-full fixed z-[100] lg:static top-0 h-full flex flex-col transition-transform duration-300 transform lg:translate-x-0 ${
+        className={`bg-white text-[#595959] dark:bg-dar-card dark:text-white py-12 lg:w-full fixed z-[120] lg:static top-0 h-full flex flex-col transition-transform duration-300 transform lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
