@@ -4,11 +4,15 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import addCollaborator from '@/public/add_collaborator.png';
 import arrowbtm from '@/public/arrow_btm.png';
 import arrowUp from '@/public/arrow_up.png';
 import close from '@/public/close.webp';
 import settingsOrange from '@/public/settings_orange.svg';
+import Cardadd from '@/src/app/components/core/cardadd';
+// Import the Cardadd component
 import Input from '@/src/app/components/core/input';
 
 interface Workspace {
@@ -116,6 +120,7 @@ const SharedStorage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(null); // Track the selected workspace
   const [isCardOpen, setIsCardOpen] = useState(false);
+  const [isAddCardOpen, setIsAddCardOpen] = useState(false); // Track the "Add shared storage" card
   const router = useRouter();
 
   useEffect(() => {
@@ -132,6 +137,73 @@ const SharedStorage = () => {
     fetchData();
   }, []);
 
+  const handleCreateSharedStorage = async (name: string, image: File | null) => {
+    // If no name is provided, show an error
+    if (!name) {
+      toast.error('Storage name is required', {
+        position: 'bottom-right',
+        theme: 'dark',
+      });
+      return;
+    }
+    setIsAddCardOpen(false);
+    // Show a loading toast while creating the shared storage
+    const toastId = toast.loading('Creating shared storage...', {
+      position: 'bottom-right',
+      theme: 'dark',
+    });
+
+    try {
+      // Create form data and append storage name and image if present
+      const formData = new FormData();
+      formData.append('name', name);
+      if (image) {
+        formData.append('image', image);
+      }
+      // Send the POST request to the backend to create the shared storage
+      const response = await axios.post('/api/storage/shared', formData);
+
+      if (!response.data.success) {
+        const result = await response.data;
+        throw new Error(result.message || 'Failed to create shared storage');
+      }
+
+      const result = await response.data.storageId;
+
+      setWorkspaces([
+        ...workspaces,
+        {
+          id: result.id,
+          imagePath: result.imagePath,
+          name: result.name,
+          rootFolderId: result.rootFolderId,
+          members: [],
+        },
+      ]);
+
+      // If successful, update the UI and show a success toast
+      toast.update(toastId, {
+        render: 'Shared storage created successfully!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000,
+        theme: 'dark',
+      });
+
+      // Optionally: You can reload the page or trigger a UI update here
+      window.location.reload();
+    } catch (error) {
+      // Show error toast in case of failure
+      toast.update(toastId, {
+        render: error instanceof Error ? error.message : 'An unknown error occurred',
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000,
+        theme: 'dark',
+      });
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-16 mt-20">
@@ -142,7 +214,7 @@ const SharedStorage = () => {
           <div className="hover:cursor-pointer">
             <button
               className={`p-[1px] bg-white rounded-full flex items-center justify-center gap-2`}
-              onClick={() => 'clicked'}
+              onClick={() => setIsAddCardOpen(true)} // Open the "Add shared storage" card
             >
               <div className="bg-[#1f1f1f] flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-clip-border">
                 <span className={`bg-white text-transparent bg-clip-text text-lg`}>
@@ -162,6 +234,7 @@ const SharedStorage = () => {
           </div>
         </div>
       </div>
+
       {loading ? (
         <div className="flex justify-center gap-6 h-full mt-20">
           <div className="text-center">
@@ -174,6 +247,10 @@ const SharedStorage = () => {
               Loading shared storages...
             </p>
           </div>
+        </div>
+      ) : workspaces.length === 0 ? (
+        <div className="text-center mt-12 text-lg text-gray-500">
+          No available shared storages for you.
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -238,11 +315,25 @@ const SharedStorage = () => {
       {isCardOpen && selectedWorkspace && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-dar-card p-8 rounded-lg relative">
-            {/* Pass the setIsCardOpen function as onSave */}
             <ShareCard SharedInfos={selectedWorkspace} onClose={() => setIsCardOpen(false)} />
           </div>
         </div>
       )}
+
+      {isAddCardOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-dar-card p-8 rounded-lg relative">
+            <Cardadd
+              title="Add a Shared Storage"
+              inputPlaceholder="Storage name"
+              onCancel={() => setIsAddCardOpen(false)}
+              onCreate={handleCreateSharedStorage}
+              includeFileInput={true}
+            />
+          </div>
+        </div>
+      )}
+      <ToastContainer />
     </>
   );
 };
