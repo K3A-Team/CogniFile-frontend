@@ -18,13 +18,15 @@ interface UserProfile {
   trashFolderId: string;
   rootFolderId: string;
   authId: string | null;
-  userSpace: string;
+  usedSpace: string;
   email: string;
 }
 
 function Settings() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [storage, setStorage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -48,8 +50,10 @@ function Settings() {
           default:
             setStorage(5);
         }
+        setIsLoading(false); // Data has been fetched, stop loading
       } catch (error) {
         setUserProfile(null);
+        setIsLoading(false); // Even in case of error, stop loading
       }
     };
 
@@ -59,6 +63,16 @@ function Settings() {
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   };
+
+  if (isLoading) {
+    // Display loading state
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-xl text-gray-500">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex px-20 w-full flex-col gap-10 h-screen">
       <div className="w-full h-16 flex justify-between items-center">
@@ -72,7 +86,7 @@ function Settings() {
         <div className="flex flex-col gap-10 w-[55%]">
           <div className="flex flex-col gap-4">
             <div className="flex gap-4 items-end">
-              <p className="font-regular text-3xl">{userProfile?.userSpace || '0'} GO</p>
+              <p className="font-regular text-3xl">{userProfile?.usedSpace || '0 B'}</p>
               <p className="text-white opacity-40">
                 {' '}
                 used from {storage.toString()} {Number(storage) < 10 ? 'TB' : 'GB'}
@@ -82,6 +96,7 @@ function Settings() {
               <div className="rounded-full bg-[#E63C18] h-1 w-4"></div>
             </div>
           </div>
+
           <div className="flex flex-col gap-8">
             <div className="flex justify-between w-full items-center">
               <p className="text-2xl font-regular">Current Plan</p>
@@ -90,6 +105,7 @@ function Settings() {
               </button>
             </div>
 
+            {/* Plan Section */}
             {userProfile?.trial === 'basic' ? (
               <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[640px]">
                 <div className="flex flex-col gap-2">
@@ -108,7 +124,7 @@ function Settings() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center mb-4">
                       <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
-                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                      <p className="text-lg">{feature}</p>
                     </li>
                   ))}
                 </ul>
@@ -131,18 +147,18 @@ function Settings() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center mb-4">
                       <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
-                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                      <p className="text-lg">{feature}</p>
                     </li>
                   ))}
                 </ul>
               </div>
             ) : (
-              <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between h-[760px]">
+              <div className="bg-[#191919] px-10 py-16 rounded-[2rem] flex flex-col justify-between">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-3xl font-extrabold">Premium Plan</h3>
                   <p className="text-[#8C57BA] text-2xl">49.99 $US/month</p>
                 </div>
-                <ul className="text-[#E3E3E3]">
+                <ul className="text-[#E3E3E3] mt-8">
                   {[
                     '2 TB Storage',
                     'All features of the Standard Plan',
@@ -153,7 +169,7 @@ function Settings() {
                   ].map((feature, index) => (
                     <li key={index} className="flex items-center mb-4">
                       <Image src={whiteCheck} alt="Check" className="w-8 h-8 mr-2" />
-                      <p className="text-lg md:text-sm lg:text-md xl:text-lg">{feature}</p>
+                      <p className="text-lg">{feature}</p>
                     </li>
                   ))}
                 </ul>
@@ -162,6 +178,7 @@ function Settings() {
           </div>
         </div>
 
+        {/* Right-hand side profile and usage information */}
         <div className="flex flex-col gap-10 w-[35%]">
           <div className="rounded-[24px] bg-dar-card p-12 flex flex-col gap-20">
             <div className="flex flex-col gap-6 items-center">

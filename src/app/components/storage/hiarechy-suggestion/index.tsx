@@ -19,6 +19,10 @@ import { FolderHierarchy } from '@/src/types/responses';
 
 /* eslint-disable camelcase */
 
+/* eslint-disable camelcase */
+
+/* eslint-disable camelcase */
+
 const HierarchySuggestion = ({
   folderId,
   onClose,
@@ -77,7 +81,7 @@ const HierarchySuggestion = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-16">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[110] p-16">
       <div className="bg-dar-card rounded-2xl w-2/3 h-[700px] p-16 overflow-y-scroll relative">
         {loading ? (
           <div className="flex items-center justify-center gap-6 p-32 h-full">

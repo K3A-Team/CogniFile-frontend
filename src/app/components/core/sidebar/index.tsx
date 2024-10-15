@@ -1,11 +1,12 @@
 'use client';
 
 import ProfileIcon from '../profileicon';
+import axios from 'axios';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import shortLogoLight from '@/public/ShortLogoLight.png';
 import dark from '@/public/dark.png';
@@ -26,6 +27,7 @@ import trash from '@/public/trash.png';
 const Sidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [usedSpace, setUsedSpace] = useState('0 B');
   const { theme, setTheme } = useTheme();
 
   const mainLinks = [
@@ -63,6 +65,17 @@ const Sidebar = () => {
       iconSelected: <Image src={trashSelected} alt="Logo" className="w-5" />,
     },
   ];
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      return await axios.get('/api/profile');
+    };
+
+    fetchUserProfile().then(response => {
+      const { usedSpace } = response.data.user;
+      setUsedSpace(usedSpace);
+    });
+  }, []);
 
   return (
     <div className="relative lg:w-[15%]">
@@ -193,10 +206,10 @@ const Sidebar = () => {
         <div className="mt-auto px-5">
           <h2 className="font-medium text-[#595959] text-sm mb-4">Storage</h2>
           <div className="flex justify-between mb-2">
-            <span>1.1B GB of 50 GB</span>
+            <span>{usedSpace} of 50 GB</span>
           </div>
           <div className="w-full dark:bg-white bg-[#F5F5F5] h-2 rounded-full mb-4">
-            <div className="bg-cf-blue h-2 rounded-full" style={{ width: '22%' }}></div>
+            <div className="bg-cf-blue h-2 rounded-full" style={{ width: '1%' }}></div>
           </div>
           <button className="dark:bg-cf-gray-two w-full py-2 px-2 rounded-md dark:text-white text-[#373737] bg-[#F0F0F0]">
             Upgrade Storage Size
